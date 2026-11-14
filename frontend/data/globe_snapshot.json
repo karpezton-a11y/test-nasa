@@ -1,0 +1,260 @@
+{
+ "data_status": "real",
+ "data_version": "REAL-G3-2026-11-14-a4151cac",
+ "regions": [
+  {
+   "region_id": "IGP",
+   "name": "Indo-Gangetic Plain (analysis box)",
+   "bbox": [
+    76.0,
+    24.0,
+    88.0,
+    30.0
+   ],
+   "variables": [
+    "rainfall",
+    "aod",
+    "air_temperature"
+   ]
+  },
+  {
+   "region_id": "TN",
+   "name": "Tamil Nadu region (analysis box)",
+   "bbox": [
+    76.5,
+    8.0,
+    80.5,
+    13.5
+   ],
+   "variables": [
+    "rainfall",
+    "aod",
+    "air_temperature"
+   ]
+  },
+  {
+   "region_id": "DELHI",
+   "name": "Delhi National Capital Region",
+   "bbox": [
+    76.8,
+    28.3,
+    77.6,
+    28.9
+   ],
+   "variables": [
+    "air_temperature",
+    "no2"
+   ]
+  },
+  {
+   "region_id": "LA_BASIN",
+   "name": "Los Angeles basin, USA",
+   "bbox": [
+    -118.7,
+    33.6,
+    -117.6,
+    34.4
+   ],
+   "variables": [
+    "air_temperature",
+    "no2"
+   ]
+  },
+  {
+   "region_id": "AMAZON_ARC",
+   "name": "Southern Amazon 'arc of deforestation', Brazil",
+   "bbox": [
+    -60.0,
+    -12.0,
+    -50.0,
+    -7.0
+   ],
+   "variables": [
+    "air_temperature"
+   ]
+  },
+  {
+   "region_id": "SAHEL",
+   "name": "Central Sahel, Africa",
+   "bbox": [
+    -5.0,
+    12.0,
+    15.0,
+    17.0
+   ],
+   "variables": [
+    "rainfall"
+   ]
+  }
+ ],
+ "layers": {
+  "rainfall": {
+   "label": "Rainfall",
+   "summary": "1 of 3 region-variable series show a trend that stays significant after Benjamini-Hochberg false-discovery-rate correction at 0.05.",
+   "rows": [
+    {
+     "region_id": "SAHEL",
+     "region_name": "Central Sahel, Africa",
+     "variable": "rainfall",
+     "status": "significant",
+     "sen_slope": 1.016733,
+     "slope_unit": "mm/month per decade",
+     "percent_change_per_decade": 2.657277,
+     "p_value": 6.573e-05,
+     "q_value": 0.00019719,
+     "headline": "rainfall in Central Sahel, Africa: increasing by 1.0 mm/month per decade (+2.7% per decade), significant after multiple-testing correction (q < 0.001)."
+    },
+    {
+     "region_id": "IGP",
+     "region_name": "Indo-Gangetic Plain (analysis box)",
+     "variable": "rainfall",
+     "status": "not_significant",
+     "sen_slope": -0.386164,
+     "slope_unit": "mm/month per decade",
+     "percent_change_per_decade": -0.428651,
+     "p_value": 0.84045815,
+     "q_value": 0.91784868,
+     "headline": "rainfall in Indo-Gangetic Plain (analysis box): no trend that survives multiple-testing correction (q = 0.918; estimate -0.4 mm/month per decade)."
+    },
+    {
+     "region_id": "TN",
+     "region_name": "Tamil Nadu region (analysis box)",
+     "variable": "rainfall",
+     "status": "not_significant",
+     "sen_slope": 0.385601,
+     "slope_unit": "mm/month per decade",
+     "percent_change_per_decade": 0.375886,
+     "p_value": 0.91784868,
+     "q_value": 0.91784868,
+     "headline": "rainfall in Tamil Nadu region (analysis box): no trend that survives multiple-testing correction (q = 0.918; estimate 0.4 mm/month per decade)."
+    }
+   ]
+  },
+  "aod": {
+   "label": "Aerosol optical depth (AOD)",
+   "summary": "2 of 2 region-variable series show a trend that stays significant after Benjamini-Hochberg false-discovery-rate correction at 0.05.",
+   "rows": [
+    {
+     "region_id": "TN",
+     "region_name": "Tamil Nadu region (analysis box)",
+     "variable": "aod",
+     "status": "significant",
+     "sen_slope": 0.049136,
+     "slope_unit": "1 per decade",
+     "percent_change_per_decade": 15.884428,
+     "p_value": 0.0,
+     "q_value": 0.0,
+     "headline": "AOD in Tamil Nadu region (analysis box): increasing by 0.049 per decade (+15.9% per decade), significant after multiple-testing correction (q < 0.001)."
+    },
+    {
+     "region_id": "IGP",
+     "region_name": "Indo-Gangetic Plain (analysis box)",
+     "variable": "aod",
+     "status": "significant",
+     "sen_slope": 0.083066,
+     "slope_unit": "1 per decade",
+     "percent_change_per_decade": 15.680241,
+     "p_value": 0.0,
+     "q_value": 0.0,
+     "headline": "AOD in Indo-Gangetic Plain (analysis box): increasing by 0.083 per decade (+15.7% per decade), significant after multiple-testing correction (q < 0.001)."
+    }
+   ]
+  },
+  "air_temperature": {
+   "label": "Near-surface air temperature",
+   "summary": "1 of 5 region-variable series show a trend that stays significant after Benjamini-Hochberg false-discovery-rate correction at 0.05.",
+   "rows": [
+    {
+     "region_id": "AMAZON_ARC",
+     "region_name": "Southern Amazon 'arc of deforestation', Brazil",
+     "variable": "air_temperature",
+     "status": "significant",
+     "sen_slope": 0.640902,
+     "slope_unit": "degC per decade",
+     "percent_change_per_decade": null,
+     "p_value": 2.99e-06,
+     "q_value": 1.495e-05,
+     "headline": "near-surface air temperature in Southern Amazon 'arc of deforestation', Brazil: increasing by 0.641 degC per decade, significant after multiple-testing correction (q < 0.001)."
+    },
+    {
+     "region_id": "TN",
+     "region_name": "Tamil Nadu region (analysis box)",
+     "variable": "air_temperature",
+     "status": "significant_before_fdr_only",
+     "sen_slope": 0.219864,
+     "slope_unit": "degC per decade",
+     "percent_change_per_decade": null,
+     "p_value": 0.02873928,
+     "q_value": 0.0718482,
+     "headline": "near-surface air temperature in Tamil Nadu region (analysis box): no trend that survives multiple-testing correction (q = 0.072; estimate 0.22 degC per decade)."
+    },
+    {
+     "region_id": "LA_BASIN",
+     "region_name": "Los Angeles basin, USA",
+     "variable": "air_temperature",
+     "status": "not_significant",
+     "sen_slope": 0.346625,
+     "slope_unit": "degC per decade",
+     "percent_change_per_decade": null,
+     "p_value": 0.06091075,
+     "q_value": 0.10151792,
+     "headline": "near-surface air temperature in Los Angeles basin, USA: no trend that survives multiple-testing correction (q = 0.102; estimate 0.347 degC per decade)."
+    },
+    {
+     "region_id": "DELHI",
+     "region_name": "Delhi National Capital Region",
+     "variable": "air_temperature",
+     "status": "not_significant",
+     "sen_slope": -0.196006,
+     "slope_unit": "degC per decade",
+     "percent_change_per_decade": null,
+     "p_value": 0.31760059,
+     "q_value": 0.39700074,
+     "headline": "near-surface air temperature in Delhi National Capital Region: no trend that survives multiple-testing correction (q = 0.397; estimate -0.196 degC per decade)."
+    },
+    {
+     "region_id": "IGP",
+     "region_name": "Indo-Gangetic Plain (analysis box)",
+     "variable": "air_temperature",
+     "status": "not_significant",
+     "sen_slope": -0.000325,
+     "slope_unit": "degC per decade",
+     "percent_change_per_decade": null,
+     "p_value": 0.99846457,
+     "q_value": 0.99846457,
+     "headline": "near-surface air temperature in Indo-Gangetic Plain (analysis box): no trend that survives multiple-testing correction (q = 0.998; estimate -0.000325 degC per decade)."
+    }
+   ]
+  },
+  "no2": {
+   "label": "Nitrogen dioxide (tropospheric column)",
+   "summary": "1 of 2 region-variable series show a trend that stays significant after Benjamini-Hochberg false-discovery-rate correction at 0.05.",
+   "rows": [
+    {
+     "region_id": "LA_BASIN",
+     "region_name": "Los Angeles basin, USA",
+     "variable": "no2",
+     "status": "significant",
+     "sen_slope": -3453930093277081.0,
+     "slope_unit": "molecules/cm2 per decade",
+     "percent_change_per_decade": -51.541763,
+     "p_value": 1e-08,
+     "q_value": 2e-08,
+     "headline": "NO2 (tropospheric column) in Los Angeles basin, USA: decreasing by 3.45e+15 molecules/cm2 per decade (-51.5% per decade), significant after multiple-testing correction (q < 0.001)."
+    },
+    {
+     "region_id": "DELHI",
+     "region_name": "Delhi National Capital Region",
+     "variable": "no2",
+     "status": "not_significant",
+     "sen_slope": -228261155035160.94,
+     "slope_unit": "molecules/cm2 per decade",
+     "percent_change_per_decade": -4.153802,
+     "p_value": 0.27322937,
+     "q_value": 0.27322937,
+     "headline": "NO2 (tropospheric column) in Delhi National Capital Region: no trend that survives multiple-testing correction (q = 0.273; estimate -2.28e+14 molecules/cm2 per decade)."
+    }
+   ]
+  }
+ }
+}

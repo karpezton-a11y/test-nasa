@@ -19,6 +19,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.gzip import GZipMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import Settings, check_startup_rules, load_settings
@@ -90,6 +91,8 @@ def create_app(settings: Settings | None = None, store: DataStore | None = None)
         # The browser may read the CSV/PDF file name and the wait time on 429/503 (audit M7).
         expose_headers=["Content-Disposition", "Retry-After"],
     )
+    # The 3D landing page ships three.js and country outlines: compress text responses.
+    app.add_middleware(GZipMiddleware, minimum_size=1024)
     app.add_middleware(SecurityHeadersMiddleware)
 
     app.include_router(core.router, prefix=API_PREFIX)

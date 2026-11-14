@@ -1,4 +1,4 @@
-// TrendTrace simple frontend: plain JavaScript, no build step, no external libraries.
+// TrendTrace lab: plain JavaScript, no build step. The 3D landing page lives in globe.js and fx.js.
 "use strict";
 const API = "/api/v1";
 const $ = (sel) => document.querySelector(sel);
@@ -49,27 +49,27 @@ function chart(fit, yLabel) {
   // axes and gridlines
   for (let i = 0; i <= 4; i++) {
     const v = y0 + ((y1 - y0) * i) / 4;
-    add("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: "#eee" });
-    add("text", { x: L - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#666" }).textContent = fmt(v, 3);
+    add("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: "rgba(150,190,255,.10)" });
+    add("text", { x: L - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#7f93b0" }).textContent = fmt(v, 3);
   }
   const years = [...new Set(fit.map((f) => f.date.slice(0, 4)))];
   const step = Math.ceil(years.length / 10);
   years.forEach((yr, i) => {
     if (i % step) return;
-    add("text", { x: X(new Date(`${yr}-07-01`).getTime()), y: H - 12, "text-anchor": "middle", "font-size": 11, fill: "#666" }).textContent = yr;
+    add("text", { x: X(new Date(`${yr}-07-01`).getTime()), y: H - 12, "text-anchor": "middle", "font-size": 11, fill: "#7f93b0" }).textContent = yr;
   });
-  add("text", { x: 12, y: 14, "font-size": 12, fill: "#444" }).textContent = yLabel;
+  add("text", { x: 12, y: 14, "font-size": 12, fill: "#b9c8dc" }).textContent = yLabel;
   const hasTrend = fit[0].fitted !== null && fit[0].fitted !== undefined;
   // band
   if (hasTrend) {
   const upper = fit.map((f, i) => `${X(t[i])},${Y(f.upper)}`);
   const lower = fit.map((f, i) => `${X(t[i])},${Y(f.lower)}`).reverse();
-  add("polygon", { points: [...upper, ...lower].join(" "), fill: "rgba(214,69,47,.18)" });
+  add("polygon", { points: [...upper, ...lower].join(" "), fill: "rgba(255,122,69,.20)" });
   }
   // data points (connected thinly) and fitted line
-  add("polyline", { points: fit.map((f, i) => `${X(t[i])},${Y(f.analysed)}`).join(" "), fill: "none", stroke: "#9cbbe0", "stroke-width": 1 });
-  fit.forEach((f, i) => add("circle", { cx: X(t[i]), cy: Y(f.analysed), r: fit.length > 60 ? 2 : 3.5, fill: "#0b5fae" }));
-  if (hasTrend) add("line", { x1: X(t[0]), y1: Y(fit[0].fitted), x2: X(t[t.length - 1]), y2: Y(fit[fit.length - 1].fitted), stroke: "#d6452f", "stroke-width": 2.5 });
+  add("polyline", { points: fit.map((f, i) => `${X(t[i])},${Y(f.analysed)}`).join(" "), fill: "none", stroke: "rgba(74,163,255,.45)", "stroke-width": 1 });
+  fit.forEach((f, i) => add("circle", { cx: X(t[i]), cy: Y(f.analysed), r: fit.length > 60 ? 2 : 3.5, fill: "#7cc4ff" }));
+  if (hasTrend) add("line", { x1: X(t[0]), y1: Y(fit[0].fitted), x2: X(t[t.length - 1]), y2: Y(fit[fit.length - 1].fitted), stroke: "#ff7a45", "stroke-width": 3 });
   return el("div", {}, svg, el("div", { class: "legend" },
     el("span", {}, el("i", { class: "dot" }), " data"), el("span", {}, el("i", { class: "line" }), " Theil–Sen trend"),
     el("span", {}, el("i", { class: "band" }), " likely range of the trend")));
@@ -82,13 +82,13 @@ function statsTable(rows) {
 function verdict(sig) { return el("span", { class: sig ? "sig" : "nosig" }, sig ? "Statistically significant" : "Not statistically significant"); }
 
 // ---------- tabs ----------
-document.querySelectorAll("nav button").forEach((b) => b.addEventListener("click", () => openTab(b.dataset.tab)));
+document.querySelectorAll("#lab-tabs button").forEach((b) => b.addEventListener("click", () => openTab(b.dataset.tab)));
 function openTab(name) {
   if (name === "scan" && !$("#scan-map").childElementCount && $("#scan-variable").options.length) {
     setTimeout(() => $("#scan-form").requestSubmit(), 0);
   }
-  document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
-  document.querySelectorAll("main section").forEach((s) => (s.hidden = s.id !== `tab-${name}`));
+  document.querySelectorAll("#lab-tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
+  document.querySelectorAll("#lab-panels > section").forEach((s) => (s.hidden = s.id !== `tab-${name}`));
 }
 
 // ---------- Analyze ----------
@@ -159,13 +159,13 @@ $("#analyze-form").addEventListener("submit", async (e) => {
 });
 
 // ---------- Map: where is it changing? ----------
-const MAP_COLORS = { up: "#d6452f", down: "#2c6fbb", none: "#b8b8b8" };
+const MAP_COLORS = { up: "#ff7a45", down: "#4aa3ff", none: "#64748b" };
 function drawMap(rows, variable) {
   const NS = "http://www.w3.org/2000/svg", W = 1000, H = 500;
   const svg = document.createElementNS(NS, "svg");
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   const add = (name, attrs, parent = svg) => { const n = document.createElementNS(NS, name); for (const k in attrs) n.setAttribute(k, attrs[k]); parent.append(n); return n; };
-  add("path", { d: WORLD_PATH, fill: "#f4f1e8", stroke: "#9a9a9a", "stroke-width": 0.6 });
+  add("path", { d: WORLD_PATH, fill: "#10284a", stroke: "#3b6ea8", "stroke-width": 0.6 });
   const X = (lon) => (lon + 180) / 360 * W, Y = (lat) => (90 - lat) / 180 * H;
   const byRegion = Object.fromEntries(rows.map((r) => [r.region_id, r]));
   const area = (r) => (r.bbox[2] - r.bbox[0]) * (r.bbox[3] - r.bbox[1]);
@@ -185,7 +185,7 @@ function drawMap(rows, variable) {
     title.textContent = row ? row.headline : `${region.name}: not analysed`;
     rect.append(title);
     const small = bw <= min;  // label small boxes on the left so they don't collide with an enclosing box's label
-    add("text", { x: small ? x - 3 : x + bw + 3, y: y + 10, "font-size": 11, fill: "#222",
+    add("text", { x: small ? x - 3 : x + bw + 3, y: y + 10, "font-size": 11, fill: "#dce6f2",
                   "text-anchor": small ? "end" : "start" }, g).textContent = region.region_id;
     rect.addEventListener("click", () => {
       $("#region").value = region.region_id; fillVariables();
@@ -366,6 +366,14 @@ async function playDemo(demo, log) {
   log.append(el("p", { class: "muted" }, "What to notice: " + demo.what_to_notice));
 }
 
+// The landing page (globe markers, case files) opens a region + variable here.
+window.ttOpenAnalysis = (regionId, variable) => {
+  if (![...$("#region").options].some((o) => o.value === regionId)) return;
+  $("#region").value = regionId; fillVariables();
+  if ([...$("#variable").options].some((o) => o.value === variable)) $("#variable").value = variable;
+  describeVariable(); openTab("analyze"); $("#analyze-form").requestSubmit();
+};
+
 // Show a first result straight away so the page is never empty.
 loadMeta().then(() => {
   if ([...$("#variable").options].some((o) => o.value === "aod")) { $("#variable").value = "aod"; describeVariable(); }
@@ -373,6 +381,8 @@ loadMeta().then(() => {
   // Deep links such as #more=interaction open that view directly (handy for demos).
   const sm = location.hash.match(/^#scan=(\w+)/);
   if (sm) { $("#scan-variable").value = sm[1]; openTab("scan"); }
+  const lab = location.hash.match(/^#lab=(\w+):(\w+)/);
+  if (lab) window.ttOpenAnalysis(lab[1], lab[2]);
   const m = location.hash.match(/^#more=(\w+)/);
   if (m) { $("#more-form").elements.what.value = m[1]; openTab("more"); $("#more-form").requestSubmit(); }
 });

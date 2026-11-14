@@ -149,7 +149,7 @@ Base path: `/api/v1`. Every successful JSON response has `{data_status,data_vers
 | POST | /analyze/series | Analyse a research series, an inline series or a Giovanni CSV (`giovanni_csv`, optional `conversion`). |
 | GET | /scan | All regions × variables with FDR q-values, headlines and opposite-direction flags. |
 
-Web app: `/` (plain HTML/JS in `frontend/`): Analyze, What's changing, Discover, Unusual months & rain (anomalies, indicators, rain–haze interaction), Real data, Demos. Deep links such as `/#more=interaction` open a view directly.
+Web app: `/` (plain HTML/JS in `frontend/`, no build step). The landing page has a 3D globe (`globe.js`, three.js vendored in `frontend/vendor/`): drag to spin, hover a country for its name, hover or click a marker for its live trend, and switch layers (aerosol, NO₂, air temperature, rainfall). Six scroll-driven case files fly the globe to each finding. Below it, the lab: Analyze, What's changing, Discover, Unusual months & rain (anomalies, indicators, rain–haze interaction), Real data & upload, Demos. Deep links: `/#lab=DELHI:no2` runs an analysis, `/#more=interaction` opens a view. After the data changes, run `python scripts/build_globe_snapshot.py` so the globe's first paint matches (a test checks it). Motion respects the reduced-motion setting; phones keep normal page scrolling.
 
 Analyze request example:
 

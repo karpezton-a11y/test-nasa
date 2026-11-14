@@ -4,26 +4,233 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TrendTrace — Earth System Trend Detective</title>
+<meta name="description" content="TrendTrace runs proper trend tests on real NASA satellite data and explains every result in plain words.">
+<meta name="theme-color" content="#030812">
+<link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="/static/style.css">
+<script type="importmap">{ "imports": { "three": "/static/vendor/three.module.min.js" } }</script>
 </head>
 <body>
-<header>
-  <h1>TrendTrace</h1>
-  <p>Find what is changing on Earth, where, how much, and whether it is significant.</p>
-  <div id="mock-banner" class="banner" hidden>MOCK DATA: the regional series are illustrative values for development. The "Real data" tab uses real NASA-derived series.</div>
+<a class="skip" href="#lab">Skip to the analysis lab</a>
+
+<!-- Boot sequence: hides as soon as the globe is ready (max ~2 s). -->
+<div id="boot" aria-hidden="true">
+  <div class="boot-inner">
+    <svg class="boot-logo" viewBox="0 0 64 64"><use href="#tt-mark"/></svg>
+    <ol class="boot-lines mono">
+      <li>Linking Aqua MODIS aerosol…</li>
+      <li>Linking Aura OMI nitrogen dioxide…</li>
+      <li>Linking GPM IMERG rainfall…</li>
+      <li>Linking MERRA-2 and NASA POWER…</li>
+      <li>Trend engine online.</li>
+    </ol>
+    <div class="boot-bar"><i></i></div>
+  </div>
+</div>
+
+<!-- Our own mark (an orbit and a rising trend line). Not a NASA logo. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="tt-grad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#4aa3ff"/><stop offset="1" stop-color="#ff7a45"/></linearGradient>
+    <symbol id="tt-mark" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="url(#tt-grad)" stroke-width="3" transform="rotate(-24 32 32)"/>
+      <circle cx="32" cy="32" r="14" fill="#0b1a30" stroke="#4aa3ff" stroke-width="2.5"/>
+      <polyline points="20,40 28,33 34,36 44,24" fill="none" stroke="#ff7a45" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="44,24 37.5,24.5 43.5,30.5" fill="#ff7a45"/>
+      <circle cx="56" cy="20" r="3.2" fill="#ffffff"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="topbar" id="top">
+  <a class="brand" href="#top" aria-label="TrendTrace home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#tt-mark"/></svg><span>TrendTrace</span>
+  </a>
+  <nav class="toplinks" aria-label="Sections">
+    <a href="#cases">Case files</a><a href="#how">How it works</a><a href="#impact">Impact</a><a href="#trust">Trust</a><a href="#lab">Lab</a>
+  </nav>
+  <a class="btn btn-primary magnetic" href="#lab"><span>Open the lab</span></a>
 </header>
 
-<nav>
-  <button data-tab="analyze" class="active">Analyze</button>
-  <button data-tab="scan">What's changing?</button>
-  <button data-tab="discover">Discover</button>
-  <button data-tab="more">Unusual months &amp; rain</button>
-  <button data-tab="real">Real data</button>
-  <button data-tab="demos">Demos</button>
-</nav>
+<!-- ============ STAGE: sticky 3D globe under the hero and the case files ============ -->
+<div id="stage">
+  <div id="globe-wrap" class="globe-wrap">
+    <canvas id="globe" aria-label="Interactive 3D globe. Drag to rotate. Hover a country to see its name; hover a marker to see its trend."></canvas>
+    <div class="globe-labels"></div>
+    <div class="globe-tip" role="status" hidden></div>
+    <div class="globe-fallback">Your browser could not start 3D graphics. Everything else works: scroll down to the lab.</div>
+  </div>
 
-<main>
-  <!-- Analyze a loaded region/variable -->
+  <section id="hero" class="over">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">NASA Space Apps Challenge 2026 · Be an Earth System Trend Detective</p>
+      <h1 class="hero-title reveal">
+        <span class="hl">Is Earth really</span>
+        <span class="hl"><span class="grad-text scramble" data-words="changing here?|warming here?|getting hazier?|getting cleaner?">changing here?</span></span>
+      </h1>
+      <p class="hero-sub reveal">TrendTrace tests 22 years of real NASA satellite data the way scientists do, and tells you what is changing, where, by how much, and whether it is real or just noise.</p>
+      <div class="hero-cta reveal">
+        <a class="btn btn-primary magnetic" href="#cases"><span>Start the investigation</span></a>
+        <a class="btn btn-ghost magnetic" href="#lab"><span>Test any region</span></a>
+      </div>
+      <div class="layer-bar reveal interactive" role="group" aria-label="Globe data layer">
+        <span class="layer-title mono">Globe layer</span>
+        <button data-layer="aod" class="chip active">Aerosol haze</button>
+        <button data-layer="no2" class="chip">NO₂</button>
+        <button data-layer="air_temperature" class="chip">Air temperature</button>
+        <button data-layer="rainfall" class="chip">Rainfall</button>
+      </div>
+      <div class="layer-status reveal mono" id="layer-status"><i class="pulse"></i><span>Loading real NASA results…</span></div>
+      <div class="legend-pills reveal">
+        <span style="--c:#ff7a45">significant rise</span><span style="--c:#4aa3ff">significant fall</span>
+        <span style="--c:#ffc86b">significant before many-test check</span><span style="--c:#8191a8">no proven trend</span>
+      </div>
+    </div>
+    <div class="globe-hint mono"><span>Drag to spin · hover a country · click a marker</span></div>
+    <div class="globe-zoom interactive"><button aria-label="Zoom in" data-zoom="0.85">+</button><button aria-label="Zoom out" data-zoom="1.18">−</button></div>
+    <a class="scroll-cue" href="#cases" aria-label="Scroll to the case files"><i></i></a>
+  </section>
+
+  <!-- Case files: each step flies the globe to the place it talks about. -->
+  <section id="cases" class="over" aria-label="Case files">
+    <div class="case-intro">
+      <p class="eyebrow">Case files</p>
+      <h2 class="section-title">Six investigations.<br>Real data. Honest verdicts.</h2>
+      <p class="muted-lg">Scroll. The globe flies to each scene. Every number below came out of our trend engine on real NASA data, and some of the verdicts are “no proven change”. That's the point.</p>
+    </div>
+
+    <article class="case" data-lat="34" data-lon="-118.2" data-dist="2.8" data-layer="no2" data-region="LA_BASIN" data-variable="no2">
+      <div class="case-card tilt">
+        <div class="case-head mono"><span>Case 01</span><span>Aura OMI · NO₂ · 2005–2024</span></div>
+        <h3>Los Angeles: the air got cleaner</h3>
+        <div class="case-big down"><b class="count" data-to="-51.5" data-dec="1">0</b><small>% per decade</small></div>
+        <p>Nitrogen dioxide, a traffic and industry gas, fell by half every ten years. The test is clear-cut: p &lt; 0.001, and it survives the many-test check.</p>
+        <div class="case-foot"><span class="verdict yes">Significant fall</span><button class="btn btn-small run" type="button">Run it live →</button></div>
+      </div>
+    </article>
+
+    <article class="case" data-lat="28.6" data-lon="77.2" data-dist="2.8" data-layer="no2" data-region="DELHI" data-variable="no2">
+      <div class="case-card tilt">
+        <div class="case-head mono"><span>Case 02</span><span>Same satellite · same years</span></div>
+        <h3>Delhi: no proven change</h3>
+        <div class="case-big flat"><b class="count" data-to="-4.2" data-dec="1">0</b><small>% per decade</small></div>
+        <p>The estimate dips slightly, but p = 0.27, so it could be noise. Only the Oct–Dec season falls significantly (−11% per decade). One satellite, two cities, two different stories.</p>
+        <p class="caveat">TrendTrace shows patterns, not causes.</p>
+        <div class="case-foot"><span class="verdict no">Not significant</span><button class="btn btn-small run" type="button">Run it live →</button></div>
+      </div>
+    </article>
+
+    <article class="case" data-lat="27" data-lon="82" data-dist="2.8" data-layer="aod" data-region="IGP" data-variable="aod">
+      <div class="case-card tilt">
+        <div class="case-head mono"><span>Case 03</span><span>Aqua MODIS · aerosol · 2003–2024</span></div>
+        <h3>Indo-Gangetic Plain: the haze is thickening</h3>
+        <div class="case-big up"><b class="count" data-to="15.7" data-dec="1" data-plus="1">0</b><small>% per decade</small></div>
+        <p>Aerosol optical depth rose for two decades over one of the most crowded farm-and-city belts on Earth. Terra MODIS and MERRA-2 agree on the direction.</p>
+        <p class="caveat">AOD is haze in the whole air column, not ground-level PM2.5.</p>
+        <div class="case-foot"><span class="verdict yes up">Significant rise</span><button class="btn btn-small run" type="button">Run it live →</button></div>
+      </div>
+    </article>
+
+    <article class="case" data-lat="26" data-lon="82" data-dist="2.8" data-layer="rainfall" data-region="IGP" data-variable="rainfall">
+      <div class="case-card tilt">
+        <div class="case-head mono"><span>Case 04</span><span>GPM IMERG vs MERRA-2 · rainfall</span></div>
+        <h3>When two NASA products disagree</h3>
+        <div class="case-big flat"><b>No trend</b><small>in satellite rainfall</small></div>
+        <p>GPM IMERG rainfall shows no significant trend over the plain, while the MERRA-2-based NASA POWER series rises. TrendTrace shows both and flags the disagreement instead of hiding it.</p>
+        <div class="case-foot"><span class="verdict no">Products disagree</span><button class="btn btn-small run" type="button">Run it live →</button></div>
+      </div>
+    </article>
+
+    <article class="case" data-lat="-9.5" data-lon="-55" data-dist="2.8" data-layer="air_temperature" data-region="AMAZON_ARC" data-variable="air_temperature">
+      <div class="case-card tilt">
+        <div class="case-head mono"><span>Case 05</span><span>NASA POWER · air temperature</span></div>
+        <h3>Southern Amazon: the arc is heating</h3>
+        <div class="case-big up"><b class="count" data-to="0.64" data-dec="2" data-plus="1">0</b><small>°C per decade</small></div>
+        <p>Near-surface air over the “arc of deforestation” warmed steadily, p &lt; 0.001. That is the clearest temperature signal among our six regions.</p>
+        <div class="case-foot"><span class="verdict yes up">Significant rise</span><button class="btn btn-small run" type="button">Run it live →</button></div>
+      </div>
+    </article>
+
+    <article class="case" data-lat="14.5" data-lon="5" data-dist="2.8" data-layer="rainfall" data-region="SAHEL" data-variable="rainfall">
+      <div class="case-card tilt">
+        <div class="case-head mono"><span>Case 06</span><span>NASA POWER · rainfall</span></div>
+        <h3>Central Sahel: the rains are recovering</h3>
+        <div class="case-big up"><b class="count" data-to="1.0" data-dec="1" data-plus="1">0</b><small>mm/month per decade</small></div>
+        <p>After the great droughts of the 1980s, rainfall over the Sahel keeps climbing, and the trend survives the many-test check.</p>
+        <div class="case-foot"><span class="verdict yes up">Significant rise</span><button class="btn btn-small run" type="button">Run it live →</button></div>
+      </div>
+    </article>
+  </section>
+</div>
+
+<!-- ============ NUMBERS ============ -->
+<section class="stats-band" aria-label="TrendTrace in numbers">
+  <div class="stat reveal"><b class="count" data-to="21">0</b><span>Earth variables</span></div>
+  <div class="stat reveal"><b class="count" data-to="6">0</b><span>NASA missions and models</span></div>
+  <div class="stat reveal"><b class="count" data-to="22">0</b><span>years of monthly data</span></div>
+  <div class="stat reveal"><b class="count" data-to="642">0</b><span>automated tests passing</span></div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="block">
+  <p class="eyebrow reveal">How it works</p>
+  <h2 class="section-title reveal">From a question to a tested answer.</h2>
+  <div class="pipeline">
+    <svg class="pipe-line" viewBox="0 0 1000 8" preserveAspectRatio="none" aria-hidden="true"><path d="M0 4 H1000"/></svg>
+    <div class="pipe-step reveal"><div class="pipe-icon">?</div><h3>Ask</h3><p>Pick a variable and a place, or start from a plain question like “is my city's air getting worse?”</p></div>
+    <div class="pipe-step reveal"><div class="pipe-icon">⇣</div><h3>Fetch</h3><p>Real monthly NASA data: MODIS, OMI, GPM IMERG, MERRA-2, NASA POWER. Gaps stay gaps.</p></div>
+    <div class="pipe-step reveal"><div class="pipe-icon">∿</div><h3>De-season</h3><p>Remove the yearly cycle, so a monsoon or a fire season can't fake a trend.</p></div>
+    <div class="pipe-step reveal"><div class="pipe-icon">∑</div><h3>Test</h3><p>Mann–Kendall (corrected for autocorrelation), Theil–Sen slope with its range, OLS check, FDR across regions.</p></div>
+    <div class="pipe-step reveal"><div class="pipe-icon">◍</div><h3>Map</h3><p>See where it rises, falls or stays flat, on the globe and on the map.</p></div>
+    <div class="pipe-step reveal"><div class="pipe-icon">✦</div><h3>Explain</h3><p>AI rewrites the computed numbers in plain words, and code checks it changed none of them.</p></div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section id="impact" class="block">
+  <p class="eyebrow reveal">Impact</p>
+  <h2 class="section-title reveal">Turns “I heard it's getting worse” into evidence.</h2>
+  <div class="persona-grid">
+    <div class="persona tilt reveal"><span class="persona-tag mono">Students &amp; teachers</span><h3>A science project in minutes, not months</h3><p>School and IB students test a real hypothesis on real NASA data, see the uncertainty, and learn why “not significant” is an answer too.</p></div>
+    <div class="persona tilt reveal"><span class="persona-tag mono">Citizens &amp; journalists</span><h3>Check claims about your own city</h3><p>“Is the air here getting dirtier?” Upload a NASA Giovanni export for any box on Earth and get a verdict with its caveats.</p></div>
+    <div class="persona tilt reveal"><span class="persona-tag mono">Planners &amp; researchers</span><h3>Fast, honest screening</h3><p>Scan many regions at once with false-discovery control, see how many years a trend needs to show, then dig deeper where it matters.</p></div>
+  </div>
+</section>
+
+<!-- ============ TRUST ============ -->
+<section id="trust" class="block">
+  <p class="eyebrow reveal">Why you can trust it</p>
+  <h2 class="section-title reveal">Every result is tested, cross-checked and labelled.</h2>
+  <div class="trust-grid">
+    <div class="trust reveal"><b>Validated</b><p>Our trend engine matches SciPy and pymannkendall on the same data.</p></div>
+    <div class="trust reveal"><b>642 tests</b><p>Automated tests run on every change, on Python 3.11 and 3.13.</p></div>
+    <div class="trust reveal"><b>Many-test check</b><p>Benjamini–Hochberg q-values stop lucky results when scanning many regions.</p></div>
+    <div class="trust reveal"><b>Gaps stay gaps</b><p>Missing months are never filled in; low-coverage months are flagged.</p></div>
+    <div class="trust reveal"><b>AI can't change numbers</b><p>Explanations are checked by code; any changed number is rejected.</p></div>
+    <div class="trust reveal"><b>Patterns, not causes</b><p>Clear caveats: AOD is not PM2.5, and a trend is not a cause.</p></div>
+  </div>
+</section>
+
+<!-- ============ LAB: the full analysis app ============ -->
+<section id="lab" class="block lab">
+  <p class="eyebrow reveal">The lab</p>
+  <h2 class="section-title reveal">Run any test yourself.</h2>
+  <div id="mock-banner" class="banner" hidden>MOCK DATA: the regional series are illustrative values for development. The "Real data" tab uses real NASA-derived series.</div>
+
+  <nav id="lab-tabs" class="lab-tabs" aria-label="Lab tools">
+    <span class="tab-glider" aria-hidden="true"></span>
+    <button data-tab="analyze" class="active">Analyze</button>
+    <button data-tab="scan">What's changing?</button>
+    <button data-tab="discover">Discover</button>
+    <button data-tab="more">Unusual months &amp; rain</button>
+    <button data-tab="real">Real data &amp; upload</button>
+    <button data-tab="demos">Demos</button>
+  </nav>
+
+  <div id="lab-panels" class="lab-panels">
   <section id="tab-analyze">
     <form id="analyze-form" class="row">
       <label>Region <select name="region_id" id="region"></select></label>
@@ -46,7 +253,6 @@
     <div id="analyze-out"></div>
   </section>
 
-  <!-- Scan everything -->
   <section id="tab-scan" hidden>
     <form id="scan-form" class="row">
       <label>Variable <select name="variable" id="scan-variable"></select></label>
@@ -59,7 +265,6 @@
     <div id="scan-out"></div>
   </section>
 
-  <!-- Guided discovery -->
   <section id="tab-discover" hidden>
     <form id="discover-form" class="row">
       <label>Theme <select name="theme" id="theme"><option value="">Any</option></select></label>
@@ -70,7 +275,6 @@
     <div id="discover-out"></div>
   </section>
 
-  <!-- Anomalies, rainfall indicators, rain-haze interaction -->
   <section id="tab-more" hidden>
     <form id="more-form" class="row">
       <label>Region <select name="region_id" id="more-region"></select></label>
@@ -90,14 +294,13 @@
     <div id="more-out"></div>
   </section>
 
-  <!-- Real research series + Giovanni upload -->
   <section id="tab-real" hidden>
     <form id="real-form" class="row">
       <label class="grow">Real annual series (2003–2024) <select name="research_id" id="research"></select></label>
       <button type="submit">Analyze</button>
     </form>
     <details>
-      <summary>Or upload your own Giovanni CSV ("Time Series, Area-Averaged", monthly)</summary>
+      <summary>Or upload your own Giovanni CSV ("Time Series, Area-Averaged", monthly) for any box on Earth</summary>
       <form id="upload-form" class="row">
         <input type="file" id="csv-file" accept=".csv,text/csv">
         <label>Unit conversion
@@ -116,17 +319,21 @@
     <div id="real-out"></div>
   </section>
 
-  <!-- Demos -->
   <section id="tab-demos" hidden>
     <div id="demos-out"></div>
   </section>
-</main>
+  </div>
+</section>
 
-<footer>
-  Statistics: Hamed–Rao modified Mann–Kendall, Theil–Sen slope, OLS t-test (trendlib). Results describe statistical patterns, not causes.
-  AOD is column haze, not ground-level PM2.5. Not an official NASA product. <a href="/docs">API docs</a>
+<footer class="site-foot">
+  <div class="foot-brand"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#tt-mark"/></svg><div><b>TrendTrace</b><span>Team Copernicus · NASA Space Apps Challenge 2026</span></div></div>
+  <p>Data: NASA GES DISC Giovanni (Aqua &amp; Terra MODIS, Aura OMI, GPM IMERG, MERRA-2), NASA POWER. Borders: Natural Earth. Statistics: Hamed–Rao modified Mann–Kendall, Theil–Sen, OLS t-test.</p>
+  <p>Results describe statistical patterns, not causes. AOD is column haze, not ground-level PM2.5. Not an official NASA product, and not endorsed by NASA. <a href="/docs">API docs</a> · <a href="https://github.com/karpezton-a11y/test-nasa">Source code</a></p>
 </footer>
+
+<div class="cursor-glow" aria-hidden="true"></div>
 <script src="/static/world.js"></script>
 <script src="/static/app.js"></script>
+<script type="module" src="/static/fx.js"></script>
 </body>
 </html>
