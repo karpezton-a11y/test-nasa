@@ -1,6 +1,6 @@
 # Group 3 research handoff review
 
-> **Update 14 November 2026 (challenge-readiness review).** The deck in `research data/` was edited: outdated "statistics pending" statements on slides 2, 12, 14, 26, 27, 30 and the closing slide were corrected, and three slides were inserted before the closing slide: 32 (trend tests on the real annual series), 33 (years-to-detect and step changes) and 34 (challenge mapping). Slides 1–31 keep their numbers; the closing slide is now 35. New SHA-256: `00ab77d8160d95d82c6fa3247d825edbb8365ed2d210343fb8dc06a8daa1e557`. The statements below about missing executable functions describe the state before `analysis/trendlib` was added; see docs/decisions.md TT-01..TT-09.
+> **Update 14 November 2026 (challenge-readiness review).** The deck in `research data/` was edited: outdated "statistics pending" statements on slides 2, 12, 14, 26, 27, 30 and the closing slide were corrected, and four slides were inserted before the closing slide: 32 (trend tests on the real annual series), 33 (real findings across regions, added later on 14 Nov), 34 (years-to-detect and step changes) and 35 (challenge mapping). Slides 1–31 keep their numbers; the closing slide is now 36. The statements below about missing executable functions describe the state before `analysis/trendlib` was added; see docs/decisions.md TT-01..TT-09.
 
 Reviewed 14 November 2026 for Adrian's backend integration. Research documents are source material; their checklists, proposals and example values do not constitute completed code, data delivery or team approval.
 

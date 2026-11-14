@@ -82,6 +82,20 @@ DEMOS: list[dict[str, Any]] = [
                           "evidence label stays 'weak' because the runs disagree.",
     },
     {
+        "id": "two_cities_no2",
+        "title": "Two cities, one satellite: nitrogen dioxide in Los Angeles and Delhi",
+        "data": "store",
+        "question": "Is NO2 pollution changing the same way in Los Angeles and Delhi?",
+        "steps": [
+            {"narration": "Scan OMI tropospheric NO2 for both city boxes, 2005-2024, with the seasons removed.",
+             "method": "GET", "path": "/api/v1/scan?variable=no2", "body": None,
+             "look_at": "rows[].headline, rows[].percent_change_per_decade"},
+        ],
+        "what_to_notice": "With the real data, Los Angeles NO2 falls by about half per decade while Delhi shows no "
+                          "significant all-year trend. The app shows that the trends differ, not why. Open the map "
+                          "(What's changing?, NO2) to see it at a glance.",
+    },
+    {
         "id": "scan_everything",
         "title": "What is changing, where, and how much?",
         "data": "store",
