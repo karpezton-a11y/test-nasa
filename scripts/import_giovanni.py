@@ -65,7 +65,8 @@ def import_csv(csv_path: Path, *, region_id: str, variable: str, processed: Path
     series = parse_giovanni_csv(csv_path.read_text(encoding="utf-8"), conversion)
     if series.frequency != "month":
         raise SystemExit("Only monthly series can be imported")
-    unit = unit or CONVERSIONS[conversion][0] or entry["unit"]
+    # Prefer what the file says (e.g. POWER T2M is in C) over the catalogue default, so nothing is mislabelled.
+    unit = unit or CONVERSIONS[conversion][0] or series.unit or entry["unit"]
     if variable in FROZEN_UNITS and unit != FROZEN_UNITS[variable]:
         raise SystemExit(f"{variable} must be in {FROZEN_UNITS[variable]} (frozen contract unit)")
     source_id = (source_id or f"GIOVANNI_{series.variable_id}").upper()[:80]
