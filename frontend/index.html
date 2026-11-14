@@ -49,11 +49,13 @@
   <!-- Scan everything -->
   <section id="tab-scan" hidden>
     <form id="scan-form" class="row">
+      <label>Variable <select name="variable" id="scan-variable"></select></label>
       <label>Season
         <select name="season"><option value="all">All months</option><option value="JJAS">Jun–Sep</option><option value="OND">Oct–Dec</option></select>
       </label>
-      <button type="submit">Scan all regions and variables</button>
+      <button type="submit">Scan</button>
     </form>
+    <div id="scan-map" class="card"></div>
     <div id="scan-out"></div>
   </section>
 
@@ -124,6 +126,7 @@
   Statistics: Hamed–Rao modified Mann–Kendall, Theil–Sen slope, OLS t-test (trendlib). Results describe statistical patterns, not causes.
   AOD is column haze, not ground-level PM2.5. Not an official NASA product. <a href="/docs">API docs</a>
 </footer>
+<script src="/static/world.js"></script>
 <script src="/static/app.js"></script>
 </body>
 </html>

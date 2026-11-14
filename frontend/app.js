@@ -84,6 +84,9 @@ function verdict(sig) { return el("span", { class: sig ? "sig" : "nosig" }, sig 
 // ---------- tabs ----------
 document.querySelectorAll("nav button").forEach((b) => b.addEventListener("click", () => openTab(b.dataset.tab)));
 function openTab(name) {
+  if (name === "scan" && !$("#scan-map").childElementCount && $("#scan-variable").options.length) {
+    setTimeout(() => $("#scan-form").requestSubmit(), 0);
+  }
   document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
   document.querySelectorAll("main section").forEach((s) => (s.hidden = s.id !== `tab-${name}`));
 }
@@ -96,6 +99,7 @@ async function loadMeta() {
     regions = r.result.regions; variables = v.result; catalog = cat.result.variables;
     $("#region").replaceChildren(...regions.map((x) => el("option", { value: x.region_id }, x.name)));
     // Anomalies, rainfall indicators and the rain-haze analysis exist only where rainfall and AOD are both loaded.
+    $("#scan-variable").replaceChildren(...variables.map((v) => el("option", { value: v.variable }, v.label)));
     $("#more-region").replaceChildren(...regions.filter((x) => x.variables.includes("rainfall") && x.variables.includes("aod"))
       .map((x) => el("option", { value: x.region_id }, x.name)));
     fillVariables();
@@ -154,12 +158,56 @@ $("#analyze-form").addEventListener("submit", async (e) => {
   } catch (err) { fail(out, err); }
 });
 
+// ---------- Map: where is it changing? ----------
+const MAP_COLORS = { up: "#d6452f", down: "#2c6fbb", none: "#b8b8b8" };
+function drawMap(rows, variable) {
+  const NS = "http://www.w3.org/2000/svg", W = 1000, H = 500;
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const add = (name, attrs, parent = svg) => { const n = document.createElementNS(NS, name); for (const k in attrs) n.setAttribute(k, attrs[k]); parent.append(n); return n; };
+  add("path", { d: WORLD_PATH, fill: "#f4f1e8", stroke: "#9a9a9a", "stroke-width": 0.6 });
+  const X = (lon) => (lon + 180) / 360 * W, Y = (lat) => (90 - lat) / 180 * H;
+  const byRegion = Object.fromEntries(rows.map((r) => [r.region_id, r]));
+  const area = (r) => (r.bbox[2] - r.bbox[0]) * (r.bbox[3] - r.bbox[1]);
+  // Big boxes first so small ones (a city inside a plain) are drawn on top and stay clickable.
+  for (const region of [...regions].sort((a, b) => area(b) - area(a))) {
+    const row = byRegion[region.region_id];
+    if (!region.variables.includes(variable)) continue;
+    const [w, s, e, n] = region.bbox;
+    let x = X(w), y = Y(n), bw = X(e) - X(w), bh = Y(s) - Y(n);
+    const min = 12;  // small boxes (a city) stay clickable
+    if (bw < min) { x -= (min - bw) / 2; bw = min; }
+    if (bh < min) { y -= (min - bh) / 2; bh = min; }
+    const kind = !row || row.status !== "significant" ? "none" : row.sen_slope > 0 ? "up" : "down";
+    const g = add("g", {});
+    const rect = add("rect", { x, y, width: bw, height: bh, fill: MAP_COLORS[kind], "fill-opacity": 0.75, class: "box" }, g);
+    const title = document.createElementNS(NS, "title");
+    title.textContent = row ? row.headline : `${region.name}: not analysed`;
+    rect.append(title);
+    const small = bw <= min;  // label small boxes on the left so they don't collide with an enclosing box's label
+    add("text", { x: small ? x - 3 : x + bw + 3, y: y + 10, "font-size": 11, fill: "#222",
+                  "text-anchor": small ? "end" : "start" }, g).textContent = region.region_id;
+    rect.addEventListener("click", () => {
+      $("#region").value = region.region_id; fillVariables();
+      $("#variable").value = variable; describeVariable(); openTab("analyze"); $("#analyze-form").requestSubmit();
+    });
+  }
+  return el("div", { class: "map" }, svg, el("p", { class: "muted" },
+    el("span", { class: "swatch", style: `background:${MAP_COLORS.up}` }), "significant increase",
+    el("span", { class: "swatch", style: `background:${MAP_COLORS.down}` }), "significant decrease",
+    el("span", { class: "swatch", style: `background:${MAP_COLORS.none}` }), "no significant trend",
+    " · significance after false-discovery-rate correction · click a box to open its analysis · regions without this variable are not drawn"));
+}
+
 // ---------- Scan ----------
 $("#scan-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const out = $("#scan-out"); loading(out);
+  const f = new FormData(e.target), variable = f.get("variable");
   try {
-    const { result } = await call(`/scan?season=${new FormData(e.target).get("season")}`);
+    const { result } = await call(`/scan?season=${f.get("season")}&variable=${encodeURIComponent(variable)}`);
+    const label = variables.find((v) => v.variable === variable)?.label || variable;
+    show($("#scan-map"), el("h3", {}, `Where is it changing? ${label}`), drawMap(result.rows, variable));
     show(out,
       el("p", { class: "summary" }, result.summary),
       ...result.opposite_directions.map((c) => el("div", { class: "card" },
@@ -323,6 +371,8 @@ loadMeta().then(() => {
   if ([...$("#variable").options].some((o) => o.value === "aod")) { $("#variable").value = "aod"; describeVariable(); }
   if ($("#region").options.length) $("#analyze-form").requestSubmit();
   // Deep links such as #more=interaction open that view directly (handy for demos).
+  const sm = location.hash.match(/^#scan=(\w+)/);
+  if (sm) { $("#scan-variable").value = sm[1]; openTab("scan"); }
   const m = location.hash.match(/^#more=(\w+)/);
   if (m) { $("#more-form").elements.what.value = m[1]; openTab("more"); $("#more-form").requestSubmit(); }
 });

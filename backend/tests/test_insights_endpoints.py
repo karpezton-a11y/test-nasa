@@ -231,6 +231,7 @@ def test_simple_frontend_is_served_without_hiding_api_errors(client):
     assert page.status_code == 200 and "text/html" in page.headers["content-type"] and "TrendTrace" in page.text
     assert client.get("/static/app.js").status_code == 200
     assert client.get("/static/style.css").status_code == 200
+    assert client.get("/static/world.js").status_code == 200  # map outlines
     missing = client.get("/api/v1/does-not-exist")
     assert missing.status_code == 404 and missing.json()["error"]["code"] == "NOT_FOUND"
 
