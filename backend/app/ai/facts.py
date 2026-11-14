@@ -5,6 +5,19 @@ from ..advanced_schemas import AnomalyBothResult, AnomalyResult, IndicatorResult
 from ..schemas import TrendResult
 
 
+import re
+
+# Limitations an explanation may quote verbatim. A sentence that itself mentions significance, PM2.5,
+# a direction word, a number or a cause would make the guardrails reject any text quoting it, so such
+# sentences stay in the result (and the UI) but are not offered to the explanation.
+_UNSAFE_LIMITATION = re.compile(r"significan|pm2\.5|increas|decreas|\brose\b|\bfell\b|\d|"
+                                r"\bcaus|due to|because|leads? to|driven by|result(?:s|ed)? in", re.IGNORECASE)
+
+
+def safe_limitations(limitations) -> list[str]:
+    return [lim for lim in limitations if not _UNSAFE_LIMITATION.search(lim) and len(lim.split()) <= 35]
+
+
 def p_text(p: float) -> str:
     return "p < 0.001" if p < 0.001 else f"p = {p:.3f}"
 
@@ -31,7 +44,7 @@ def item_facts(result) -> dict:
                 "significance_statement": significance, "slope": slope, "range": ci,
                 "p_value": p_text(result.p_value), "coverage": f"{result.evidence.valid_obs_pct:.1f}%",
                 "evidence_label": result.evidence.evidence_label,
-                "limitations": list(result.limitations) or ["Record length limits the interpretation of this trend."]}
+                "limitations": safe_limitations(result.limitations) or ["Record length limits the interpretation of this trend."]}
     if isinstance(result, AnomalyBothResult):
         return {"kind": "anomaly", "label": result.region_id + " rainfall and AOD",
                 "period": f"{result.period.start} to {result.period.end}",

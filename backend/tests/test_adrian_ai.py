@@ -10,7 +10,7 @@ from app.ai.service import ExplanationService, RateLimiter
 from app.ai.resolve import ResultRegistry
 from app.core_schemas import Explanation, LlmOutput
 from app.config import REPO_ROOT
-from app.schemas import Period, Envelope
+from app.schemas import Period, Envelope, TrendResult
 from app.services.store import MockStore
 
 
@@ -159,7 +159,8 @@ def test_causal_or_spelled_number_in_free_text_does_not_break_template(make_sett
     trend = trend.model_copy(update={"limitations": ["One sensor has missing data due to clouds."]})
     service = ExplanationService(make_settings())
     result = service.explain([trend], data_status="mock", data_version="MOCK-test")
-    assert result.source == "template" and "Scientific interpretation depends on data coverage." in result.text
+    # The unsafe limitation is never quoted; a safe caveat is used instead.
+    assert result.source == "template" and "due to clouds" not in result.text and "Limitation:" in result.text
 
 
 def test_provider_http_contract_with_mock_transport(make_settings, monkeypatch, facts):
@@ -228,3 +229,25 @@ def test_free_tier_providers_use_fixed_origins(make_settings, monkeypatch, facts
 def test_unknown_provider_falls_back_to_template(make_settings, trend):
     service = ExplanationService(make_settings(LLM_API_KEY="k", LLM_PROVIDER="grok", LLM_MODEL="m"))
     assert service.explain([trend], data_status="mock", data_version="MOCK-test").source == "template"
+
+
+def test_llm_text_passes_guardrails_on_a_real_trendlib_result(make_settings):
+    """Regression: trendlib limitations (PM2.5, 'significance' wording) made every provider answer fail."""
+    from fastapi.testclient import TestClient
+    from app.main import create_app
+    from app.ai.facts import build_facts
+    with TestClient(create_app(make_settings())) as c:
+        trend = TrendResult.model_validate(c.post("/api/v1/analyze", json={"region_id": "IGP", "variable": "aod"}).json()["result"])
+    facts = build_facts([trend], data_status="real", data_version="REAL-x")
+    item = facts["items"][0]
+    assert not any("PM2.5" in lim or "ignifican" in lim for lim in item["limitations"])
+
+    class Model:  # a typical well-behaved model answer
+        def generate(self, f):
+            i = f["items"][0]
+            return json.dumps({"text": f"{i['significance_statement']} Over {i['period']} the haze level changed by about "
+                                       f"{i['slope']} ({i['p_value']}). Limitation: {i['limitations'][0]}",
+                               "key_points": [], "caveats": [], "numbers_used": []})
+    service = ExplanationService(make_settings(LLM_API_KEY="k", LLM_PROVIDER="groq", LLM_MODEL="openai/gpt-oss-120b"), client=Model())
+    result = service.explain([trend], data_status="real", data_version="REAL-x")
+    assert result.source == "llm", result.guardrail.issues

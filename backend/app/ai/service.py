@@ -13,7 +13,7 @@ from ..errors import ApiError, api_error
 from ..services.rate_limit import RequestLimiter
 from .client import ProviderClient
 from .facts import build_facts
-from .guardrails import check
+from .guardrails import NUMBER, check
 from .templates import render
 
 logger = logging.getLogger("trendtrace.ai")
@@ -73,15 +73,22 @@ class ExplanationService:
                 return self.cache[key].model_copy(deep=True)
         issues = []
         candidate = None
+        llm_failed = False
         if use_llm and self.settings.llm_api_key_set:
             try:
                 raw = self.client.generate(facts)
                 candidate = LlmOutput.model_validate_json(raw) if isinstance(raw, (str, bytes)) else LlmOutput.model_validate(raw)
+                candidate = repair(candidate, facts)
                 issues = check(candidate, facts)
+                if issues:
+                    logger.warning("Explanation provider text rejected by guardrails %s; using automatic summary", issues)
             except Exception as exc:
                 # Do not log provider bodies/keys or copy exception messages to users.
-                logger.warning("Explanation provider failed (%s); using automatic summary", type(exc).__name__)
-                issues = ["provider_unavailable"]
+                status = getattr(exc, "status", None)
+                logger.warning("Explanation provider failed (%s%s); using automatic summary", type(exc).__name__,
+                               f", HTTP {status}" if status else "")
+                issues = ["provider_unavailable" if status is None else f"provider_http_{status}"]
+            llm_failed = candidate is None or bool(issues)
             if candidate is not None and not issues:
                 result = Explanation(text=candidate.text, key_points=candidate.key_points, caveats=candidate.caveats,
                                      source="llm", guardrail=GuardrailResult(passed=True, issues=[]))
@@ -91,7 +98,9 @@ class ExplanationService:
             result = self._template(facts, ["llm_unconfigured"] if not self.settings.llm_api_key_set else [])
         # A report's immediate template must not prevent a later explicit
         # /explain request from generating an optional LLM explanation.
-        if use_llm or result.source == "llm":
+        # A provider failure is not cached, so the next click can try the provider again (the per-client
+        # rate limit still bounds cost); successes and unconfigured templates are cached.
+        if (use_llm or result.source == "llm") and not llm_failed:
             with self.lock:
                 self.cache[key] = result.model_copy(deep=True)
                 self.cache.move_to_end(key)
@@ -118,3 +127,19 @@ class ExplanationService:
         except Exception as exc:
             logger.error("Automatic summary failed (%s)", type(exc).__name__)
             raise api_error("AI_UNAVAILABLE", "The explanation is temporarily unavailable.") from exc
+
+
+def repair(candidate: LlmOutput, facts: dict) -> LlmOutput:
+    """Fix formatting only, never content: add a missing exact significance statement or verbatim limitation,
+    and list the numbers actually used. Every number, word and claim is still checked by guardrails.check."""
+    text = candidate.text.strip()
+    for item in facts["items"]:
+        statement = item.get("significance_statement")
+        if statement and statement not in text:
+            text = f"{statement} {text}"
+    limits = [lim for item in facts["items"] for lim in item["limitations"]]
+    visible = " ".join([text, *candidate.key_points, *candidate.caveats])
+    if limits and not any(lim in visible for lim in limits):
+        text = f"{text} Limitation: {limits[0]}"
+    numbers = NUMBER.findall(" ".join([text, *candidate.key_points, *candidate.caveats]))
+    return candidate.model_copy(update={"text": text, "numbers_used": numbers})

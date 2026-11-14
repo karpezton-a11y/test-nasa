@@ -145,7 +145,9 @@ $("#analyze-form").addEventListener("submit", async (e) => {
       ]), el("p", {}, el("button", { class: "btn", onclick: async () => {
           explainBox.textContent = "Explaining…";
           try { const ex = await call("/explain", { result_type: "trend", result_id: tr.result_id });
-                explainBox.textContent = `${ex.result.source === "llm" ? "AI-generated explanation of computed results" : "Automatic summary"}: ${ex.result.text}`; }
+                const why = ex.result.source === "template" && ex.result.guardrail.issues.length
+                  ? ` (AI text not used: ${ex.result.guardrail.issues.join(", ")})` : "";
+                explainBox.textContent = `${ex.result.source === "llm" ? "AI-generated explanation of computed results" : "Automatic summary"}: ${ex.result.text}${why}`; }
           catch (err) { explainBox.textContent = err.message; }
         } }, "Explain"), " ", el("a", { href: csv }, "Download series CSV")), explainBox,
         el("p", { class: "muted" }, tr.limitations.join(" "))));
