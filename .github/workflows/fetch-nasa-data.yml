@@ -1,0 +1,40 @@
+# Downloads real NASA POWER monthly series (no login needed) on GitHub's servers
+# and commits the raw CSVs to data/raw/. Run it from the Actions tab ("Run workflow").
+name: fetch NASA data
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Install
+        run: pip install -r requirements.txt -c requirements.lock
+      - name: Download NASA POWER series
+        run: |
+          set -e
+          fetch() { python scripts/fetch_nasa_power.py --bbox $2 $3 $4 $5 --parameter $6 --start 2003 --end 2024 -o data/raw/$1_$6.csv; }
+          fetch IGP        76    24    88    30    T2M
+          fetch TN         76.5  8     80.5  13.5  T2M
+          fetch DELHI      76.8  28.3  77.6  28.9  T2M
+          fetch LA_BASIN  -118.7 33.6 -117.6 34.4  T2M
+          fetch IGP        76    24    88    30    PRECTOTCORR
+          fetch TN         76.5  8     80.5  13.5  PRECTOTCORR
+          fetch SAHEL     -5     12    15    17    PRECTOTCORR
+          fetch AMAZON_ARC -60  -12   -50   -7     T2M
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw/*.csv
+          git diff --cached --quiet || git commit -m "Add NASA POWER raw series (fetched by workflow)"
+          git push
