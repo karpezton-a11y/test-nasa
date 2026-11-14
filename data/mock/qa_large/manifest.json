@@ -1,0 +1,85 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-normal",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "purpose": "MOCK QA input, never scientific observations",
+    "registry_sha256": "8ceed549101551c1b4c86f2069796928d57347e3085d728a4403c4cf570f14ad",
+    "start": "2003-01",
+    "end": "2024-12",
+    "series": [
+      {
+        "region_id": "IGP",
+        "variable": "rainfall",
+        "source_id": "IMERG_V07_FINAL_DAILY",
+        "unit": "mm/day"
+      },
+      {
+        "region_id": "IGP",
+        "variable": "aod",
+        "source_id": "MODIS_AQUA_C61_DAILY",
+        "unit": "1"
+      },
+      {
+        "region_id": "IGP",
+        "variable": "aod",
+        "source_id": "MOCK_AOD_SECONDARY_DAILY",
+        "unit": "1"
+      },
+      {
+        "region_id": "TN",
+        "variable": "rainfall",
+        "source_id": "IMERG_V07_FINAL_DAILY",
+        "unit": "mm/day"
+      },
+      {
+        "region_id": "TN",
+        "variable": "aod",
+        "source_id": "MODIS_AQUA_C61_DAILY",
+        "unit": "1"
+      },
+      {
+        "region_id": "TN",
+        "variable": "aod",
+        "source_id": "MOCK_AOD_SECONDARY_DAILY",
+        "unit": "1"
+      }
+    ],
+    "days_per_series": 8036,
+    "rows": 48216,
+    "csv_sha256": "da14b179deacab480bea8fe95d9544e537cf16214cf8d60df1238968efe9898c",
+    "sparse": {
+      "filename": "sparse_daily.csv",
+      "rows": 32144,
+      "series": [
+        {
+          "region_id": "IGP",
+          "variable": "rainfall",
+          "source_id": "IMERG_V07_FINAL_DAILY",
+          "unit": "mm/day"
+        },
+        {
+          "region_id": "IGP",
+          "variable": "aod",
+          "source_id": "MODIS_AQUA_C61_DAILY",
+          "unit": "1"
+        },
+        {
+          "region_id": "TN",
+          "variable": "rainfall",
+          "source_id": "IMERG_V07_FINAL_DAILY",
+          "unit": "mm/day"
+        },
+        {
+          "region_id": "TN",
+          "variable": "aod",
+          "source_id": "MODIS_AQUA_C61_DAILY",
+          "unit": "1"
+        }
+      ],
+      "policy": "MOCK: two of every five daily slots missing; complete 2020-2021 outage",
+      "csv_sha256": "fbe07a2c9fd7eeea8708c8d2bc32432da0c69d3083d9d215ba6f6f36a3d6f9e7"
+    }
+  }
+}

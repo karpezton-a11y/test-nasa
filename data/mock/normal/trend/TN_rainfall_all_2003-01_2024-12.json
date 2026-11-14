@@ -1,0 +1,99 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-normal",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "result_id": "trend_TN_rainfall_all_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "rainfall",
+    "source_id": "IMERG_V07_FINAL_MONTHLY",
+    "period": {
+      "start": "2003-01",
+      "end": "2024-12"
+    },
+    "season": "all",
+    "series_type": "monthly_deseasonalised",
+    "method": {
+      "test": "mann_kendall_hamed_rao",
+      "slope": "theil_sen",
+      "alpha": 0.05,
+      "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "positive",
+    "sen_slope": 9.8,
+    "slope_unit": "mm/month per decade",
+    "slope_ci": [
+      -2.4,
+      21.5
+    ],
+    "p_value": 0.09,
+    "significant": false,
+    "ols_slope": 10.6,
+    "ols_ci": [
+      -3.0,
+      24.1
+    ],
+    "change_over_period": 21.56,
+    "baseline_mean": 88.9,
+    "percent_change_per_decade": 11.0236,
+    "n_expected": 264,
+    "n_valid": 260,
+    "missing_pct": 1.5151515151515156,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.09,
+    "limitations": [
+      "MOCK fixture: illustrative numbers, not a scientific result.",
+      "Satellite rainfall over a large box smooths local extremes; the changing satellite constellation may add artefacts."
+    ],
+    "evidence": {
+      "record_years": 22.0,
+      "n_valid": 260,
+      "n_expected": 264,
+      "valid_obs_pct": 98.48484848484848,
+      "mean_valid_fraction": 0.9973,
+      "low_coverage_months": 0,
+      "p_value": 0.09,
+      "slope_ci": [
+        -2.4,
+        21.5
+      ],
+      "ci_excludes_zero": false,
+      "sensitivity": [
+        {
+          "name": "exclude_low_coverage",
+          "sen_slope": 9.5,
+          "p_value": 0.1,
+          "same_sign": true
+        },
+        {
+          "name": "end_2021",
+          "sen_slope": 8.7,
+          "p_value": 0.15,
+          "same_sign": true
+        },
+        {
+          "name": "seasonal_kendall",
+          "sen_slope": 10.1,
+          "p_value": 0.08,
+          "same_sign": true
+        },
+        {
+          "name": "ols",
+          "sen_slope": 10.6,
+          "p_value": 0.11,
+          "same_sign": true
+        }
+      ],
+      "evidence_label": "weak",
+      "label_rule_version": "v1",
+      "notes": [
+        "Label rule defined by the team; see Methods.",
+        "MOCK fixture: illustrative numbers."
+      ]
+    },
+    "trendlib_version": "0.0.0-mock",
+    "computed_at": "2026-11-13T12:00:00+05:30"
+  }
+}

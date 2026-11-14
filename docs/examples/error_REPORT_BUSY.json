@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "REPORT_BUSY",
+    "message": "The server is busy creating other reports. Please try again in a few seconds.",
+    "details": {
+      "retry_after_s": 5
+    }
+  }
+}

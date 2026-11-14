@@ -1,0 +1,127 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-sparse",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "regions": [
+      {
+        "region_id": "IGP",
+        "name": "Indo-Gangetic Plain (analysis box)",
+        "bbox": [
+          76.0,
+          24.0,
+          88.0,
+          30.0
+        ],
+        "status": "provisional",
+        "description": "MOCK metadata. Provisional rectangular analysis box; includes parts of several states.",
+        "variables": [
+          "rainfall",
+          "aod"
+        ],
+        "period_available": {
+          "start": "2003-01",
+          "end": "2024-12"
+        }
+      },
+      {
+        "region_id": "TN",
+        "name": "Tamil Nadu (analysis box)",
+        "bbox": [
+          76.5,
+          8.0,
+          80.5,
+          13.5
+        ],
+        "status": "provisional",
+        "description": "MOCK metadata. Provisional rectangular analysis box; includes some coastal sea and a small part of northern Sri Lanka.",
+        "variables": [
+          "rainfall",
+          "aod"
+        ],
+        "period_available": {
+          "start": "2003-01",
+          "end": "2024-12"
+        }
+      }
+    ],
+    "geojson": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "IGP",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  76.0,
+                  24.0
+                ],
+                [
+                  88.0,
+                  24.0
+                ],
+                [
+                  88.0,
+                  30.0
+                ],
+                [
+                  76.0,
+                  30.0
+                ],
+                [
+                  76.0,
+                  24.0
+                ]
+              ]
+            ]
+          },
+          "properties": {
+            "region_id": "IGP",
+            "name": "Indo-Gangetic Plain (analysis box)",
+            "status": "provisional"
+          }
+        },
+        {
+          "type": "Feature",
+          "id": "TN",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  76.5,
+                  8.0
+                ],
+                [
+                  80.5,
+                  8.0
+                ],
+                [
+                  80.5,
+                  13.5
+                ],
+                [
+                  76.5,
+                  13.5
+                ],
+                [
+                  76.5,
+                  8.0
+                ]
+              ]
+            ]
+          },
+          "properties": {
+            "region_id": "TN",
+            "name": "Tamil Nadu (analysis box)",
+            "status": "provisional"
+          }
+        }
+      ]
+    }
+  }
+}

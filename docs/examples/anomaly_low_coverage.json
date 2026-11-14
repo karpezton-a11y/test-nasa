@@ -1,0 +1,76 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "result_id": "anomalies_TN_aod_2023-06_2023-09_raw",
+    "region_id": "TN",
+    "variable": "aod",
+    "source_id": "MODIS_AQUA_C61_MONTHLY",
+    "unit": "1",
+    "period": {
+      "start": "2023-06",
+      "end": "2023-09"
+    },
+    "baseline": {
+      "start": "2003-01",
+      "end": "2024-12",
+      "method": "same_calendar_month",
+      "statistic": "z_log",
+      "detrended": false
+    },
+    "thresholds": {
+      "high": 2.0,
+      "low": -2.0,
+      "min_valid_fraction": null,
+      "dry_suppression_median": null
+    },
+    "anomalies": [
+      {
+        "date": "2023-06-01",
+        "value": 0.452,
+        "baseline_median": 0.418,
+        "score": 0.41,
+        "score_type": "z_log",
+        "category": null,
+        "valid_fraction": 0.25,
+        "qc_flag": "low_coverage",
+        "note": "low coverage: 25% of days had a valid retrieval"
+      },
+      {
+        "date": "2023-07-01",
+        "value": null,
+        "baseline_median": 0.437,
+        "score": null,
+        "score_type": "z_log",
+        "category": null,
+        "valid_fraction": 0.03,
+        "qc_flag": "missing",
+        "note": "missing month: too few valid days"
+      },
+      {
+        "date": "2023-08-01",
+        "value": null,
+        "baseline_median": 0.429,
+        "score": null,
+        "score_type": "z_log",
+        "category": null,
+        "valid_fraction": 0.0,
+        "qc_flag": "missing",
+        "note": "missing month: no valid days"
+      },
+      {
+        "date": "2023-09-01",
+        "value": 0.371,
+        "baseline_median": 0.402,
+        "score": -0.7,
+        "score_type": "z_log",
+        "category": null,
+        "valid_fraction": 0.47,
+        "qc_flag": "ok",
+        "note": ""
+      }
+    ]
+  }
+}

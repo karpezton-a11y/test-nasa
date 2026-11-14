@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "METHOD_NOT_ALLOWED",
+    "message": "This HTTP method is not allowed here.",
+    "details": {}
+  }
+}

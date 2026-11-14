@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "PERIOD_TOO_SHORT",
+    "message": "Choose at least 10 years.",
+    "details": {
+      "min_years": 10,
+      "requested_years": 6.0
+    }
+  }
+}

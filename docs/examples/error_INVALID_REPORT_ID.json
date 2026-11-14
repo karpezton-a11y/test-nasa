@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "INVALID_REPORT_ID",
+    "message": "That report ID is not valid.",
+    "details": {
+      "param": "report_id"
+    }
+  }
+}

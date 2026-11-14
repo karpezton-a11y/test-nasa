@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trendlib"
+version = "1.0.0"
+description = "TrendTrace trend statistics: deseasonalised Hamed-Rao modified Mann-Kendall, Theil-Sen, OLS t-test, evidence labels, change points and detection time."
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0", "pandas>=2.2"]
+license = { text = "Apache-2.0" }
+
+[tool.setuptools]
+packages = ["trendlib"]

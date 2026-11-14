@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "AI_UNAVAILABLE",
+    "message": "The explanation service is unavailable right now.",
+    "details": {}
+  }
+}

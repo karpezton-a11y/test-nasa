@@ -1,0 +1,11 @@
+{
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "Too many requests from this device. Please wait a minute and try again.",
+    "details": {
+      "retry_after_s": 42,
+      "limit": 10,
+      "window_s": 60
+    }
+  }
+}

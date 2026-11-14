@@ -1,0 +1,29 @@
+# Runs the backend test suite on every push and pull request (audit LOW: tests only ran on laptops).
+# Same Python as Render (.python-version) and the same pinned packages (requirements.lock).
+name: backend tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+            requirements.lock
+      - name: Install
+        run: pip install -r requirements-dev.txt -c requirements.lock
+      - name: Test
+        run: python -m pytest -q

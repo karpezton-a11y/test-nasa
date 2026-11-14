@@ -1,0 +1,13 @@
+{
+  "error": {
+    "code": "INVALID_VARIABLE",
+    "message": "Unknown variable. Choose rainfall or aod.",
+    "details": {
+      "param": "variable",
+      "allowed": [
+        "rainfall",
+        "aod"
+      ]
+    }
+  }
+}

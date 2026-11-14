@@ -1,0 +1,6 @@
+# Test and QA tools (not needed on the host).
+-r requirements.txt
+pytest==9.2.0
+pypdf==7.0.1
+# Optional: renders PDF pages to PNG for visual layout checks (scripts/render_pdf_pages.py)
+pypdfium2==5.15.2

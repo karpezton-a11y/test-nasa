@@ -1,0 +1,14 @@
+{
+  "error": {
+    "code": "INVALID_EXPORT_TYPE",
+    "message": "Unknown export type.",
+    "details": {
+      "param": "what",
+      "allowed": [
+        "series",
+        "trend",
+        "anomalies"
+      ]
+    }
+  }
+}

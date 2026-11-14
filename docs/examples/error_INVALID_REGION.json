@@ -1,0 +1,13 @@
+{
+  "error": {
+    "code": "INVALID_REGION",
+    "message": "Unknown region. Choose one of the listed regions.",
+    "details": {
+      "param": "region_id",
+      "allowed": [
+        "IGP",
+        "TN"
+      ]
+    }
+  }
+}

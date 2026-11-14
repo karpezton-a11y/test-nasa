@@ -1,0 +1,74 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-sparse",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": [
+    {
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "product": "MOCK stand-in for GPM IMERG Final daily 0.1 deg V07 (not NASA data)",
+      "short_name": "MOCK",
+      "version": "MOCK",
+      "doi": null,
+      "access_method": "mock_generator (no download)",
+      "access_date": null,
+      "variable_name": "MOCK",
+      "citation": null
+    },
+    {
+      "source_id": "IMERG_V07_FINAL_MONTHLY",
+      "product": "MOCK stand-in for GPM IMERG Final monthly 0.1 deg V07 (not NASA data)",
+      "short_name": "MOCK",
+      "version": "MOCK",
+      "doi": null,
+      "access_method": "mock_generator (no download)",
+      "access_date": null,
+      "variable_name": "MOCK",
+      "citation": null
+    },
+    {
+      "source_id": "MODIS_AQUA_C61_DAILY",
+      "product": "MOCK stand-in for MODIS Aqua L3 daily C6.1 AOD 550 nm (not NASA data)",
+      "short_name": "MOCK",
+      "version": "MOCK",
+      "doi": null,
+      "access_method": "mock_generator (no download)",
+      "access_date": null,
+      "variable_name": "MOCK",
+      "citation": null
+    },
+    {
+      "source_id": "MODIS_AQUA_C61_MONTHLY",
+      "product": "MOCK stand-in for MODIS Aqua L3 monthly C6.1 AOD 550 nm (not NASA data)",
+      "short_name": "MOCK",
+      "version": "MOCK",
+      "doi": null,
+      "access_method": "mock_generator (no download)",
+      "access_date": null,
+      "variable_name": "MOCK",
+      "citation": null
+    },
+    {
+      "source_id": "MODIS_TERRA_C61_MONTHLY",
+      "product": "MOCK stand-in for MODIS Terra L3 monthly C6.1 AOD 550 nm (cross-check) (not NASA data)",
+      "short_name": "MOCK",
+      "version": "MOCK",
+      "doi": null,
+      "access_method": "mock_generator (no download)",
+      "access_date": null,
+      "variable_name": "MOCK",
+      "citation": null
+    },
+    {
+      "source_id": "MERRA2_M2TMNXAER_TOTEXTTAU",
+      "product": "MOCK stand-in for MERRA-2 total aerosol extinction AOT 550 nm (cross-check) (not NASA data)",
+      "short_name": "MOCK",
+      "version": "MOCK",
+      "doi": null,
+      "access_method": "mock_generator (no download)",
+      "access_date": null,
+      "variable_name": "MOCK",
+      "citation": null
+    }
+  ]
+}

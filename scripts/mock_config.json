@@ -1,0 +1,568 @@
+{
+  "_comment": "THE single mock registry (regions, variables, sources, scenarios). Every value here is a MOCK placeholder for development; Group 3's data/processed/ files replace it in real mode. Edit here only.",
+  "generator_version": "1",
+  "seed": 20261113,
+  "data_version": "MOCK-2026-11-13",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "trendlib_version": "0.0.0-mock",
+  "baseline": {
+    "start": "2003-01",
+    "end": "2024-12"
+  },
+  "scenarios": {
+    "normal": {
+      "period": {
+        "start": "2003-01",
+        "end": "2024-12"
+      },
+      "extra_missing_fraction": 0.0,
+      "daily": true,
+      "results": true,
+      "description": "Normal coverage, 22 years, a few missing months."
+    },
+    "sparse": {
+      "period": {
+        "start": "2003-01",
+        "end": "2024-12"
+      },
+      "extra_missing_fraction": 0.4,
+      "daily": false,
+      "results": false,
+      "description": "About 40% of monthly values missing (fewer than 70% valid)."
+    },
+    "short": {
+      "period": {
+        "start": "2019-01",
+        "end": "2024-12"
+      },
+      "extra_missing_fraction": 0.0,
+      "daily": false,
+      "results": false,
+      "description": "Record shorter than 10 years."
+    }
+  },
+  "regions": [
+    {
+      "region_id": "IGP",
+      "name": "Indo-Gangetic Plain (analysis box)",
+      "bbox": [
+        76.0,
+        24.0,
+        88.0,
+        30.0
+      ],
+      "status": "provisional",
+      "description": "MOCK metadata. Provisional rectangular analysis box; includes parts of several states.",
+      "variables": [
+        "rainfall",
+        "aod"
+      ],
+      "rain_clim": [
+        15,
+        18,
+        12,
+        8,
+        20,
+        90,
+        260,
+        250,
+        170,
+        35,
+        4,
+        7
+      ],
+      "aod_clim": [
+        0.65,
+        0.58,
+        0.55,
+        0.6,
+        0.68,
+        0.7,
+        0.65,
+        0.6,
+        0.6,
+        0.7,
+        0.8,
+        0.78
+      ],
+      "aod_valid": [
+        0.85,
+        0.85,
+        0.9,
+        0.9,
+        0.85,
+        0.5,
+        0.25,
+        0.2,
+        0.45,
+        0.9,
+        0.9,
+        0.85
+      ],
+      "aod_drift_per_year": 0.008
+    },
+    {
+      "region_id": "TN",
+      "name": "Tamil Nadu (analysis box)",
+      "bbox": [
+        76.5,
+        8.0,
+        80.5,
+        13.5
+      ],
+      "status": "provisional",
+      "description": "MOCK metadata. Provisional rectangular analysis box; includes some coastal sea and a small part of northern Sri Lanka.",
+      "variables": [
+        "rainfall",
+        "aod"
+      ],
+      "rain_clim": [
+        20,
+        8,
+        14,
+        40,
+        70,
+        45,
+        60,
+        95,
+        105,
+        190,
+        300,
+        120
+      ],
+      "aod_clim": [
+        0.38,
+        0.37,
+        0.4,
+        0.42,
+        0.4,
+        0.42,
+        0.43,
+        0.43,
+        0.41,
+        0.36,
+        0.32,
+        0.34
+      ],
+      "aod_valid": [
+        0.6,
+        0.75,
+        0.8,
+        0.7,
+        0.5,
+        0.35,
+        0.3,
+        0.3,
+        0.4,
+        0.35,
+        0.3,
+        0.45
+      ],
+      "aod_drift_per_year": -0.004
+    }
+  ],
+  "variables": [
+    {
+      "variable": "rainfall",
+      "label": "Rainfall",
+      "unit": "mm/month",
+      "unit_label": "mm/month",
+      "sources": [
+        "IMERG_V07_FINAL_MONTHLY",
+        "IMERG_V07_FINAL_DAILY"
+      ],
+      "description": "MOCK description (Group 3 supplies the final text). Monthly total rainfall from GPM IMERG Final V07.",
+      "caveat": "Daily values are in mm/day. MOCK values are illustrative, not NASA data.",
+      "daily_unit": "mm/day"
+    },
+    {
+      "variable": "aod",
+      "label": "Aerosol optical depth (AOD)",
+      "unit": "1",
+      "unit_label": "unitless",
+      "sources": [
+        "MODIS_AQUA_C61_MONTHLY",
+        "MODIS_AQUA_C61_DAILY"
+      ],
+      "description": "MOCK description (Group 3 supplies the final text). Column amount of haze and particles seen from space at 550 nm; not ground-level PM2.5.",
+      "caveat": "Clear-sky only: monsoon months have fewer valid days. MOCK values are illustrative, not NASA data.",
+      "daily_unit": "1"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "stands_in_for": "GPM IMERG Final daily 0.1 deg V07"
+    },
+    {
+      "source_id": "IMERG_V07_FINAL_MONTHLY",
+      "stands_in_for": "GPM IMERG Final monthly 0.1 deg V07"
+    },
+    {
+      "source_id": "MODIS_AQUA_C61_DAILY",
+      "stands_in_for": "MODIS Aqua L3 daily C6.1 AOD 550 nm"
+    },
+    {
+      "source_id": "MODIS_AQUA_C61_MONTHLY",
+      "stands_in_for": "MODIS Aqua L3 monthly C6.1 AOD 550 nm"
+    },
+    {
+      "source_id": "MODIS_TERRA_C61_MONTHLY",
+      "stands_in_for": "MODIS Terra L3 monthly C6.1 AOD 550 nm (cross-check)"
+    },
+    {
+      "source_id": "MERRA2_M2TMNXAER_TOTEXTTAU",
+      "stands_in_for": "MERRA-2 total aerosol extinction AOT 550 nm (cross-check)"
+    }
+  ],
+  "trends": [
+    {
+      "region_id": "IGP",
+      "variable": "aod",
+      "slope_unit": "1 per decade",
+      "sen_slope": 0.021,
+      "slope_ci": [
+        0.01,
+        0.033
+      ],
+      "p_value": 0.004,
+      "ols_slope": 0.019,
+      "ols_ci": [
+        0.008,
+        0.031
+      ],
+      "baseline_mean": 0.642,
+      "lag1": 0.31,
+      "label": "moderate",
+      "sensitivity": [
+        [
+          "exclude_low_coverage",
+          0.019,
+          0.011
+        ],
+        [
+          "end_2021",
+          0.024,
+          0.006
+        ],
+        [
+          "seasonal_kendall",
+          0.018,
+          0.032
+        ],
+        [
+          "ols",
+          0.019,
+          0.009
+        ],
+        [
+          "terra_monthly",
+          0.012,
+          0.12
+        ],
+        [
+          "merra2",
+          -0.002,
+          0.71
+        ]
+      ]
+    },
+    {
+      "region_id": "IGP",
+      "variable": "rainfall",
+      "slope_unit": "mm/month per decade",
+      "sen_slope": -4.2,
+      "slope_ci": [
+        -11.8,
+        3.1
+      ],
+      "p_value": 0.41,
+      "ols_slope": -3.9,
+      "ols_ci": [
+        -12.5,
+        4.7
+      ],
+      "baseline_mean": 74.1,
+      "lag1": 0.12,
+      "label": "weak",
+      "sensitivity": [
+        [
+          "exclude_low_coverage",
+          -4.0,
+          0.44
+        ],
+        [
+          "end_2021",
+          -5.1,
+          0.36
+        ],
+        [
+          "seasonal_kendall",
+          -3.3,
+          0.52
+        ],
+        [
+          "ols",
+          -3.9,
+          0.43
+        ]
+      ]
+    },
+    {
+      "region_id": "TN",
+      "variable": "aod",
+      "slope_unit": "1 per decade",
+      "sen_slope": -0.012,
+      "slope_ci": [
+        -0.019,
+        -0.006
+      ],
+      "p_value": 0.001,
+      "ols_slope": -0.012,
+      "ols_ci": [
+        -0.02,
+        -0.005
+      ],
+      "baseline_mean": 0.391,
+      "lag1": 0.27,
+      "label": "moderate",
+      "sensitivity": [
+        [
+          "exclude_low_coverage",
+          -0.011,
+          0.002
+        ],
+        [
+          "end_2021",
+          -0.013,
+          0.003
+        ],
+        [
+          "seasonal_kendall",
+          -0.01,
+          0.004
+        ],
+        [
+          "ols",
+          -0.012,
+          0.001
+        ],
+        [
+          "terra_monthly",
+          -0.009,
+          0.03
+        ],
+        [
+          "merra2",
+          0.001,
+          0.82
+        ]
+      ]
+    },
+    {
+      "region_id": "TN",
+      "variable": "rainfall",
+      "slope_unit": "mm/month per decade",
+      "sen_slope": 9.8,
+      "slope_ci": [
+        -2.4,
+        21.5
+      ],
+      "p_value": 0.09,
+      "ols_slope": 10.6,
+      "ols_ci": [
+        -3.0,
+        24.1
+      ],
+      "baseline_mean": 88.9,
+      "lag1": 0.09,
+      "label": "weak",
+      "sensitivity": [
+        [
+          "exclude_low_coverage",
+          9.5,
+          0.1
+        ],
+        [
+          "end_2021",
+          8.7,
+          0.15
+        ],
+        [
+          "seasonal_kendall",
+          10.1,
+          0.08
+        ],
+        [
+          "ols",
+          10.6,
+          0.11
+        ]
+      ]
+    }
+  ],
+  "trend_limitations": {
+    "aod": "AOD is only retrieved under clear skies; monsoon months have fewer valid days.",
+    "rainfall": "Satellite rainfall over a large box smooths local extremes; the changing satellite constellation may add artefacts."
+  },
+  "interactions": [
+    {
+      "region_id": "IGP",
+      "season": "JJAS",
+      "template": "interaction_ok.json",
+      "overrides": {}
+    },
+    {
+      "region_id": "IGP",
+      "season": "OND",
+      "template": "interaction_too_few_events.json",
+      "overrides": {}
+    },
+    {
+      "region_id": "TN",
+      "season": "OND",
+      "template": "interaction_ok.json",
+      "overrides": {
+        "n_events": 31,
+        "n_events_used": 18,
+        "valid_aod_pct_before": 34.4,
+        "valid_aod_pct_after": 30.1,
+        "aod_before_median": 0.402,
+        "aod_after_median": 0.371,
+        "median_change": -0.024,
+        "median_change_ci": [
+          -0.051,
+          0.006
+        ],
+        "p_value": 0.087,
+        "control": {
+          "method": "random_non_event_days_same_month",
+          "n": 90,
+          "median_change": -0.004
+        },
+        "monthly_association": {
+          "method": "spearman_on_deseasonalised_anomalies",
+          "rho": -0.18,
+          "n": 66,
+          "p_value": 0.15
+        }
+      }
+    },
+    {
+      "region_id": "TN",
+      "season": "JJAS",
+      "template": "interaction_too_few_events.json",
+      "overrides": {
+        "n_events": 0,
+        "n_events_used": 0,
+        "valid_aod_pct_before": null,
+        "valid_aod_pct_after": null,
+        "aod_before_median": null,
+        "aod_after_median": null,
+        "median_change": null,
+        "control": {
+          "method": "random_non_event_days_same_month",
+          "n": 0,
+          "median_change": null
+        },
+        "monthly_association": {
+          "method": "spearman_on_deseasonalised_anomalies",
+          "rho": 0.05,
+          "n": 88,
+          "p_value": 0.64
+        }
+      }
+    },
+    {
+      "region_id": "IGP",
+      "season": "all",
+      "template": "interaction_ok.json",
+      "overrides": {
+        "n_events": 96,
+        "n_events_used": 61,
+        "valid_aod_pct_before": 47.9,
+        "valid_aod_pct_after": 44.1,
+        "aod_before_median": 0.655,
+        "aod_after_median": 0.611,
+        "median_change": -0.038,
+        "median_change_ci": [
+          -0.066,
+          -0.012
+        ],
+        "p_value": 0.009,
+        "control": {
+          "method": "random_non_event_days_same_month",
+          "n": 305,
+          "median_change": -0.003
+        },
+        "monthly_association": {
+          "method": "spearman_on_deseasonalised_anomalies",
+          "rho": -0.22,
+          "n": 264,
+          "p_value": 0.0004
+        }
+      }
+    },
+    {
+      "region_id": "TN",
+      "season": "all",
+      "template": "interaction_too_few_events.json",
+      "overrides": {
+        "n_events": 21,
+        "n_events_used": 9,
+        "valid_aod_pct_before": 38.1,
+        "valid_aod_pct_after": 33.3,
+        "aod_before_median": 0.415,
+        "aod_after_median": 0.398,
+        "median_change": -0.011,
+        "control": {
+          "method": "random_non_event_days_same_month",
+          "n": 45,
+          "median_change": 0.002
+        },
+        "monthly_association": {
+          "method": "spearman_on_deseasonalised_anomalies",
+          "rho": -0.09,
+          "n": 264,
+          "p_value": 0.15
+        }
+      }
+    }
+  ],
+  "indicators": {
+    "heavy_rain_share": {
+      "unit": "%",
+      "slope_unit": "% per decade",
+      "mean": 27.0,
+      "sd": 3.0,
+      "decimals": 1,
+      "definition": "Percentage of the year's (or season's) wet-day rainfall that falls on days above the 95th percentile of wet-day rainfall in the 2003-2024 baseline. Wet day: at least 1 mm."
+    },
+    "longest_dry_spell": {
+      "unit": "days",
+      "slope_unit": "days per decade",
+      "mean": {
+        "annual": 120.0,
+        "JJAS": 9.0,
+        "OND": 35.0
+      },
+      "sd": 8.0,
+      "decimals": 0,
+      "definition": "Maximum number of consecutive days with rainfall below 1 mm within the year (or within the season)."
+    },
+    "rx5day": {
+      "unit": "mm",
+      "slope_unit": "mm per decade",
+      "mean": 140.0,
+      "sd": 25.0,
+      "decimals": 1,
+      "definition": "Maximum 5-day accumulated rainfall in the year (or season)."
+    }
+  },
+  "indicator_seasons": [
+    "annual",
+    "JJAS",
+    "OND"
+  ]
+}

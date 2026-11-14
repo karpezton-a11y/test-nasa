@@ -1,0 +1,21 @@
+{
+  "sources": [
+    {
+      "filename": "TrendTrace-2.pdf",
+      "kind": "research_handbook",
+      "pages_or_slides": 42,
+      "sha256": "b717b918ff2396b2b20cbc007543f8b225bf77d456a9cf614c32c8ceb245e834",
+      "contains_required_full_precision_processed_series": false,
+      "contains_executable_trendlib": false
+    },
+    {
+      "filename": "Sritharan_Observed_Research.pptx",
+      "kind": "observed_research_briefing",
+      "pages_or_slides": 32,
+      "sha256": "8e1b1ffd19b671bcf393925b13e7c9066d34ebad3ad72f40933f10f8e5546e22",
+      "contains_required_full_precision_processed_series": false,
+      "contains_executable_trendlib": false
+    }
+  ],
+  "note": "Source identity, not a real API dataset or independent scientific validation."
+}

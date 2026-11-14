@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": "INVALID_SEASON",
+    "message": "Unknown season.",
+    "details": {
+      "param": "season",
+      "allowed": [
+        "all",
+        "JF",
+        "MAM",
+        "JJAS",
+        "OND"
+      ]
+    }
+  }
+}

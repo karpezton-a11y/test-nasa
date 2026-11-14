@@ -1,0 +1,833 @@
+{
+ "dataset": "research_annual",
+ "data_status": "real",
+ "data_origin": "Group 3 (Sritharan) observed-research export: chart workbooks embedded in research data/Sritharan_Observed_Research.pptx",
+ "precision_note": "Chart workbook values are rounded to six decimal places by the export (slide notes). Full-precision monthly/daily files remain in Group 3's results/ package.",
+ "period": {
+  "start": "2003",
+  "end": "2024"
+ },
+ "limitations": [
+  "Regional box averages, not administrative areas.",
+  "AOD is a column optical measure, not ground-level PM2.5; clear-sky sampling.",
+  "Annual aggregation removes the seasonal cycle but leaves only 22 values per series."
+ ],
+ "series": [
+  {
+   "research_id": "IGP_rainfall_annual_total",
+   "region_id": "IGP",
+   "region_name": "Indo-Gangetic Plain box [76,24,88,30]",
+   "variable": "rainfall_annual_total",
+   "label": "Annual rainfall total",
+   "unit": "mm/year",
+   "frequency": "year",
+   "theme": "water",
+   "method": "Sum of 12 monthly IMERG Final V07 regional values (GPM_3IMERGM)",
+   "source_slide": 12,
+   "values": [
+    {
+     "year": 2003,
+     "value": 1204.359296
+    },
+    {
+     "year": 2004,
+     "value": 1027.068381
+    },
+    {
+     "year": 2005,
+     "value": 1015.85124
+    },
+    {
+     "year": 2006,
+     "value": 941.822694
+    },
+    {
+     "year": 2007,
+     "value": 1180.520687
+    },
+    {
+     "year": 2008,
+     "value": 1233.570246
+    },
+    {
+     "year": 2009,
+     "value": 917.616311
+    },
+    {
+     "year": 2010,
+     "value": 1058.621417
+    },
+    {
+     "year": 2011,
+     "value": 1239.456746
+    },
+    {
+     "year": 2012,
+     "value": 1018.656844
+    },
+    {
+     "year": 2013,
+     "value": 1268.647031
+    },
+    {
+     "year": 2014,
+     "value": 980.645069
+    },
+    {
+     "year": 2015,
+     "value": 959.299908
+    },
+    {
+     "year": 2016,
+     "value": 1082.391498
+    },
+    {
+     "year": 2017,
+     "value": 923.85361
+    },
+    {
+     "year": 2018,
+     "value": 1023.978295
+    },
+    {
+     "year": 2019,
+     "value": 1088.148642
+    },
+    {
+     "year": 2020,
+     "value": 1101.453476
+    },
+    {
+     "year": 2021,
+     "value": 1301.841965
+    },
+    {
+     "year": 2022,
+     "value": 1081.264544
+    },
+    {
+     "year": 2023,
+     "value": 986.958119
+    },
+    {
+     "year": 2024,
+     "value": 1147.266131
+    }
+   ]
+  },
+  {
+   "research_id": "TN_rainfall_annual_total",
+   "region_id": "TN",
+   "region_name": "Tamil Nadu box [76.5,8,80.5,13.5]",
+   "variable": "rainfall_annual_total",
+   "label": "Annual rainfall total",
+   "unit": "mm/year",
+   "frequency": "year",
+   "theme": "water",
+   "method": "Sum of 12 monthly IMERG Final V07 regional values (GPM_3IMERGM)",
+   "source_slide": 12,
+   "values": [
+    {
+     "year": 2003,
+     "value": 990.315793
+    },
+    {
+     "year": 2004,
+     "value": 1354.696826
+    },
+    {
+     "year": 2005,
+     "value": 1488.685145
+    },
+    {
+     "year": 2006,
+     "value": 1247.930662
+    },
+    {
+     "year": 2007,
+     "value": 1325.224667
+    },
+    {
+     "year": 2008,
+     "value": 1403.428903
+    },
+    {
+     "year": 2009,
+     "value": 1164.610495
+    },
+    {
+     "year": 2010,
+     "value": 1407.930449
+    },
+    {
+     "year": 2011,
+     "value": 1215.762493
+    },
+    {
+     "year": 2012,
+     "value": 932.457281
+    },
+    {
+     "year": 2013,
+     "value": 1013.42499
+    },
+    {
+     "year": 2014,
+     "value": 1227.094289
+    },
+    {
+     "year": 2015,
+     "value": 1448.314407
+    },
+    {
+     "year": 2016,
+     "value": 799.295377
+    },
+    {
+     "year": 2017,
+     "value": 1181.50859
+    },
+    {
+     "year": 2018,
+     "value": 1035.759541
+    },
+    {
+     "year": 2019,
+     "value": 1178.533157
+    },
+    {
+     "year": 2020,
+     "value": 1178.216278
+    },
+    {
+     "year": 2021,
+     "value": 1646.335417
+    },
+    {
+     "year": 2022,
+     "value": 1255.187183
+    },
+    {
+     "year": 2023,
+     "value": 1240.042695
+    },
+    {
+     "year": 2024,
+     "value": 1347.564145
+    }
+   ]
+  },
+  {
+   "research_id": "IGP_aod_annual_mean",
+   "region_id": "IGP",
+   "region_name": "Indo-Gangetic Plain box [76,24,88,30]",
+   "variable": "aod_annual_mean",
+   "label": "Annual mean aerosol optical depth",
+   "unit": "1",
+   "frequency": "year",
+   "theme": "air",
+   "method": "Mean of 12 monthly Aqua MODIS MYD08_M3 C6.1 combined DT/DB AOD at 550 nm",
+   "source_slide": 14,
+   "values": [
+    {
+     "year": 2003,
+     "value": 0.4528
+    },
+    {
+     "year": 2004,
+     "value": 0.492724
+    },
+    {
+     "year": 2005,
+     "value": 0.431053
+    },
+    {
+     "year": 2006,
+     "value": 0.439833
+    },
+    {
+     "year": 2007,
+     "value": 0.460282
+    },
+    {
+     "year": 2008,
+     "value": 0.517065
+    },
+    {
+     "year": 2009,
+     "value": 0.471262
+    },
+    {
+     "year": 2010,
+     "value": 0.497273
+    },
+    {
+     "year": 2011,
+     "value": 0.540215
+    },
+    {
+     "year": 2012,
+     "value": 0.519589
+    },
+    {
+     "year": 2013,
+     "value": 0.522482
+    },
+    {
+     "year": 2014,
+     "value": 0.522656
+    },
+    {
+     "year": 2015,
+     "value": 0.541087
+    },
+    {
+     "year": 2016,
+     "value": 0.572985
+    },
+    {
+     "year": 2017,
+     "value": 0.525225
+    },
+    {
+     "year": 2018,
+     "value": 0.59218
+    },
+    {
+     "year": 2019,
+     "value": 0.590756
+    },
+    {
+     "year": 2020,
+     "value": 0.56557
+    },
+    {
+     "year": 2021,
+     "value": 0.6199
+    },
+    {
+     "year": 2022,
+     "value": 0.600169
+    },
+    {
+     "year": 2023,
+     "value": 0.573313
+    },
+    {
+     "year": 2024,
+     "value": 0.60601
+    }
+   ]
+  },
+  {
+   "research_id": "TN_aod_annual_mean",
+   "region_id": "TN",
+   "region_name": "Tamil Nadu box [76.5,8,80.5,13.5]",
+   "variable": "aod_annual_mean",
+   "label": "Annual mean aerosol optical depth",
+   "unit": "1",
+   "frequency": "year",
+   "theme": "air",
+   "method": "Mean of 12 monthly Aqua MODIS MYD08_M3 C6.1 combined DT/DB AOD at 550 nm",
+   "source_slide": 14,
+   "values": [
+    {
+     "year": 2003,
+     "value": 0.243613
+    },
+    {
+     "year": 2004,
+     "value": 0.244267
+    },
+    {
+     "year": 2005,
+     "value": 0.259132
+    },
+    {
+     "year": 2006,
+     "value": 0.259956
+    },
+    {
+     "year": 2007,
+     "value": 0.275952
+    },
+    {
+     "year": 2008,
+     "value": 0.294015
+    },
+    {
+     "year": 2009,
+     "value": 0.304321
+    },
+    {
+     "year": 2010,
+     "value": 0.291265
+    },
+    {
+     "year": 2011,
+     "value": 0.335548
+    },
+    {
+     "year": 2012,
+     "value": 0.311109
+    },
+    {
+     "year": 2013,
+     "value": 0.307961
+    },
+    {
+     "year": 2014,
+     "value": 0.335665
+    },
+    {
+     "year": 2015,
+     "value": 0.279731
+    },
+    {
+     "year": 2016,
+     "value": 0.327809
+    },
+    {
+     "year": 2017,
+     "value": 0.328095
+    },
+    {
+     "year": 2018,
+     "value": 0.387764
+    },
+    {
+     "year": 2019,
+     "value": 0.313133
+    },
+    {
+     "year": 2020,
+     "value": 0.295869
+    },
+    {
+     "year": 2021,
+     "value": 0.321994
+    },
+    {
+     "year": 2022,
+     "value": 0.387256
+    },
+    {
+     "year": 2023,
+     "value": 0.34679
+    },
+    {
+     "year": 2024,
+     "value": 0.354104
+    }
+   ]
+  },
+  {
+   "research_id": "IGP_longest_dry_spell",
+   "region_id": "IGP",
+   "region_name": "Indo-Gangetic Plain box [76,24,88,30]",
+   "variable": "longest_dry_spell",
+   "label": "Longest dry spell (regional daily mean < 1 mm/day)",
+   "unit": "days",
+   "frequency": "year",
+   "theme": "water",
+   "method": "Longest run of IMERG daily regional-mean rainfall below 1 mm/day within each calendar year",
+   "source_slide": 21,
+   "values": [
+    {
+     "year": 2003,
+     "value": 49.0
+    },
+    {
+     "year": 2004,
+     "value": 78.0
+    },
+    {
+     "year": 2005,
+     "value": 68.0
+    },
+    {
+     "year": 2006,
+     "value": 66.0
+    },
+    {
+     "year": 2007,
+     "value": 75.0
+    },
+    {
+     "year": 2008,
+     "value": 84.0
+    },
+    {
+     "year": 2009,
+     "value": 45.0
+    },
+    {
+     "year": 2010,
+     "value": 64.0
+    },
+    {
+     "year": 2011,
+     "value": 70.0
+    },
+    {
+     "year": 2012,
+     "value": 58.0
+    },
+    {
+     "year": 2013,
+     "value": 76.0
+    },
+    {
+     "year": 2014,
+     "value": 47.0
+    },
+    {
+     "year": 2015,
+     "value": 63.0
+    },
+    {
+     "year": 2016,
+     "value": 83.0
+    },
+    {
+     "year": 2017,
+     "value": 72.0
+    },
+    {
+     "year": 2018,
+     "value": 66.0
+    },
+    {
+     "year": 2019,
+     "value": 34.0
+    },
+    {
+     "year": 2020,
+     "value": 38.0
+    },
+    {
+     "year": 2021,
+     "value": 38.0
+    },
+    {
+     "year": 2022,
+     "value": 80.0
+    },
+    {
+     "year": 2023,
+     "value": 41.0
+    },
+    {
+     "year": 2024,
+     "value": 75.0
+    }
+   ]
+  },
+  {
+   "research_id": "TN_longest_dry_spell",
+   "region_id": "TN",
+   "region_name": "Tamil Nadu box [76.5,8,80.5,13.5]",
+   "variable": "longest_dry_spell",
+   "label": "Longest dry spell (regional daily mean < 1 mm/day)",
+   "unit": "days",
+   "frequency": "year",
+   "theme": "water",
+   "method": "Longest run of IMERG daily regional-mean rainfall below 1 mm/day within each calendar year",
+   "source_slide": 21,
+   "values": [
+    {
+     "year": 2003,
+     "value": 22.0
+    },
+    {
+     "year": 2004,
+     "value": 43.0
+    },
+    {
+     "year": 2005,
+     "value": 32.0
+    },
+    {
+     "year": 2006,
+     "value": 23.0
+    },
+    {
+     "year": 2007,
+     "value": 33.0
+    },
+    {
+     "year": 2008,
+     "value": 33.0
+    },
+    {
+     "year": 2009,
+     "value": 39.0
+    },
+    {
+     "year": 2010,
+     "value": 71.0
+    },
+    {
+     "year": 2011,
+     "value": 26.0
+    },
+    {
+     "year": 2012,
+     "value": 37.0
+    },
+    {
+     "year": 2013,
+     "value": 25.0
+    },
+    {
+     "year": 2014,
+     "value": 41.0
+    },
+    {
+     "year": 2015,
+     "value": 39.0
+    },
+    {
+     "year": 2016,
+     "value": 23.0
+    },
+    {
+     "year": 2017,
+     "value": 33.0
+    },
+    {
+     "year": 2018,
+     "value": 32.0
+    },
+    {
+     "year": 2019,
+     "value": 38.0
+    },
+    {
+     "year": 2020,
+     "value": 34.0
+    },
+    {
+     "year": 2021,
+     "value": 34.0
+    },
+    {
+     "year": 2022,
+     "value": 38.0
+    },
+    {
+     "year": 2023,
+     "value": 24.0
+    },
+    {
+     "year": 2024,
+     "value": 73.0
+    }
+   ]
+  },
+  {
+   "research_id": "IGP_heavy_rain_share",
+   "region_id": "IGP",
+   "region_name": "Indo-Gangetic Plain box [76,24,88,30]",
+   "variable": "heavy_rain_share",
+   "label": "Share of wet-day rain above baseline wet-day P95",
+   "unit": "%",
+   "frequency": "year",
+   "theme": "water",
+   "method": "Rain strictly above the 2003-2024 wet-day P95 divided by all wet-day rain (IMERG daily, regional mean)",
+   "source_slide": 22,
+   "values": [
+    {
+     "year": 2003,
+     "value": 14.673991
+    },
+    {
+     "year": 2004,
+     "value": 8.950895
+    },
+    {
+     "year": 2005,
+     "value": 17.390386
+    },
+    {
+     "year": 2006,
+     "value": 12.256928
+    },
+    {
+     "year": 2007,
+     "value": 17.9349
+    },
+    {
+     "year": 2008,
+     "value": 19.139353
+    },
+    {
+     "year": 2009,
+     "value": 22.715745
+    },
+    {
+     "year": 2010,
+     "value": 15.277239
+    },
+    {
+     "year": 2011,
+     "value": 23.709866
+    },
+    {
+     "year": 2012,
+     "value": 28.787981
+    },
+    {
+     "year": 2013,
+     "value": 18.108486
+    },
+    {
+     "year": 2014,
+     "value": 9.613398
+    },
+    {
+     "year": 2015,
+     "value": 8.578816
+    },
+    {
+     "year": 2016,
+     "value": 13.888036
+    },
+    {
+     "year": 2017,
+     "value": 11.24113
+    },
+    {
+     "year": 2018,
+     "value": 10.393288
+    },
+    {
+     "year": 2019,
+     "value": 21.184093
+    },
+    {
+     "year": 2020,
+     "value": 10.76598
+    },
+    {
+     "year": 2021,
+     "value": 17.527934
+    },
+    {
+     "year": 2022,
+     "value": 17.73637
+    },
+    {
+     "year": 2023,
+     "value": 4.883223
+    },
+    {
+     "year": 2024,
+     "value": 24.957695
+    }
+   ]
+  },
+  {
+   "research_id": "TN_heavy_rain_share",
+   "region_id": "TN",
+   "region_name": "Tamil Nadu box [76.5,8,80.5,13.5]",
+   "variable": "heavy_rain_share",
+   "label": "Share of wet-day rain above baseline wet-day P95",
+   "unit": "%",
+   "frequency": "year",
+   "theme": "water",
+   "method": "Rain strictly above the 2003-2024 wet-day P95 divided by all wet-day rain (IMERG daily, regional mean)",
+   "source_slide": 22,
+   "values": [
+    {
+     "year": 2003,
+     "value": 14.087233
+    },
+    {
+     "year": 2004,
+     "value": 23.755594
+    },
+    {
+     "year": 2005,
+     "value": 42.240012
+    },
+    {
+     "year": 2006,
+     "value": 21.241044
+    },
+    {
+     "year": 2007,
+     "value": 22.414906
+    },
+    {
+     "year": 2008,
+     "value": 29.869836
+    },
+    {
+     "year": 2009,
+     "value": 32.921022
+    },
+    {
+     "year": 2010,
+     "value": 27.453082
+    },
+    {
+     "year": 2011,
+     "value": 20.703559
+    },
+    {
+     "year": 2012,
+     "value": 28.483036
+    },
+    {
+     "year": 2013,
+     "value": 6.904499
+    },
+    {
+     "year": 2014,
+     "value": 16.061737
+    },
+    {
+     "year": 2015,
+     "value": 27.471404
+    },
+    {
+     "year": 2016,
+     "value": 23.644364
+    },
+    {
+     "year": 2017,
+     "value": 16.925128
+    },
+    {
+     "year": 2018,
+     "value": 11.221235
+    },
+    {
+     "year": 2019,
+     "value": 22.592743
+    },
+    {
+     "year": 2020,
+     "value": 16.273398
+    },
+    {
+     "year": 2021,
+     "value": 27.706529
+    },
+    {
+     "year": 2022,
+     "value": 11.26379
+    },
+    {
+     "year": 2023,
+     "value": 18.325462
+    },
+    {
+     "year": 2024,
+     "value": 19.655578
+    }
+   ]
+  }
+ ]
+}

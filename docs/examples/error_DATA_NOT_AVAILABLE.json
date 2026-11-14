@@ -1,0 +1,11 @@
+{
+  "error": {
+    "code": "DATA_NOT_AVAILABLE",
+    "message": "This data is not available yet.",
+    "details": {
+      "dataset": "timeseries_daily",
+      "region_id": "TN",
+      "variable": "aod"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "error": {
+    "code": "INVALID_PERIOD",
+    "message": "The start month is after the end month.",
+    "details": {
+      "param": "start",
+      "reason": "start_after_end",
+      "available": {
+        "start": "2003-01",
+        "end": "2024-12"
+      }
+    }
+  }
+}

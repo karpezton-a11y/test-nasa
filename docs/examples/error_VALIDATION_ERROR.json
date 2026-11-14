@@ -1,0 +1,18 @@
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "The request is missing a field or has a value in the wrong format.",
+    "details": {
+      "fields": [
+        {
+          "loc": [
+            "query",
+            "region_id"
+          ],
+          "msg": "Field required",
+          "type": "missing"
+        }
+      ]
+    }
+  }
+}

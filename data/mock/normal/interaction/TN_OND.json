@@ -1,0 +1,61 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-normal",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "result_id": "interaction_TN_OND_2003-01_2024-12",
+    "region_id": "TN",
+    "season": "OND",
+    "period": {
+      "start": "2003-01",
+      "end": "2024-12"
+    },
+    "source_ids": {
+      "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+      "aod_daily": "MODIS_AQUA_C61_DAILY",
+      "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+      "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+    },
+    "event_definition": {
+      "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+      "threshold_period": {
+        "start": "2003-01",
+        "end": "2024-12"
+      },
+      "min_separation_days": 7,
+      "window_days": 3,
+      "event_day_excluded": true,
+      "min_valid_aod_days_per_window": 1
+    },
+    "status": "ok",
+    "note": null,
+    "n_events": 31,
+    "n_events_used": 18,
+    "valid_aod_pct_before": 34.4,
+    "valid_aod_pct_after": 30.1,
+    "aod_before_median": 0.402,
+    "aod_after_median": 0.371,
+    "median_change": -0.024,
+    "median_change_ci": [
+      -0.051,
+      0.006
+    ],
+    "ci_level": 0.95,
+    "ci_method": "bootstrap",
+    "test": "wilcoxon_signed_rank",
+    "p_value": 0.087,
+    "control": {
+      "method": "random_non_event_days_same_month",
+      "n": 90,
+      "median_change": -0.004
+    },
+    "monthly_association": {
+      "method": "spearman_on_deseasonalised_anomalies",
+      "rho": -0.18,
+      "n": 66,
+      "p_value": 0.15
+    },
+    "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  }
+}

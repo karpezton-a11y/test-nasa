@@ -1,0 +1,30 @@
+# Render Blueprint (checked against render.com/docs/blueprint-spec on 2026-11-13).
+# STAGING rehearsal: mock data, clearly labelled. Do NOT set APP_ENV=prod until real data
+# (Group 3, H5) and Member 1's loader exist; the app refuses prod + mock by design.
+services:
+  - type: web
+    name: trendtrace-api-staging
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt -c requirements.lock
+    startCommand: uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: APP_ENV
+        value: dev
+      - key: DATA_MODE
+        value: mock
+      - key: MOCK_SCENARIO
+        value: normal
+      - key: LOG_LEVEL
+        value: INFO
+      - key: REPORTS_DIR
+        value: reports
+      - key: MAX_BODY_BYTES
+        value: "65536"
+      - key: ALLOWED_ORIGIN
+        sync: false
+      - key: LLM_API_KEY
+        sync: false

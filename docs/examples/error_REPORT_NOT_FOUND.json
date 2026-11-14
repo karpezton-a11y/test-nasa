@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "REPORT_NOT_FOUND",
+    "message": "No report with this ID exists (reports may be removed when the server restarts).",
+    "details": {
+      "report_id": "rpt_0f3c9a2b7d4e4f1a8b6c2d9e0a1b3c5d"
+    }
+  }
+}

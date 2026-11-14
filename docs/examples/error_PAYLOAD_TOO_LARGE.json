@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "PAYLOAD_TOO_LARGE",
+    "message": "The request body is too large.",
+    "details": {
+      "max_bytes": 65536
+    }
+  }
+}

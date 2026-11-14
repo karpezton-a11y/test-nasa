@@ -1,0 +1,217 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-normal",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "result_id": "indicator_IGP_longest_dry_spell_OND_2003-01_2024-12",
+    "region_id": "IGP",
+    "indicator": "longest_dry_spell",
+    "season": "OND",
+    "period": {
+      "start": "2003-01",
+      "end": "2024-12"
+    },
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "unit": "days",
+    "definition": "Maximum number of consecutive days with rainfall below 1 mm within the year (or within the season).",
+    "spatial_method": "regional_mean",
+    "threshold_baseline": null,
+    "min_valid_fraction": 0.95,
+    "values": [
+      {
+        "year": 2003,
+        "value": 38.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2004,
+        "value": 33.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2005,
+        "value": 23.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2006,
+        "value": 25.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2007,
+        "value": 14.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2008,
+        "value": 19.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2009,
+        "value": 49.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2010,
+        "value": 32.0,
+        "valid_fraction": 0.987
+      },
+      {
+        "year": 2011,
+        "value": 26.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2012,
+        "value": 48.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2013,
+        "value": 29.0,
+        "valid_fraction": 0.979
+      },
+      {
+        "year": 2014,
+        "value": 16.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2015,
+        "value": 40.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2016,
+        "value": 49.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2017,
+        "value": 37.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2018,
+        "value": 34.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2019,
+        "value": null,
+        "valid_fraction": 0.93
+      },
+      {
+        "year": 2020,
+        "value": 37.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2021,
+        "value": 35.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2022,
+        "value": 39.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2023,
+        "value": 44.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2024,
+        "value": 30.0,
+        "valid_fraction": 1.0
+      }
+    ],
+    "trend": {
+      "result_id": "trend_IGP_longest_dry_spell_OND_2003-01_2024-12",
+      "region_id": "IGP",
+      "variable": "rainfall",
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "period": {
+        "start": "2003-01",
+        "end": "2024-12"
+      },
+      "season": "OND",
+      "series_type": "annual_indicator",
+      "method": {
+        "test": "mann_kendall_hamed_rao",
+        "slope": "theil_sen",
+        "alpha": 0.05,
+        "ci_level": 0.95
+      },
+      "direction": "no_significant_trend",
+      "slope_sign": "negative",
+      "sen_slope": -0.96,
+      "slope_unit": "days per decade",
+      "slope_ci": [
+        -5.83,
+        3.65
+      ],
+      "p_value": 0.341,
+      "significant": false,
+      "ols_slope": -1.01,
+      "ols_ci": [
+        -5.88,
+        3.6
+      ],
+      "change_over_period": -2.112,
+      "baseline_mean": 33.19,
+      "percent_change_per_decade": -2.8924,
+      "n_expected": 22,
+      "n_valid": 21,
+      "missing_pct": 4.545454545454547,
+      "record_years": 22.0,
+      "lag1_autocorrelation": 0.05,
+      "limitations": [
+        "MOCK fixture: illustrative numbers, not a scientific result.",
+        "Regional-mean indicator: averaging a large box hides local extremes."
+      ],
+      "evidence": {
+        "record_years": 22.0,
+        "n_valid": 21,
+        "n_expected": 22,
+        "valid_obs_pct": 95.45454545454545,
+        "mean_valid_fraction": 0.9953,
+        "low_coverage_months": 0,
+        "p_value": 0.341,
+        "slope_ci": [
+          -5.83,
+          3.65
+        ],
+        "ci_excludes_zero": false,
+        "sensitivity": [
+          {
+            "name": "end_2021",
+            "sen_slope": -1.06,
+            "p_value": 0.371,
+            "same_sign": true
+          },
+          {
+            "name": "ols",
+            "sen_slope": -1.01,
+            "p_value": 0.341,
+            "same_sign": true
+          }
+        ],
+        "evidence_label": "weak",
+        "label_rule_version": "v1",
+        "notes": [
+          "Label rule defined by the team; see Methods.",
+          "MOCK fixture: illustrative numbers.",
+          "Counts refer to years (annual indicator)."
+        ]
+      },
+      "trendlib_version": "0.0.0-mock",
+      "computed_at": "2026-11-13T12:00:00+05:30"
+    },
+    "trend_note": null
+  }
+}

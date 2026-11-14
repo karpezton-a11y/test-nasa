@@ -1,0 +1,111 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-normal",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "result_id": "trend_IGP_aod_all_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "aod",
+    "source_id": "MODIS_AQUA_C61_MONTHLY",
+    "period": {
+      "start": "2003-01",
+      "end": "2024-12"
+    },
+    "season": "all",
+    "series_type": "monthly_deseasonalised",
+    "method": {
+      "test": "mann_kendall_hamed_rao",
+      "slope": "theil_sen",
+      "alpha": 0.05,
+      "ci_level": 0.95
+    },
+    "direction": "increasing",
+    "slope_sign": "positive",
+    "sen_slope": 0.021,
+    "slope_unit": "1 per decade",
+    "slope_ci": [
+      0.01,
+      0.033
+    ],
+    "p_value": 0.004,
+    "significant": true,
+    "ols_slope": 0.019,
+    "ols_ci": [
+      0.008,
+      0.031
+    ],
+    "change_over_period": 0.0462,
+    "baseline_mean": 0.642,
+    "percent_change_per_decade": 3.271,
+    "n_expected": 264,
+    "n_valid": 262,
+    "missing_pct": 0.7575757575757507,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.31,
+    "limitations": [
+      "MOCK fixture: illustrative numbers, not a scientific result.",
+      "AOD is only retrieved under clear skies; monsoon months have fewer valid days."
+    ],
+    "evidence": {
+      "record_years": 22.0,
+      "n_valid": 262,
+      "n_expected": 264,
+      "valid_obs_pct": 99.24242424242425,
+      "mean_valid_fraction": 0.7028,
+      "low_coverage_months": 38,
+      "p_value": 0.004,
+      "slope_ci": [
+        0.01,
+        0.033
+      ],
+      "ci_excludes_zero": true,
+      "sensitivity": [
+        {
+          "name": "exclude_low_coverage",
+          "sen_slope": 0.019,
+          "p_value": 0.011,
+          "same_sign": true
+        },
+        {
+          "name": "end_2021",
+          "sen_slope": 0.024,
+          "p_value": 0.006,
+          "same_sign": true
+        },
+        {
+          "name": "seasonal_kendall",
+          "sen_slope": 0.018,
+          "p_value": 0.032,
+          "same_sign": true
+        },
+        {
+          "name": "ols",
+          "sen_slope": 0.019,
+          "p_value": 0.009,
+          "same_sign": true
+        },
+        {
+          "name": "terra_monthly",
+          "sen_slope": 0.012,
+          "p_value": 0.12,
+          "same_sign": true
+        },
+        {
+          "name": "merra2",
+          "sen_slope": -0.002,
+          "p_value": 0.71,
+          "same_sign": false
+        }
+      ],
+      "evidence_label": "moderate",
+      "label_rule_version": "v1",
+      "notes": [
+        "Label rule defined by the team; see Methods.",
+        "MOCK fixture: illustrative numbers."
+      ]
+    },
+    "trendlib_version": "0.0.0-mock",
+    "computed_at": "2026-11-13T12:00:00+05:30"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-short",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": [
+    {
+      "variable": "rainfall",
+      "label": "Rainfall",
+      "unit": "mm/month",
+      "unit_label": "mm/month",
+      "sources": [
+        "IMERG_V07_FINAL_MONTHLY",
+        "IMERG_V07_FINAL_DAILY"
+      ],
+      "description": "MOCK description (Group 3 supplies the final text). Monthly total rainfall from GPM IMERG Final V07.",
+      "caveat": "Daily values are in mm/day. MOCK values are illustrative, not NASA data."
+    },
+    {
+      "variable": "aod",
+      "label": "Aerosol optical depth (AOD)",
+      "unit": "1",
+      "unit_label": "unitless",
+      "sources": [
+        "MODIS_AQUA_C61_MONTHLY",
+        "MODIS_AQUA_C61_DAILY"
+      ],
+      "description": "MOCK description (Group 3 supplies the final text). Column amount of haze and particles seen from space at 550 nm; not ground-level PM2.5.",
+      "caveat": "Clear-sky only: monsoon months have fewer valid days. MOCK values are illustrative, not NASA data."
+    }
+  ]
+}

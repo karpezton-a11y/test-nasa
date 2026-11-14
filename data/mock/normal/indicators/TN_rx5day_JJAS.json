@@ -1,0 +1,217 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13-normal",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "result_id": "indicator_TN_rx5day_JJAS_2003-01_2024-12",
+    "region_id": "TN",
+    "indicator": "rx5day",
+    "season": "JJAS",
+    "period": {
+      "start": "2003-01",
+      "end": "2024-12"
+    },
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "unit": "mm",
+    "definition": "Maximum 5-day accumulated rainfall in the year (or season).",
+    "spatial_method": "regional_mean",
+    "threshold_baseline": null,
+    "min_valid_fraction": 0.95,
+    "values": [
+      {
+        "year": 2003,
+        "value": 119.9,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2004,
+        "value": 108.3,
+        "valid_fraction": 0.993
+      },
+      {
+        "year": 2005,
+        "value": 168.3,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2006,
+        "value": 126.7,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2007,
+        "value": 150.8,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2008,
+        "value": 168.7,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2009,
+        "value": 122.0,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2010,
+        "value": 187.5,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2011,
+        "value": 132.5,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2012,
+        "value": 101.9,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2013,
+        "value": 155.4,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2014,
+        "value": 156.4,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2015,
+        "value": 123.8,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2016,
+        "value": 104.9,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2017,
+        "value": 142.3,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2018,
+        "value": 157.5,
+        "valid_fraction": 0.999
+      },
+      {
+        "year": 2019,
+        "value": 122.1,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2020,
+        "value": 168.5,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2021,
+        "value": 154.4,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2022,
+        "value": null,
+        "valid_fraction": 0.93
+      },
+      {
+        "year": 2023,
+        "value": 166.6,
+        "valid_fraction": 1.0
+      },
+      {
+        "year": 2024,
+        "value": 127.8,
+        "valid_fraction": 1.0
+      }
+    ],
+    "trend": {
+      "result_id": "trend_TN_rx5day_JJAS_2003-01_2024-12",
+      "region_id": "TN",
+      "variable": "rainfall",
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "period": {
+        "start": "2003-01",
+        "end": "2024-12"
+      },
+      "season": "JJAS",
+      "series_type": "annual_indicator",
+      "method": {
+        "test": "mann_kendall_hamed_rao",
+        "slope": "theil_sen",
+        "alpha": 0.05,
+        "ci_level": 0.95
+      },
+      "direction": "no_significant_trend",
+      "slope_sign": "negative",
+      "sen_slope": -16.36,
+      "slope_unit": "mm per decade",
+      "slope_ci": [
+        -31.38,
+        0.01
+      ],
+      "p_value": 0.296,
+      "significant": false,
+      "ols_slope": -17.18,
+      "ols_ci": [
+        -32.2,
+        0.01
+      ],
+      "change_over_period": -35.992,
+      "baseline_mean": 141.25,
+      "percent_change_per_decade": -11.5823,
+      "n_expected": 22,
+      "n_valid": 21,
+      "missing_pct": 4.545454545454547,
+      "record_years": 22.0,
+      "lag1_autocorrelation": 0.05,
+      "limitations": [
+        "MOCK fixture: illustrative numbers, not a scientific result.",
+        "Regional-mean indicator: averaging a large box hides local extremes."
+      ],
+      "evidence": {
+        "record_years": 22.0,
+        "n_valid": 21,
+        "n_expected": 22,
+        "valid_obs_pct": 95.45454545454545,
+        "mean_valid_fraction": 0.9965,
+        "low_coverage_months": 0,
+        "p_value": 0.296,
+        "slope_ci": [
+          -31.38,
+          0.01
+        ],
+        "ci_excludes_zero": false,
+        "sensitivity": [
+          {
+            "name": "end_2021",
+            "sen_slope": -18.0,
+            "p_value": 0.326,
+            "same_sign": true
+          },
+          {
+            "name": "ols",
+            "sen_slope": -17.18,
+            "p_value": 0.296,
+            "same_sign": true
+          }
+        ],
+        "evidence_label": "weak",
+        "label_rule_version": "v1",
+        "notes": [
+          "Label rule defined by the team; see Methods.",
+          "MOCK fixture: illustrative numbers.",
+          "Counts refer to years (annual indicator)."
+        ]
+      },
+      "trendlib_version": "0.0.0-mock",
+      "computed_at": "2026-11-13T12:00:00+05:30"
+    },
+    "trend_note": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "error": {
+    "code": "INVALID_INDICATOR",
+    "message": "Unknown rainfall indicator.",
+    "details": {
+      "param": "indicator",
+      "allowed": [
+        "heavy_rain_share",
+        "longest_dry_spell",
+        "rx5day"
+      ]
+    }
+  }
+}

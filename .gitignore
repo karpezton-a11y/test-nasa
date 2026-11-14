@@ -1,0 +1,42 @@
+# Secrets and local config (keep the template)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Data: raw NASA downloads are large; keep the folder marker and provenance log
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/provenance.csv
+
+# Generated reports at the repo root only (backend/app/reports/ is source code)
+/reports/*
+!/reports/.gitkeep
+
+# Static snapshot output (rebuildable)
+/snapshot/
+
+# Frontend
+node_modules/
+frontend/dist/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local release archives
+/dist/

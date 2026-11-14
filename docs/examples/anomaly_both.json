@@ -1,0 +1,342 @@
+{
+  "data_status": "mock",
+  "data_version": "MOCK-2026-11-13",
+  "contract_version": "1.0",
+  "generated_at": "2026-11-13T12:00:00+05:30",
+  "result": {
+    "result_id": "anomalies_IGP_both_2024-01_2024-12_raw",
+    "region_id": "IGP",
+    "variable": "both",
+    "period": {
+      "start": "2024-01",
+      "end": "2024-12"
+    },
+    "detrended": false,
+    "results": [
+      {
+        "result_id": "anomalies_IGP_rainfall_2024-01_2024-12_raw",
+        "region_id": "IGP",
+        "variable": "rainfall",
+        "source_id": "IMERG_V07_FINAL_MONTHLY",
+        "unit": "mm/month",
+        "period": {
+          "start": "2024-01",
+          "end": "2024-12"
+        },
+        "baseline": {
+          "start": "2003-01",
+          "end": "2024-12",
+          "method": "same_calendar_month",
+          "statistic": "empirical_percentile",
+          "detrended": false
+        },
+        "thresholds": {
+          "high": 0.9,
+          "low": 0.1,
+          "min_valid_fraction": 0.9,
+          "dry_suppression_median": 10.0
+        },
+        "anomalies": [
+          {
+            "date": "2024-01-01",
+            "value": 14.1,
+            "baseline_median": 17.3,
+            "score": 0.36363636363636365,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-02-01",
+            "value": 21.5,
+            "baseline_median": 19.8,
+            "score": 0.5909090909090909,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-03-01",
+            "value": 9.2,
+            "baseline_median": 11.6,
+            "score": 0.3181818181818182,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-04-01",
+            "value": 6.0,
+            "baseline_median": 8.4,
+            "score": 0.18181818181818182,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": "dry flag not applicable: same-month baseline median below 10 mm/month"
+          },
+          {
+            "date": "2024-05-01",
+            "value": 22.8,
+            "baseline_median": 18.1,
+            "score": 0.6818181818181818,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-06-01",
+            "value": 88.4,
+            "baseline_median": 79.5,
+            "score": 0.6363636363636364,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-07-01",
+            "value": 262.7,
+            "baseline_median": 248.1,
+            "score": 0.5909090909090909,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-08-01",
+            "value": 301.5,
+            "baseline_median": 236.4,
+            "score": null,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 0.87,
+            "qc_flag": "ok",
+            "note": "not assessed: valid_fraction 0.87 is below 0.9"
+          },
+          {
+            "date": "2024-09-01",
+            "value": 176.3,
+            "baseline_median": 168.0,
+            "score": 0.5454545454545454,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-10-01",
+            "value": 4.1,
+            "baseline_median": 38.0,
+            "score": 0.045454545454545456,
+            "score_type": "percentile",
+            "category": "unusually_dry",
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-11-01",
+            "value": 0.0,
+            "baseline_median": 2.9,
+            "score": 0.13636363636363635,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": "dry flag not applicable: same-month baseline median below 10 mm/month"
+          },
+          {
+            "date": "2024-12-01",
+            "value": 7.7,
+            "baseline_median": 6.5,
+            "score": 0.6363636363636364,
+            "score_type": "percentile",
+            "category": null,
+            "valid_fraction": 1.0,
+            "qc_flag": "ok",
+            "note": "dry flag not applicable: same-month baseline median below 10 mm/month"
+          }
+        ]
+      },
+      {
+        "result_id": "anomalies_IGP_aod_2024-01_2024-12_raw",
+        "region_id": "IGP",
+        "variable": "aod",
+        "source_id": "MODIS_AQUA_C61_MONTHLY",
+        "unit": "1",
+        "period": {
+          "start": "2024-01",
+          "end": "2024-12"
+        },
+        "baseline": {
+          "start": "2003-01",
+          "end": "2024-12",
+          "method": "same_calendar_month",
+          "statistic": "z_log",
+          "detrended": false
+        },
+        "thresholds": {
+          "high": 2.0,
+          "low": -2.0,
+          "min_valid_fraction": null,
+          "dry_suppression_median": null
+        },
+        "anomalies": [
+          {
+            "date": "2024-01-01",
+            "value": 0.712,
+            "baseline_median": 0.655,
+            "score": 0.61,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.81,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-02-01",
+            "value": 0.598,
+            "baseline_median": 0.571,
+            "score": 0.33,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.86,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-03-01",
+            "value": 0.402,
+            "baseline_median": 0.538,
+            "score": -2.12,
+            "score_type": "z_log",
+            "category": "unusually_low_aod",
+            "valid_fraction": 0.9,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-04-01",
+            "value": 0.611,
+            "baseline_median": 0.592,
+            "score": 0.24,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.93,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-05-01",
+            "value": 0.705,
+            "baseline_median": 0.684,
+            "score": 0.21,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.77,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-06-01",
+            "value": 0.744,
+            "baseline_median": 0.701,
+            "score": 0.39,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.4,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-07-01",
+            "value": 0.689,
+            "baseline_median": 0.652,
+            "score": 0.27,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.19,
+            "qc_flag": "low_coverage",
+            "note": "low coverage: 19% of days had a valid retrieval"
+          },
+          {
+            "date": "2024-08-01",
+            "value": null,
+            "baseline_median": 0.611,
+            "score": null,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.06,
+            "qc_flag": "missing",
+            "note": "missing month: too few valid days"
+          },
+          {
+            "date": "2024-09-01",
+            "value": 0.633,
+            "baseline_median": 0.598,
+            "score": 0.31,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.52,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-10-01",
+            "value": 0.904,
+            "baseline_median": 0.642,
+            "score": 2.05,
+            "score_type": "z_log",
+            "category": "unusually_high_aod",
+            "valid_fraction": 0.94,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-11-01",
+            "value": 1.112,
+            "baseline_median": 0.781,
+            "score": 2.31,
+            "score_type": "z_log",
+            "category": "unusually_high_aod",
+            "valid_fraction": 0.97,
+            "qc_flag": "ok",
+            "note": ""
+          },
+          {
+            "date": "2024-12-01",
+            "value": 0.867,
+            "baseline_median": 0.774,
+            "score": 0.88,
+            "score_type": "z_log",
+            "category": null,
+            "valid_fraction": 0.9,
+            "qc_flag": "ok",
+            "note": ""
+          }
+        ]
+      }
+    ],
+    "combined_flags": [
+      {
+        "date": "2024-10-01",
+        "category": "dry_and_high_aod",
+        "rainfall_category": "unusually_dry",
+        "aod_category": "unusually_high_aod"
+      }
+    ]
+  }
+}

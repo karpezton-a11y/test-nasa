@@ -1,0 +1,12 @@
+{
+  "error": {
+    "code": "INSUFFICIENT_DATA",
+    "message": "Too many missing values in this period: fewer than 70% of expected values are valid.",
+    "details": {
+      "min_valid_pct": 70.0,
+      "valid_pct": 59.8,
+      "n_valid": 158,
+      "n_expected": 264
+    }
+  }
+}

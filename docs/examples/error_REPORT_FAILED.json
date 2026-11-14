@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "REPORT_FAILED",
+    "message": "The PDF report could not be created. Use the CSV download or the printable report page.",
+    "details": {}
+  }
+}
