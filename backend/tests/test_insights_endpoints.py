@@ -224,3 +224,12 @@ def test_import_giovanni_then_real_mode_serves_and_analyses_new_variable(tmp_pat
         assert {v["id"] for v in catalog if v["available_now"]} == {"rainfall", "no2"}
         scan = client.get(API + "/scan").json()["result"]
         assert scan["tested"] == 2
+
+
+def test_simple_frontend_is_served_without_hiding_api_errors(client):
+    page = client.get("/")
+    assert page.status_code == 200 and "text/html" in page.headers["content-type"] and "TrendTrace" in page.text
+    assert client.get("/static/app.js").status_code == 200
+    assert client.get("/static/style.css").status_code == 200
+    missing = client.get("/api/v1/does-not-exist")
+    assert missing.status_code == 404 and missing.json()["error"]["code"] == "NOT_FOUND"

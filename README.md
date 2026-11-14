@@ -68,7 +68,7 @@ python -m pip install -r requirements-dev.txt -c requirements.lock
 python -m uvicorn app.main:app --app-dir backend --port 8000
 ```
 
-Open http://127.0.0.1:8000/docs. `/` is reserved for the later frontend build and currently returns the contract NOT_FOUND error. No `.env` or AI key is required for mock mode. Tests/QA tools are in requirements-dev.txt; deployment uses requirements.txt.
+Open http://127.0.0.1:8000/ for the simple web app (plain HTML/JS in `frontend/`, no build step) or http://127.0.0.1:8000/docs for the API. No `.env` or AI key is required for mock mode. Tests/QA tools are in requirements-dev.txt; deployment uses requirements.txt.
 
 For a first check in `/docs`, run `GET /api/v1/health`, then `POST /api/v1/analyze` with the example below. Send its `result_id` to `/explain` for an automatic summary. The displayed `data_status` must remain `mock` throughout this development journey.
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrendTrace — Earth System Trend Detective</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1>TrendTrace</h1>
+  <p>Find what is changing on Earth, where, how much, and whether it is significant.</p>
+  <div id="mock-banner" class="banner" hidden>MOCK DATA: the regional series are illustrative values for development. The "Real data" tab uses real NASA-derived series.</div>
+</header>
+
+<nav>
+  <button data-tab="analyze" class="active">Analyze</button>
+  <button data-tab="scan">What's changing?</button>
+  <button data-tab="discover">Discover</button>
+  <button data-tab="real">Real data</button>
+  <button data-tab="demos">Demos</button>
+</nav>
+
+<main>
+  <!-- Analyze a loaded region/variable -->
+  <section id="tab-analyze">
+    <form id="analyze-form" class="row">
+      <label>Region <select name="region_id" id="region"></select></label>
+      <label>Variable <select name="variable" id="variable"></select></label>
+      <label>Season
+        <select name="season">
+          <option value="all">All months (seasons removed)</option>
+          <option value="JF">Jan–Feb</option><option value="MAM">Mar–May</option>
+          <option value="JJAS">Jun–Sep (monsoon)</option><option value="OND">Oct–Dec</option>
+        </select>
+      </label>
+      <label>Start <input name="start" placeholder="2003-01" size="7"></label>
+      <label>End <input name="end" placeholder="2024-12" size="7"></label>
+      <label>Alpha
+        <select name="alpha"><option>0.05</option><option>0.01</option><option>0.10</option></select>
+      </label>
+      <button type="submit">Analyze</button>
+    </form>
+    <p id="variable-info" class="muted"></p>
+    <div id="analyze-out"></div>
+  </section>
+
+  <!-- Scan everything -->
+  <section id="tab-scan" hidden>
+    <form id="scan-form" class="row">
+      <label>Season
+        <select name="season"><option value="all">All months</option><option value="JJAS">Jun–Sep</option><option value="OND">Oct–Dec</option></select>
+      </label>
+      <button type="submit">Scan all regions and variables</button>
+    </form>
+    <div id="scan-out"></div>
+  </section>
+
+  <!-- Guided discovery -->
+  <section id="tab-discover" hidden>
+    <form id="discover-form" class="row">
+      <label>Theme <select name="theme" id="theme"><option value="">Any</option></select></label>
+      <label>Place <select name="place_type" id="place"><option value="">Any</option></select></label>
+      <label class="grow">Your question <input name="question" placeholder="Is the air in my city getting more polluted?"></label>
+      <button type="submit">Suggest variables</button>
+    </form>
+    <div id="discover-out"></div>
+  </section>
+
+  <!-- Real research series + Giovanni upload -->
+  <section id="tab-real" hidden>
+    <form id="real-form" class="row">
+      <label class="grow">Real annual series (2003–2024) <select name="research_id" id="research"></select></label>
+      <button type="submit">Analyze</button>
+    </form>
+    <details>
+      <summary>Or upload your own Giovanni CSV ("Time Series, Area-Averaged", monthly)</summary>
+      <form id="upload-form" class="row">
+        <input type="file" id="csv-file" accept=".csv,text/csv">
+        <label>Unit conversion
+          <select name="conversion">
+            <option value="none">None</option>
+            <option value="mmhr_to_mm_month">mm/hr → mm/month (GPM rain)</option>
+            <option value="mmday_to_mm_month">mm/day → mm/month (POWER rain)</option>
+            <option value="kgm2s_to_mm_month">kg/m²/s → mm/month (GLDAS)</option>
+            <option value="k_to_c">K → °C</option>
+          </select>
+        </label>
+        <label>Place name <input name="place" placeholder="Delhi"></label>
+        <button type="submit">Analyze file</button>
+      </form>
+    </details>
+    <div id="real-out"></div>
+  </section>
+
+  <!-- Demos -->
+  <section id="tab-demos" hidden>
+    <div id="demos-out"></div>
+  </section>
+</main>
+
+<footer>
+  Statistics: Hamed–Rao modified Mann–Kendall, Theil–Sen slope, OLS t-test (trendlib). Results describe statistical patterns, not causes.
+  AOD is column haze, not ground-level PM2.5. Not an official NASA product. <a href="/docs">API docs</a>
+</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>

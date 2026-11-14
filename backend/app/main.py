@@ -14,7 +14,11 @@ from contextlib import asynccontextmanager
 from functools import cache
 from typing import Any, AsyncIterator
 
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import Settings, check_startup_rules, load_settings
@@ -97,13 +101,26 @@ def create_app(settings: Settings | None = None, store: DataStore | None = None)
     app.include_router(_reports_router(), prefix=API_PREFIX)
     install_contract_openapi(app)  # /docs shows {"error": {...}} for every error (audit M3)
 
-    # Future frontend build (Group 2). Mount AFTER all API routers, only if it exists:
-    # from pathlib import Path
-    # from fastapi.staticfiles import StaticFiles
-    # dist = Path(__file__).resolve().parents[2] / "frontend" / "dist"
-    # if dist.is_dir():
-    #     app.mount("/", StaticFiles(directory=dist, html=True), name="frontend")
+    _mount_frontend(app)
     return app
+
+
+FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
+
+
+def _mount_frontend(app: FastAPI) -> None:
+    """Simple no-build frontend: '/' serves index.html, '/static/*' its CSS/JS.
+
+    Only these two paths are added, so unknown /api paths keep the contract NOT_FOUND error.
+    """
+    index = FRONTEND_DIR / "index.html"
+    if not index.is_file():
+        return
+    app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="frontend")
+
+    @app.get("/", include_in_schema=False)
+    def frontend_index() -> FileResponse:
+        return FileResponse(index, media_type="text/html")
 
 
 @cache
