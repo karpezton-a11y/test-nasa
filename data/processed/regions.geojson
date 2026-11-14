@@ -2,7 +2,7 @@
  "data_status": "real",
  "data_version": "REAL-G3-2026-11-14-a4151cac",
  "contract_version": "1.0",
- "generated_at": "2026-11-14T18:01:42+05:30",
+ "generated_at": "2026-11-14T20:14:35+05:30",
  "result": {
   "regions": [
    {
@@ -59,7 +59,8 @@
     "status": "analysis_box",
     "description": "One of the world's largest cities; haze and NO2 hotspot.",
     "variables": [
-     "air_temperature"
+     "air_temperature",
+     "no2"
     ],
     "period_available": {
      "start": "2003-01",
@@ -78,7 +79,8 @@
     "status": "analysis_box",
     "description": "Emissions rules have cut NO2 for decades: a contrast with fast-growing cities.",
     "variables": [
-     "air_temperature"
+     "air_temperature",
+     "no2"
     ],
     "period_available": {
      "start": "2003-01",

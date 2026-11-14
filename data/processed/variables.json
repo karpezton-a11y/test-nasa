@@ -2,7 +2,7 @@
  "data_status": "real",
  "data_version": "REAL-G3-2026-11-14-a4151cac",
  "contract_version": "1.0",
- "generated_at": "2026-11-14T18:01:42+05:30",
+ "generated_at": "2026-11-14T20:14:35+05:30",
  "result": [
   {
    "variable": "rainfall",
@@ -41,6 +41,17 @@
    ],
    "description": "How warm the air is about 2 metres above the ground, the temperature you would feel.",
    "caveat": "Kelvin and Celsius differ only by 273.15, so a slope in K per decade equals a slope in degrees C per decade."
+  },
+  {
+   "variable": "no2",
+   "label": "Nitrogen dioxide (tropospheric column)",
+   "unit": "molecules/cm2",
+   "unit_label": "molecules/cm2",
+   "sources": [
+    "OMI_OMNO2D_V003_MONTHLY_MEAN"
+   ],
+   "description": "A brown gas from burning fuel in cars, power plants and factories, measured as the amount of gas above each square centimetre of ground.",
+   "caveat": "OMI has a 'row anomaly' since 2007 that reduces coverage; the cloud-screened field drops cloudy pixels."
   }
  ]
 }

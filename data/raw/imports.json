@@ -1,5 +1,5 @@
 {
- "note": "Extra NASA POWER series fetched by .github/workflows/fetch-nasa-data.yml; imported by scripts/build_real_data.py.",
+ "note": "Extra NASA series: NASA POWER (fetched by .github/workflows/fetch-nasa-data.yml) and OMI NO2 daily Giovanni downloads (uploaded by the team); imported by scripts/build_real_data.py.",
  "imports": [
   {
    "file": "IGP_T2M.csv",
@@ -56,6 +56,18 @@
    "variable": "rainfall",
    "conversion": "mmday_to_mm_month",
    "source_id": "NASA_POWER_PRECTOTCORR"
+  },
+  {
+   "file": "DELHI_NO2.csv",
+   "region_id": "DELHI",
+   "variable": "no2",
+   "source_id": "OMI_OMNO2D_V003_MONTHLY_MEAN"
+  },
+  {
+   "file": "LA_BASIN_NO2.csv",
+   "region_id": "LA_BASIN",
+   "variable": "no2",
+   "source_id": "OMI_OMNO2D_V003_MONTHLY_MEAN"
   }
  ]
 }

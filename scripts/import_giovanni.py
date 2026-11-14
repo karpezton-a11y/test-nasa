@@ -32,7 +32,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
-from app.services.giovanni import CONVERSIONS, parse_giovanni_csv  # noqa: E402
+from app.services.giovanni import CONVERSIONS, daily_to_monthly, parse_giovanni_csv  # noqa: E402
 
 COLUMNS = ["date", "region_id", "variable", "frequency", "value", "unit", "source_id", "valid_fraction", "qc_flag"]
 IST = timezone(timedelta(hours=5, minutes=30))
@@ -62,9 +62,14 @@ def import_csv(csv_path: Path, *, region_id: str, variable: str, processed: Path
     entry = next((v for v in catalog["variables"] if v["id"] == variable), None)
     if entry is None:
         raise SystemExit(f"Unknown variable {variable!r}; use an id from data/catalog/variables_catalog.json")
-    series = parse_giovanni_csv(csv_path.read_text(encoding="utf-8"), conversion)
+    series = parse_giovanni_csv(csv_path.read_text(encoding="utf-8"), conversion, allow_daily=True)
+    fractions = None
+    if series.frequency == "day":
+        # Daily products (e.g. OMI OMNO2d) become monthly means with measured temporal coverage.
+        series.dates, series.values, fractions = daily_to_monthly(series)
+        series.frequency = "month"
     if series.frequency != "month":
-        raise SystemExit("Only monthly series can be imported")
+        raise SystemExit("Only monthly or daily series can be imported")
     # Prefer what the file says (e.g. POWER T2M is in C) over the catalogue default, so nothing is mislabelled.
     unit = unit or CONVERSIONS[conversion][0] or series.unit or entry["unit"]
     if variable in FROZEN_UNITS and unit != FROZEN_UNITS[variable]:
@@ -84,10 +89,12 @@ def import_csv(csv_path: Path, *, region_id: str, variable: str, processed: Path
     if exists and not replace:
         raise SystemExit(f"Series {key} already exists; pass --replace to overwrite it")
     rows = [r for r in rows if (r["region_id"], r["variable"], r["source_id"]) != key]
-    for d, v in zip(series.dates, series.values):
+    for i, (d, v) in enumerate(zip(series.dates, series.values)):
+        vf = None if fractions is None else fractions[i]
+        qc = "missing" if v is None else ("low_coverage" if vf is not None and vf < 0.5 else "ok")
         rows.append({"date": d.isoformat(), "region_id": region_id, "variable": variable, "frequency": "month",
                      "value": "" if v is None else repr(float(v)), "unit": unit, "source_id": source_id,
-                     "valid_fraction": "", "qc_flag": "missing" if v is None else "ok"})
+                     "valid_fraction": "" if vf is None else repr(vf), "qc_flag": qc})
     rows.sort(key=lambda r: (r["region_id"], r["variable"], r["source_id"], r["date"]))
     buffer = io.StringIO()
     writer = csv.DictWriter(buffer, fieldnames=COLUMNS, extrasaction="ignore", lineterminator="\n")
@@ -156,6 +163,8 @@ def import_csv(csv_path: Path, *, region_id: str, variable: str, processed: Path
     manifest = {"data_status": "real", "data_version": version, "contract_version": contract, "assets": assets}
     (processed / "manifest.json").write_text(json.dumps(manifest, indent=1), encoding="utf-8")
     return {"rows": len(series.dates), "missing": sum(v is None for v in series.values), "source_id": source_id,
+            "low_coverage": sum(1 for r in rows if r["source_id"] == source_id and r["region_id"] == region_id
+                                and r["variable"] == variable and r["qc_flag"] == "low_coverage"),
             "unit": unit, "period": (first, last), "data_version": version}
 
 

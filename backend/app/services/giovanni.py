@@ -28,6 +28,7 @@ from datetime import date
 from ..errors import api_error
 
 MAX_ROWS = 2000
+MAX_DAILY_ROWS = 12000  # importer only: about 30 years of daily values
 
 # Unit conversions a student commonly needs; each is exact arithmetic on calendar days.
 CONVERSIONS = {
@@ -70,7 +71,28 @@ def _parse_date(text: str) -> date:
     return date(int(m[1]), int(m[2]), int(m[3] or 1))
 
 
-def parse_giovanni_csv(text: str, conversion: str = "none") -> GiovanniSeries:
+def daily_to_monthly(series: "GiovanniSeries", min_valid_days: int = 5):
+    """Monthly means of a daily series: (dates, values, valid_fractions).
+
+    valid_fraction = valid days / calendar days. A month with fewer than ``min_valid_days`` valid days is
+    missing (value None), never filled. Nothing is interpolated.
+    """
+    by_month: dict[date, list[float]] = {}
+    for d, v in zip(series.dates, series.values):
+        by_month.setdefault(date(d.year, d.month, 1), [])
+        if v is not None:
+            by_month[date(d.year, d.month, 1)].append(v)
+    dates, values, fractions = [], [], []
+    for month in sorted(by_month):
+        vals = by_month[month]
+        days = calendar.monthrange(month.year, month.month)[1]
+        dates.append(month)
+        values.append(sum(vals) / len(vals) if len(vals) >= min_valid_days else None)
+        fractions.append(round(len(vals) / days, 4))
+    return dates, values, fractions
+
+
+def parse_giovanni_csv(text: str, conversion: str = "none", *, allow_daily: bool = False) -> GiovanniSeries:
     if conversion not in CONVERSIONS:
         _bad(f"Unknown conversion; choose one of {', '.join(CONVERSIONS)}.")
     lines = text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
@@ -96,7 +118,7 @@ def parse_giovanni_csv(text: str, conversion: str = "none") -> GiovanniSeries:
     header, body = rows[0], [r for r in rows[1:] if r and any(c.strip() for c in r)]
     if len(header) < 2:
         _bad("The Giovanni CSV needs a time column and one value column.")
-    if len(body) > MAX_ROWS:
+    if len(body) > (MAX_DAILY_ROWS if allow_daily else MAX_ROWS):
         _bad(f"At most {MAX_ROWS} rows; use monthly data.")
     variable_id = header[1].strip().removeprefix("mean_")
     convert_unit, convert = CONVERSIONS[conversion]
@@ -108,7 +130,11 @@ def parse_giovanni_csv(text: str, conversion: str = "none") -> GiovanniSeries:
             v = float(raw)
         except ValueError:
             v = math.nan
-        if not math.isfinite(v) or any(abs(v - f) < 1e-9 * max(1.0, abs(f)) for f in fills) or v <= -9999:
+        # Only the file's declared fill values mean "missing". The old "<= -9999" guess dropped genuine
+        # negative retrievals (OMI tropospheric NO2 can be about -1e15 molecules/cm2 from retrieval noise);
+        # it is used only when a file declares no fill value.
+        is_fill = any(abs(v - f) <= 1e-6 * max(1.0, abs(f)) for f in fills) if fills else v <= -9999
+        if not math.isfinite(v) or is_fill:
             values.append(None)
         else:
             values.append(convert(v, d))
@@ -130,7 +156,7 @@ def parse_giovanni_csv(text: str, conversion: str = "none") -> GiovanniSeries:
     gaps = sorted({(b - a).days for a, b in zip(dates, dates[1:])})
     frequency = "month" if gaps and 27 <= gaps[0] and gaps[-1] <= 31 * 12 and all(d.day == 1 for d in dates) else (
         "year" if gaps and gaps[0] >= 365 else "day")
-    if frequency == "day":
+    if frequency == "day" and not allow_daily:
         _bad("Daily Giovanni series are not supported here; download the monthly product.")
     return GiovanniSeries(dates=dates, values=values, variable_id=variable_id, unit=unit, title=title,
                           bbox=bbox, frequency=frequency, metadata=meta)

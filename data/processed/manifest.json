@@ -5,7 +5,7 @@
  "assets": {
   "timeseries_monthly.csv": {
    "data_status": "real",
-   "sha256": "165f6071ea237ba3c5f21111979e7f28b540c43916f7d93ca6491616db41f6bf"
+   "sha256": "53790c8036fd28e1133a4d40f4112519f7049f6a2b5bbbbd2c3779e88cb6622d"
   },
   "timeseries_daily.csv": {
    "data_status": "real",

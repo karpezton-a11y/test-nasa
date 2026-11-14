@@ -23,6 +23,7 @@ data/raw/*
 !data/raw/imports.json
 !data/raw/*_T2M.csv
 !data/raw/*_PRECTOTCORR.csv
+!data/raw/*_NO2.csv
 
 # Generated reports at the repo root only (backend/app/reports/ is source code)
 /reports/*

@@ -40,7 +40,12 @@ def p_text(p: float) -> str:
 
 
 def _label(variable: str) -> str:
-    return {"aod": "AOD", "rainfall": "rainfall"}.get(variable, variable.replace("_", " "))
+    """Readable name: AOD/rainfall as before, catalogue names for the other variables (e.g. NO2)."""
+    fixed = {"aod": "AOD", "rainfall": "rainfall", "no2": "NO2 (tropospheric column)"}
+    if variable in fixed:
+        return fixed[variable]
+    entry = next((v for v in load_catalog()["variables"] if v["id"] == variable), None)
+    return entry["name"].lower() if entry else variable.replace("_", " ")
 
 
 TEMPERATURE_UNITS = ("degC", "C", "K", "°C")

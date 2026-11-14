@@ -246,3 +246,18 @@ def test_discover_next_step_targets_a_region_that_has_the_variable(make_settings
                     body = s["next_step"]["body"]
                     assert s["variable_id"] in regions[body["region_id"]]
                     assert client.post(API + "/analyze/detail", json=body).status_code == 200
+
+
+def test_giovanni_keeps_negative_retrievals_and_averages_daily_to_monthly():
+    from app.services.giovanni import daily_to_monthly, parse_giovanni_csv
+    lines = ["Title:,Time Series, Area-Averaged of NO2 daily", "Fill Value (mean_OMNO2d_003_ColumnAmountNO2TropCloudScreened):, -1.267651e+30",
+             "", "time, mean_OMNO2d_003_ColumnAmountNO2TropCloudScreened"]
+    lines += [f"2005-01-{d:02d},{v}" for d, v in zip(range(1, 32), ["-1.5e+15"] + ["-1.267651e+30"] * 2 + ["4.0e+15"] * 28)]
+    lines += [f"2005-02-{d:02d},-1.267651e+30" for d in range(1, 25)] + [f"2005-02-{d:02d},5.0e+15" for d in range(25, 29)]
+    series = parse_giovanni_csv("\n".join(lines) + "\n", allow_daily=True)
+    assert series.frequency == "day" and series.values[0] == -1.5e15  # a real negative retrieval, not a fill
+    assert series.values[1] is None and series.unit == "molecules/cm2"
+    dates, values, fractions = daily_to_monthly(series)
+    assert [d.isoformat() for d in dates] == ["2005-01-01", "2005-02-01"]
+    assert values[0] == pytest.approx((-1.5e15 + 28 * 4.0e15) / 29) and fractions[0] == round(29 / 31, 4)
+    assert values[1] is None and fractions[1] == round(4 / 28, 4)  # fewer than 5 valid days: missing, not filled
