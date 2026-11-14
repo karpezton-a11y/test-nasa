@@ -133,7 +133,7 @@ $("#analyze-form").addEventListener("submit", async (e) => {
       el("div", { class: "card" }, chart(a.fit, tr.season === "all" ? `${tr.variable} anomaly${tr.slope_unit.startsWith("1 ") ? "" : " (" + tr.slope_unit.replace(" per decade", "") + ")"}` : `${tr.season} mean`)),
       el("div", { class: "card" }, statsTable([
         ["Theil–Sen slope", `${fmt(tr.sen_slope)} ${perDecade(tr.slope_unit)} (range ${fmt(tr.slope_ci[0])} to ${fmt(tr.slope_ci[1])})`],
-        ["Change per decade", `${tr.percent_change_per_decade.toFixed(1)}%`],
+        ["Change per decade", /^(degC|C|K) /.test(tr.slope_unit) ? "n/a (temperature)" : `${tr.percent_change_per_decade.toFixed(1)}%`],
         ["Mann–Kendall p (Hamed–Rao)", pText(tr.p_value)],
         ["OLS t-test slope", `${fmt(tr.ols_slope)} (range ${fmt(tr.ols_ci[0])} to ${fmt(tr.ols_ci[1])})`],
         ["Evidence label (team rule)", tr.evidence.evidence_label],
@@ -162,7 +162,7 @@ $("#scan-form").addEventListener("submit", async (e) => {
         el("b", {}, `Opposite trends for ${c.variable}: `), `up in ${c.increasing_in.join(", ")}; down in ${c.decreasing_in.join(", ")}.`)),
       el("table", {}, el("tr", {}, ["Region", "Variable", "Slope / decade", "% / decade", "p", "q (FDR)", "Result"].map((h) => el("th", {}, h))),
         result.rows.map((r) => el("tr", {}, el("td", {}, r.region_name), el("td", {}, r.variable),
-          el("td", {}, `${fmt(r.sen_slope)} ${r.slope_unit.startsWith("1 ") ? "" : r.slope_unit.replace(" per decade", "")}`), el("td", {}, `${r.percent_change_per_decade.toFixed(1)}%`),
+          el("td", {}, `${fmt(r.sen_slope)} ${r.slope_unit.startsWith("1 ") ? "" : r.slope_unit.replace(" per decade", "")}`), el("td", {}, r.percent_change_per_decade === null ? "n/a" : `${r.percent_change_per_decade.toFixed(1)}%`),
           el("td", {}, pText(r.p_value)), el("td", {}, pText(r.q_value)),
           el("td", {}, el("span", { class: r.status === "significant" ? "sig" : "nosig" }, r.status.replaceAll("_", " ")))))),
       el("p", { class: "muted" }, "q-values correct for testing many series at once (Benjamini–Hochberg)."));

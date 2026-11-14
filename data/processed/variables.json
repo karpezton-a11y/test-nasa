@@ -2,7 +2,7 @@
  "data_status": "real",
  "data_version": "REAL-G3-2026-11-14-a4151cac",
  "contract_version": "1.0",
- "generated_at": "2026-11-14T00:00:00+05:30",
+ "generated_at": "2026-11-14T17:39:34+05:30",
  "result": [
   {
    "variable": "rainfall",
@@ -11,7 +11,8 @@
    "unit_label": "mm/month",
    "sources": [
     "IMERG_V07_FINAL_MONTHLY",
-    "IMERG_V07_FINAL_DAILY"
+    "IMERG_V07_FINAL_DAILY",
+    "NASA_POWER_PRECTOTCORR"
    ],
    "description": "Precipitation reaching the surface, reported as daily depth rate or monthly total after checking source units. Source: GPM IMERG Final V07.",
    "caveat": "Daily values are in mm/day. No valid observation is available for this time. Missing values are not zero."
@@ -29,6 +30,17 @@
    ],
    "description": "Aerosol Optical Depth at 550 nm describes light extinction by particles through the atmospheric column. It is dimensionless. Primary: Aqua MODIS C6.1; Terra MODIS and MERRA-2 are separate comparison series.",
    "caveat": "AOD does not directly measure ground-level PM2.5. MODIS clear-sky retrievals under-sample cloudy and rainy conditions."
+  },
+  {
+   "variable": "air_temperature",
+   "label": "Near-surface air temperature",
+   "unit": "degC",
+   "unit_label": "degC",
+   "sources": [
+    "NASA_POWER_T2M"
+   ],
+   "description": "How warm the air is about 2 metres above the ground, the temperature you would feel.",
+   "caveat": "Kelvin and Celsius differ only by 273.15, so a slope in K per decade equals a slope in degrees C per decade."
   }
  ]
 }

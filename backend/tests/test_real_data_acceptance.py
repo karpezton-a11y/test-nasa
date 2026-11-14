@@ -83,12 +83,19 @@ def _source_ids(result: dict) -> set[str]:
 
 def _series_problems(store: Any, region_id: str, variable: str, frequency: str, registry: set[str]) -> list[str]:
     tag = f"{region_id}/{variable}/{frequency}"
+    if frequency == "day":
+        try:
+            if store.series(region_id, variable, "month").source_id.startswith("NASA_POWER"):
+                return []  # monthly-only NASA POWER import (e.g. SAHEL rainfall): no daily product delivered
+        except Exception:  # noqa: BLE001 - reported by the monthly check
+            pass
     try:
         series = store.series(region_id, variable, frequency)
     except Exception:  # noqa: BLE001 - absent data is reported as a problem, never faked
         return [f"series {tag} not available"]
     problems = []
-    if series.unit != UNITS[(variable, frequency)]:
+    declared = next((v.unit for v in store.variables() if v.variable == variable), None)
+    if series.unit != UNITS.get((variable, frequency), declared):  # catalogue variables: their declared unit
         problems.append(f"{tag}: unit {series.unit!r}")
     if series.source_id not in registry:
         problems.append(f"{tag}: source_id {series.source_id!r} not in /meta/sources")
@@ -107,7 +114,7 @@ def structural_problems(client: TestClient) -> list[str]:
     problems = [problem
                 for region in client.get(f"{API}/regions").json()["result"]["regions"]
                 for variable in region["variables"]
-                for frequency in ("month", "day")
+                for frequency in (("month", "day") if (variable, "day") in UNITS else ("month",))
                 for problem in _series_problems(store, region["region_id"], variable, frequency, registry)]
     for path, params, response in advanced_responses(client):
         if response.status_code == 404 and response.json()["error"]["code"] == "DATA_NOT_AVAILABLE":

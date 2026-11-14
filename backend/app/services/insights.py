@@ -43,6 +43,14 @@ def _label(variable: str) -> str:
     return {"aod": "AOD", "rainfall": "rainfall"}.get(variable, variable.replace("_", " "))
 
 
+TEMPERATURE_UNITS = ("degC", "C", "K", "°C")
+
+
+def percent_meaningful(unit: str) -> bool:
+    """A % change of a temperature in C or K is not meaningful (no true zero on a human scale)."""
+    return unit.replace(" per decade", "").strip() not in TEMPERATURE_UNITS
+
+
 def q_text(q: float) -> str:
     return "q < 0.001" if q < 0.001 else f"q = {q:.3f}"
 
@@ -59,6 +67,8 @@ def plain_language(*, what: str, where: str, period: str, variable: str, unit_pe
                    slope: float, ci: tuple[float, float] | list[float], p: float, alpha: float,
                    significant: bool, percent_per_decade: float | None, years_needed: float | None,
                    years_available: float | None, change_point: dict[str, Any] | None = None) -> str:
+    if not percent_meaningful(unit_per_decade):
+        percent_per_decade = None
     unit_per_decade = per_decade(unit_per_decade.removesuffix("per decade"))
     s = fmt(abs(slope) if significant else slope, variable)
     lo, hi = fmt(ci[0], variable), fmt(ci[1], variable)
@@ -151,17 +161,19 @@ def scan_for(store, *, variables: list[str] | None, season: str, alpha: float,
         direction = trend.direction if sig_fdr else "no_significant_trend"
         headline = (f"{_label(trend.variable)} in {region.name}: "
                     + (f"{'increasing' if trend.sen_slope > 0 else 'decreasing'} by {fmt(abs(trend.sen_slope), trend.variable)} "
-                       f"{per_decade(trend.slope_unit.removesuffix('per decade'))} ({trend.percent_change_per_decade:+.1f}% per decade), "
-                       f"significant after multiple-testing correction ({q_text(q)})." if status == "significant" else
+                       f"{per_decade(trend.slope_unit.removesuffix('per decade'))}"
+                       + (f" ({trend.percent_change_per_decade:+.1f}% per decade)" if percent_meaningful(trend.slope_unit) else "")
+                       + f", significant after multiple-testing correction ({q_text(q)})." if status == "significant" else
                        f"no trend that survives multiple-testing correction ({q_text(q)}; estimate "
                        f"{fmt(trend.sen_slope, trend.variable)} {per_decade(trend.slope_unit.removesuffix('per decade'))})."))
         out.append({"region_id": trend.region_id, "region_name": region.name, "variable": trend.variable,
                     "season": trend.season, "period": trend.period.model_dump(), "sen_slope": trend.sen_slope,
                     "slope_unit": trend.slope_unit, "slope_ci": list(trend.slope_ci),
-                    "percent_change_per_decade": trend.percent_change_per_decade, "p_value": trend.p_value,
+                    "percent_change_per_decade": trend.percent_change_per_decade if percent_meaningful(trend.slope_unit) else None,
+                    "p_value": trend.p_value,
                     "q_value": round(q, 8), "status": status, "direction_after_fdr": direction,
                     "evidence_label": trend.evidence.evidence_label, "result_id": trend.result_id, "headline": headline})
-    out.sort(key=lambda r: (r["status"] != "significant", -abs(r["percent_change_per_decade"])))
+    out.sort(key=lambda r: (r["status"] != "significant", -abs(r["percent_change_per_decade"] or 0), r["p_value"]))
     contrasts = []
     for variable in sorted({r["variable"] for r in out}):
         sig = [r for r in out if r["variable"] == variable and r["status"] == "significant"]

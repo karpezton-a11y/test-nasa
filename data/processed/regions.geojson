@@ -2,7 +2,7 @@
  "data_status": "real",
  "data_version": "REAL-G3-2026-11-14-a4151cac",
  "contract_version": "1.0",
- "generated_at": "2026-11-14T00:00:00+05:30",
+ "generated_at": "2026-11-14T17:39:34+05:30",
  "result": {
   "regions": [
    {
@@ -18,7 +18,8 @@
     "description": "Rectangular analysis box. Includes neighbouring areas and potentially coastal water. This selection is a rectangular analysis box rather than an exact administrative boundary.",
     "variables": [
      "rainfall",
-     "aod"
+     "aod",
+     "air_temperature"
     ],
     "period_available": {
      "start": "2003-01",
@@ -38,7 +39,84 @@
     "description": "Rectangular analysis box. Includes neighbouring areas and potentially coastal water. This selection is a rectangular analysis box rather than an exact administrative boundary.",
     "variables": [
      "rainfall",
-     "aod"
+     "aod",
+     "air_temperature"
+    ],
+    "period_available": {
+     "start": "2003-01",
+     "end": "2024-12"
+    }
+   },
+   {
+    "region_id": "DELHI",
+    "name": "Delhi National Capital Region",
+    "bbox": [
+     76.8,
+     28.3,
+     77.6,
+     28.9
+    ],
+    "status": "analysis_box",
+    "description": "One of the world's largest cities; haze and NO2 hotspot.",
+    "variables": [
+     "air_temperature"
+    ],
+    "period_available": {
+     "start": "2003-01",
+     "end": "2024-12"
+    }
+   },
+   {
+    "region_id": "LA_BASIN",
+    "name": "Los Angeles basin, USA",
+    "bbox": [
+     -118.7,
+     33.6,
+     -117.6,
+     34.4
+    ],
+    "status": "analysis_box",
+    "description": "Emissions rules have cut NO2 for decades: a contrast with fast-growing cities.",
+    "variables": [
+     "air_temperature"
+    ],
+    "period_available": {
+     "start": "2003-01",
+     "end": "2024-12"
+    }
+   },
+   {
+    "region_id": "AMAZON_ARC",
+    "name": "Southern Amazon 'arc of deforestation', Brazil",
+    "bbox": [
+     -60,
+     -12,
+     -50,
+     -7
+    ],
+    "status": "analysis_box",
+    "description": "Forest clearing and fire change greenness, land temperature and smoke.",
+    "variables": [
+     "air_temperature"
+    ],
+    "period_available": {
+     "start": "2003-01",
+     "end": "2024-12"
+    }
+   },
+   {
+    "region_id": "SAHEL",
+    "name": "Central Sahel, Africa",
+    "bbox": [
+     -5,
+     12,
+     15,
+     17
+    ],
+    "status": "analysis_box",
+    "description": "Rainfall recovered after the 1980s droughts; greening and dust are debated.",
+    "variables": [
+     "rainfall"
     ],
     "period_available": {
      "start": "2003-01",
@@ -119,6 +197,150 @@
       "region_id": "TN",
       "name": "Tamil Nadu region (analysis box)",
       "status": "provisional"
+     }
+    },
+    {
+     "type": "Feature",
+     "id": "DELHI",
+     "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         76.8,
+         28.3
+        ],
+        [
+         77.6,
+         28.3
+        ],
+        [
+         77.6,
+         28.9
+        ],
+        [
+         76.8,
+         28.9
+        ],
+        [
+         76.8,
+         28.3
+        ]
+       ]
+      ]
+     },
+     "properties": {
+      "region_id": "DELHI",
+      "name": "Delhi National Capital Region",
+      "status": "analysis_box"
+     }
+    },
+    {
+     "type": "Feature",
+     "id": "LA_BASIN",
+     "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -118.7,
+         33.6
+        ],
+        [
+         -117.6,
+         33.6
+        ],
+        [
+         -117.6,
+         34.4
+        ],
+        [
+         -118.7,
+         34.4
+        ],
+        [
+         -118.7,
+         33.6
+        ]
+       ]
+      ]
+     },
+     "properties": {
+      "region_id": "LA_BASIN",
+      "name": "Los Angeles basin, USA",
+      "status": "analysis_box"
+     }
+    },
+    {
+     "type": "Feature",
+     "id": "AMAZON_ARC",
+     "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -60,
+         -12
+        ],
+        [
+         -50,
+         -12
+        ],
+        [
+         -50,
+         -7
+        ],
+        [
+         -60,
+         -7
+        ],
+        [
+         -60,
+         -12
+        ]
+       ]
+      ]
+     },
+     "properties": {
+      "region_id": "AMAZON_ARC",
+      "name": "Southern Amazon 'arc of deforestation', Brazil",
+      "status": "analysis_box"
+     }
+    },
+    {
+     "type": "Feature",
+     "id": "SAHEL",
+     "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -5,
+         12
+        ],
+        [
+         15,
+         12
+        ],
+        [
+         15,
+         17
+        ],
+        [
+         -5,
+         17
+        ],
+        [
+         -5,
+         12
+        ]
+       ]
+      ]
+     },
+     "properties": {
+      "region_id": "SAHEL",
+      "name": "Central Sahel, Africa",
+      "status": "analysis_box"
      }
     }
    ]

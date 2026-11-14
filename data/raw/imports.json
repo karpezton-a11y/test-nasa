@@ -1,0 +1,61 @@
+{
+ "note": "Extra NASA POWER series fetched by .github/workflows/fetch-nasa-data.yml; imported by scripts/build_real_data.py.",
+ "imports": [
+  {
+   "file": "IGP_T2M.csv",
+   "region_id": "IGP",
+   "variable": "air_temperature",
+   "unit": "degC",
+   "source_id": "NASA_POWER_T2M"
+  },
+  {
+   "file": "TN_T2M.csv",
+   "region_id": "TN",
+   "variable": "air_temperature",
+   "unit": "degC",
+   "source_id": "NASA_POWER_T2M"
+  },
+  {
+   "file": "DELHI_T2M.csv",
+   "region_id": "DELHI",
+   "variable": "air_temperature",
+   "unit": "degC",
+   "source_id": "NASA_POWER_T2M"
+  },
+  {
+   "file": "LA_BASIN_T2M.csv",
+   "region_id": "LA_BASIN",
+   "variable": "air_temperature",
+   "unit": "degC",
+   "source_id": "NASA_POWER_T2M"
+  },
+  {
+   "file": "AMAZON_ARC_T2M.csv",
+   "region_id": "AMAZON_ARC",
+   "variable": "air_temperature",
+   "unit": "degC",
+   "source_id": "NASA_POWER_T2M"
+  },
+  {
+   "file": "IGP_PRECTOTCORR.csv",
+   "region_id": "IGP",
+   "variable": "rainfall",
+   "conversion": "mmday_to_mm_month",
+   "source_id": "NASA_POWER_PRECTOTCORR"
+  },
+  {
+   "file": "TN_PRECTOTCORR.csv",
+   "region_id": "TN",
+   "variable": "rainfall",
+   "conversion": "mmday_to_mm_month",
+   "source_id": "NASA_POWER_PRECTOTCORR"
+  },
+  {
+   "file": "SAHEL_PRECTOTCORR.csv",
+   "region_id": "SAHEL",
+   "variable": "rainfall",
+   "conversion": "mmday_to_mm_month",
+   "source_id": "NASA_POWER_PRECTOTCORR"
+  }
+ ]
+}

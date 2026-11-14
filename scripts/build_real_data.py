@@ -297,8 +297,29 @@ def build_research_annual() -> None:
     write(ROOT / "data" / "research" / "annual_series.json", doc)
 
 
+def import_extras(out: Path = OUT) -> list[str]:
+    """Add the extra NASA series listed in data/raw/imports.json (NASA POWER / Giovanni CSVs)."""
+    spec_path = ROOT / "data" / "raw" / "imports.json"
+    if not spec_path.is_file():
+        return []
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("import_giovanni", ROOT / "scripts" / "import_giovanni.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    done = []
+    for item in json.loads(spec_path.read_text(encoding="utf-8"))["imports"]:
+        module.import_csv(ROOT / "data" / "raw" / item["file"], region_id=item["region_id"], variable=item["variable"],
+                          processed=out, conversion=item.get("conversion", "none"), unit=item.get("unit"),
+                          source_id=item["source_id"])
+        done.append(item["file"])
+    return done
+
+
 if __name__ == "__main__":
     info = build()
+    extras = import_extras()
+    if extras:
+        print(f"Imported {len(extras)} extra NASA series: {', '.join(extras)}")
     build_research_annual()
     print(f"Built {OUT} — data_version {info['data_version']}, {info['anomaly_files']} anomaly files, "
           f"{info['indicator_results']} indicator results; refreshed data/research/annual_series.json")

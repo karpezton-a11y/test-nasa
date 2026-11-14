@@ -74,7 +74,7 @@ These come from chart workbook values rounded to six decimals. They are statisti
 ## 5. Still open (team actions)
 
 1. ~~Commit Group 3's data package.~~ **Done (later on 14 Nov):** `group3_pipeline/` is in the repo, `data/processed/` is built from it and the live site serves real data.
-2. **Fetch more real variables** on a laptop with internet (this review's sandbox could not reach NASA servers): e.g. `fetch_nasa_power.py` for T2M over IGP/TN, Giovanni CSVs for OMI NO2 over Delhi, GLDAS soil moisture over the northwest India aquifer.
+2. ~~Fetch more real variables~~ **Partly done:** a GitHub Actions workflow fetched NASA POWER temperature and rainfall for 6 regions, now served. Still worth adding by hand from Giovanni (needs an Earthdata login): OMI NO₂ for Delhi and Los Angeles, GLDAS soil moisture.
 3. ~~Interaction composites~~ **Done:** implemented in `trendlib.interaction` and served with real data; Aadarsh should review it.
 4. **Independent review** of trendlib by Aadarsh; reconcile the anomaly baseline minimum (15 vs 10, INT-02).
 5. **Submission deck.** The research deck is an internal briefing (slides 29–30 discuss role splits). The compressed competition deck is still missing; slides 32–34 can be reused in it.

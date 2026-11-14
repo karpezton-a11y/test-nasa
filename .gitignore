@@ -20,6 +20,9 @@ htmlcov/
 data/raw/*
 !data/raw/.gitkeep
 !data/raw/provenance.csv
+!data/raw/imports.json
+!data/raw/*_T2M.csv
+!data/raw/*_PRECTOTCORR.csv
 
 # Generated reports at the repo root only (backend/app/reports/ is source code)
 /reports/*

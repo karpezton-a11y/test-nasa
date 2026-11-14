@@ -98,11 +98,17 @@ def import_csv(csv_path: Path, *, region_id: str, variable: str, processed: Path
     # Sources.
     src_env = _read_envelope(processed / "sources.json")
     sources = src_env["result"] if src_env else []
+    power = "POWER" in series.metadata.get("Data Source", "")
+    param = series.variable_id.removeprefix("POWER_")
     sources = [s for s in sources if s["source_id"] != source_id] + [{
-        "source_id": source_id, "product": entry["product"], "short_name": series.variable_id, "version": "as downloaded",
-        "doi": None, "access_method": ("NASA POWER monthly point API, box mean" if "POWER" in series.metadata.get("Data Source", "")
-                          else "NASA Giovanni area-averaged time series CSV"),
-        "access_date": date.today().isoformat(), "variable_name": entry["field"], "citation": None}]
+        "source_id": source_id,
+        "product": f"NASA POWER monthly {param} (MERRA-2/GEOS-based meteorology)" if power else entry["product"],
+        "short_name": param if power else series.variable_id, "version": "as downloaded",
+        "doi": None, "access_method": ("NASA POWER monthly point API, box mean" if power
+                                       else "NASA Giovanni area-averaged time series CSV"),
+        "access_date": date.today().isoformat(), "variable_name": param if power else entry["field"],
+        "citation": ("NASA Langley Research Center POWER Project, monthly point API (power.larc.nasa.gov), "
+                     f"accessed {date.today().isoformat()}." if power else None)}]
 
     # Variables.
     var_env = _read_envelope(processed / "variables.json")

@@ -2,7 +2,7 @@
  "data_status": "real",
  "data_version": "REAL-G3-2026-11-14-a4151cac",
  "contract_version": "1.0",
- "generated_at": "2026-11-14T00:00:00+05:30",
+ "generated_at": "2026-11-14T17:39:34+05:30",
  "result": [
   {
    "source_id": "IMERG_V07_FINAL_MONTHLY",
@@ -69,6 +69,28 @@
    "access_date": "2026-11-13",
    "variable_name": "TOTEXTTAU",
    "citation": "M2TMNXAER version 5.12.4. NASA. Area-averaged time series via NASA Giovanni, accessed 2026-11-13. https://disc.gsfc.nasa.gov/datasets/M2TMNXAER_5.12.4/summary"
+  },
+  {
+   "source_id": "NASA_POWER_T2M",
+   "product": "NASA POWER monthly T2M (MERRA-2/GEOS-based meteorology)",
+   "short_name": "T2M",
+   "version": "as downloaded",
+   "doi": null,
+   "access_method": "NASA POWER monthly point API, box mean",
+   "access_date": "2026-11-14",
+   "variable_name": "T2M",
+   "citation": "NASA Langley Research Center POWER Project, monthly point API (power.larc.nasa.gov), accessed 2026-11-14."
+  },
+  {
+   "source_id": "NASA_POWER_PRECTOTCORR",
+   "product": "NASA POWER monthly PRECTOTCORR (MERRA-2/GEOS-based meteorology)",
+   "short_name": "PRECTOTCORR",
+   "version": "as downloaded",
+   "doi": null,
+   "access_method": "NASA POWER monthly point API, box mean",
+   "access_date": "2026-11-14",
+   "variable_name": "PRECTOTCORR",
+   "citation": "NASA Langley Research Center POWER Project, monthly point API (power.larc.nasa.gov), accessed 2026-11-14."
   }
  ]
 }

@@ -64,6 +64,24 @@ DEMOS: list[dict[str, Any]] = [
                           "cycle is removed, and individual seasons can trend differently.",
     },
     {
+        "id": "products_disagree",
+        "title": "Two NASA products, two answers: always cross-check",
+        "data": "store",
+        "question": "Is rainfall over the Indo-Gangetic Plain increasing?",
+        "steps": [
+            {"narration": "Test GPM IMERG satellite rainfall, 2003-2024, with the seasons removed.",
+             "method": "POST", "path": "/api/v1/analyze/detail",
+             "body": {"region_id": "IGP", "variable": "rainfall", "season": "all"},
+             "look_at": "trend.significant, trend.evidence.sensitivity"},
+            {"narration": "Look at the sensitivity runs: the MERRA-2-based NASA POWER rainfall is tested the same way.",
+             "method": None, "path": None, "body": None,
+             "look_at": "trend.evidence.sensitivity[name=merra2_power_rainfall]"},
+        ],
+        "what_to_notice": "With real data, IMERG shows no significant trend while the model-based MERRA-2 rainfall "
+                          "shows a significant rise. A trend that appears in only one product is weak evidence; the "
+                          "evidence label stays 'weak' because the runs disagree.",
+    },
+    {
         "id": "scan_everything",
         "title": "What is changing, where, and how much?",
         "data": "store",

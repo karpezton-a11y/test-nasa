@@ -311,7 +311,8 @@ class RealStore:
 
     # Handbook sensitivity runs: the same test on independent comparison products (never blended into the
     # primary series). Names match the contract fixtures: terra_monthly, merra2.
-    COMPARISON_RUNS = {"MODIS_TERRA_C61_MONTHLY": "terra_monthly", "MERRA2_MONTHLY_TOTEXTTAU": "merra2"}
+    COMPARISON_RUNS = {"MODIS_TERRA_C61_MONTHLY": "terra_monthly", "MERRA2_MONTHLY_TOTEXTTAU": "merra2",
+                       "NASA_POWER_PRECTOTCORR": "merra2_power_rainfall"}
 
     def _with_comparison_sources(self, result, region_id, variable, period, season, alpha):
         from .science import _trendlib, quality_errors, series_frame

@@ -2,41 +2,10 @@
  "data_status": "real",
  "data_version": "REAL-G3-2026-11-14-a4151cac",
  "contract_version": "1.0",
- "source_package": "group3_pipeline (Sritharan observed-research package)",
- "raw_export_sha256": [
-  "28305505f86a669c1d22ed790d9df1fdce400a94aeeb30527ecead567c62ab71",
-  "2969a098ebcc51d47bbbf6074affde9139c6a034c04bd2d7b3144519bfb25df5",
-  "33c8ac4a9b73a345f5aeb116dadeb9a4496f931b843b1235f3cd03ec36ccd2d4",
-  "3512052f7532b980dae71bc0e48318e05328174fe1f4e2ca6bb80845f01a962e",
-  "71183176da32f819b1326c6a30c957d67dd6b2d4606b6796af320ff72fdbb0c6",
-  "834d7c6c138ac226352d49e3815167b4025f88257e73c4424dfc2af34f66cc6b",
-  "8acee4d6d5e3fbdec465147db9203a771bb9a3d473d1b8a8645c4eb641b1eebd",
-  "a213d6a6d3e4e1f3a8f920281b6bc82e1975a65e4ce6e555086e788af6e5d0cb",
-  "a6418eacee09dabdf3d9ea2a3e7108f77da7a125831120359f4958ad121fcd34",
-  "afe9ecff4abd39e3b4c1ba61a6eba43b6ff82c786f8618a0805f0f3c388d02e1",
-  "b0cb80df2f21722911db3ead80c3d8727c13ce592933a61ee67d022d79d9f270",
-  "ff16e251bbda898103bddf4fa8e803c8390241f842041c742383096fec16eb07"
- ],
- "interaction_p90_thresholds_mm_day": {
-  "IGP_all": 9.5217,
-  "IGP_JF": 1.508,
-  "IGP_MAM": 2.6661,
-  "IGP_JJAS": 14.5668,
-  "IGP_OND": 0.9029,
-  "TN_all": 9.0835,
-  "TN_JF": 1.3118,
-  "TN_MAM": 5.4052,
-  "TN_JJAS": 8.5909,
-  "TN_OND": 16.6418
- },
- "computed_here": [
-  "indicator trends (trendlib)",
-  "interaction composites (trendlib.interaction)"
- ],
  "assets": {
   "timeseries_monthly.csv": {
    "data_status": "real",
-   "sha256": "fd009c6263fdace3d5d6752ec2d3eb55d1d54f48bcab9f286a7f02ab8a3e7fd0"
+   "sha256": "165f6071ea237ba3c5f21111979e7f28b540c43916f7d93ca6491616db41f6bf"
   },
   "timeseries_daily.csv": {
    "data_status": "real",
