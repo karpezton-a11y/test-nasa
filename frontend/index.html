@@ -49,8 +49,9 @@
   <a class="brand" href="#top" aria-label="TrendTrace home">
     <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#tt-mark"/></svg><span>TrendTrace</span>
   </a>
+  <div class="mission-clock mono" aria-hidden="true"><span><i class="rec"></i>UTC <b id="utc">--:--:--</b></span><span>MET <b id="met">T+00:00:00</b></span></div>
   <nav class="toplinks" aria-label="Sections">
-    <a href="#cases">Case files</a><a href="#how">How it works</a><a href="#impact">Impact</a><a href="#trust">Trust</a><a href="#lab">Lab</a>
+    <a href="#cases">Case files</a><a href="#missions">Missions</a><a href="#climate">Climate</a><a href="#how">How it works</a><a href="#impact">Impact</a><a href="#trust">Trust</a><a href="#lab">Lab</a>
   </nav>
   <a class="btn btn-primary magnetic" href="#lab"><span>Open the lab</span></a>
 </header>
@@ -61,6 +62,13 @@
     <canvas id="globe" aria-label="Interactive 3D globe. Drag to rotate. Hover a country to see its name; hover a marker to see its trend."></canvas>
     <div class="globe-labels"></div>
     <div class="globe-tip" role="status" hidden></div>
+    <div class="hud mono" aria-hidden="true">
+      <span class="hud-corner tl"></span><span class="hud-corner tr"></span><span class="hud-corner bl"></span><span class="hud-corner br"></span>
+      <div class="hud-row"><em>SUB-POINT</em><b id="hud-ll">--</b></div>
+      <div class="hud-row"><em>ALTITUDE</em><b id="hud-alt">--</b></div>
+      <div class="hud-row"><em>LAYER</em><b id="hud-layer">AEROSOL</b></div>
+      <div class="hud-row"><em>IN ORBIT</em><b>AQUA · AURA · GPM</b></div>
+    </div>
     <div class="globe-fallback">Your browser could not start 3D graphics. Everything else works: scroll down to the lab.</div>
   </div>
 
@@ -171,7 +179,68 @@
   <div class="stat reveal"><b class="count" data-to="21">0</b><span>Earth variables</span></div>
   <div class="stat reveal"><b class="count" data-to="6">0</b><span>NASA missions and models</span></div>
   <div class="stat reveal"><b class="count" data-to="22">0</b><span>years of monthly data</span></div>
-  <div class="stat reveal"><b class="count" data-to="642">0</b><span>automated tests passing</span></div>
+  <div class="stat reveal"><b class="count" data-to="643">0</b><span>automated tests passing</span></div>
+</section>
+
+
+<!-- ============ MISSIONS ============ -->
+<section id="missions" class="block">
+  <div class="mission-head">
+    <div>
+      <p class="eyebrow reveal">Missions behind the data</p>
+      <h2 class="section-title reveal">Six NASA sources. One honest verdict.</h2>
+      <p class="muted-lg reveal">TrendTrace stands on decades of Earth observation. These are the spacecraft and models whose measurements we test.</p>
+    </div>
+    <svg class="patch reveal" viewBox="0 0 220 220" role="img" aria-label="TrendTrace mission patch">
+      <defs><path id="patch-arc" d="M110,110 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/>
+        <radialGradient id="patch-bg" cx=".4" cy=".35"><stop offset="0" stop-color="#173a6e"/><stop offset="1" stop-color="#050d22"/></radialGradient></defs>
+      <circle cx="110" cy="110" r="106" fill="#0b1a30" stroke="#ff7a45" stroke-width="4"/>
+      <circle cx="110" cy="110" r="68" fill="url(#patch-bg)" stroke="#4aa3ff" stroke-width="3"/>
+      <text font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" letter-spacing="3" fill="#e8eef7"><textPath href="#patch-arc" startOffset="0">TRENDTRACE · TEAM COPERNICUS · SPACE APPS 2026 ·</textPath></text>
+      <g class="patch-stars" fill="#fff"><circle cx="78" cy="80" r="1.5"/><circle cx="140" cy="72" r="1.2"/><circle cx="150" cy="130" r="1.6"/><circle cx="72" cy="138" r="1.1"/></g>
+      <svg x="62" y="62" width="96" height="96" viewBox="0 0 64 64"><use href="#tt-mark"/></svg>
+    </svg>
+  </div>
+  <div class="mission-track">
+    <svg class="mission-orbit" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 C300,10 900,10 1200,90"/></svg>
+    <article class="mission tilt reveal"><span class="m-year mono">1980 →</span><h3>MERRA-2</h3><p>NASA's reanalysis: a physics model fed with observations. Our cross-check for aerosol and rain.</p><span class="m-tag mono">model · reanalysis</span></article>
+    <article class="mission tilt reveal"><span class="m-year mono">1999</span><h3>Terra</h3><p>Morning-pass MODIS aerosol, used to check that Aqua's haze trend isn't an instrument quirk.</p><span class="m-tag mono">MODIS · comparison</span></article>
+    <article class="mission tilt reveal"><span class="m-year mono">2002</span><h3>Aqua</h3><p>Afternoon-pass MODIS: our main aerosol record, 2003–2024.</p><span class="m-tag mono">MODIS · aerosol</span></article>
+    <article class="mission tilt reveal"><span class="m-year mono">2004</span><h3>Aura</h3><p>OMI measures nitrogen dioxide, the gas behind the Los Angeles vs Delhi story.</p><span class="m-tag mono">OMI · NO₂</span></article>
+    <article class="mission tilt reveal"><span class="m-year mono">2014</span><h3>GPM</h3><p>The Core Observatory anchors IMERG, a rainfall record merged from a fleet of satellites back to 2000.</p><span class="m-tag mono">IMERG · rainfall</span></article>
+    <article class="mission tilt reveal"><span class="m-year mono">1981 →</span><h3>NASA POWER</h3><p>Ready-made surface weather built on MERRA-2: our air temperature and Sahel rainfall.</p><span class="m-tag mono">temperature · rain</span></article>
+  </div>
+</section>
+
+<!-- ============ CLIMATE PULSE ============ -->
+<section id="climate" class="block climate">
+  <p class="eyebrow green reveal">Climate pulse</p>
+  <h2 class="section-title reveal">Warming, one stripe at a time.</h2>
+  <p class="muted-lg reveal">Each stripe is one year of near-surface air temperature for a real place, coloured by how far it sat from that place's own 2003–2024 average. Built live from NASA POWER data by our trend engine.</p>
+  <div class="stripe-tabs reveal" role="tablist" aria-label="Choose a place">
+    <button class="chip active" data-region="AMAZON_ARC">Southern Amazon</button>
+    <button class="chip" data-region="DELHI">Delhi</button>
+    <button class="chip" data-region="LA_BASIN">Los Angeles</button>
+    <button class="chip" data-region="IGP">Indo-Gangetic Plain</button>
+    <button class="chip" data-region="TN">Tamil Nadu</button>
+  </div>
+  <div class="stripes-card reveal">
+    <div class="stripes" id="stripes" aria-live="polite"><p class="muted">Waiting for the data…</p></div>
+    <div class="stripes-axis mono" id="stripes-axis"></div>
+    <div class="stripes-foot">
+      <div class="stripes-verdict" id="stripes-verdict"></div>
+      <div class="stripes-legend mono"><span>cooler</span><i></i><span>warmer</span></div>
+    </div>
+  </div>
+  <p class="caveat reveal">A short regional record can show a warming trend that differs from the global one. Stripes show the pattern; the verdict tells you whether it is statistically real.</p>
+</section>
+
+<!-- ============ EARTH'S VITAL SIGNS ============ -->
+<section id="vitals" class="block">
+  <p class="eyebrow green reveal">Earth's vital signs</p>
+  <h2 class="section-title reveal">Air, heat, water, forests, ice and ocean.</h2>
+  <p class="muted-lg reveal">21 NASA variables across six themes. Four are loaded and live right now; any other can be tested by uploading a NASA Giovanni export for any place on Earth.</p>
+  <div class="vitals-grid" id="vitals-grid"></div>
 </section>
 
 <!-- ============ HOW IT WORKS ============ -->
@@ -206,7 +275,7 @@
   <h2 class="section-title reveal">Every result is tested, cross-checked and labelled.</h2>
   <div class="trust-grid">
     <div class="trust reveal"><b>Validated</b><p>Our trend engine matches SciPy and pymannkendall on the same data.</p></div>
-    <div class="trust reveal"><b>642 tests</b><p>Automated tests run on every change, on Python 3.11 and 3.13.</p></div>
+    <div class="trust reveal"><b>643 tests</b><p>Automated tests run on every change, on Python 3.11 and 3.13.</p></div>
     <div class="trust reveal"><b>Many-test check</b><p>Benjamini–Hochberg q-values stop lucky results when scanning many regions.</p></div>
     <div class="trust reveal"><b>Gaps stay gaps</b><p>Missing months are never filled in; low-coverage months are flagged.</p></div>
     <div class="trust reveal"><b>AI can't change numbers</b><p>Explanations are checked by code; any changed number is rejected.</p></div>
@@ -322,6 +391,35 @@
   <section id="tab-demos" hidden>
     <div id="demos-out"></div>
   </section>
+  </div>
+</section>
+
+
+<!-- ============ FINALE: nature ============ -->
+<section id="finale" class="finale" aria-label="One planet">
+  <svg class="landscape" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#030812"/><stop offset=".45" stop-color="#0d2448"/><stop offset=".78" stop-color="#3a3f6e"/><stop offset="1" stop-color="#ff9a6b"/></linearGradient>
+      <radialGradient id="sunglow"><stop offset="0" stop-color="#ffe2b0"/><stop offset=".3" stop-color="#ffb36b" stop-opacity=".8"/><stop offset="1" stop-color="#ff7a45" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="1600" height="600" fill="url(#sky)"/>
+    <g class="sun"><circle cx="1060" cy="470" r="220" fill="url(#sunglow)"/><circle cx="1060" cy="470" r="56" fill="#ffe7c2"/></g>
+    <g class="birds" stroke="#0b1a30" stroke-width="3" fill="none" stroke-linecap="round">
+      <path d="M0 0 q8 -8 16 0 q8 -8 16 0" transform="translate(380 230)"/><path d="M0 0 q6 -6 12 0 q6 -6 12 0" transform="translate(430 205)"/><path d="M0 0 q7 -7 14 0 q7 -7 14 0" transform="translate(470 240)"/>
+    </g>
+    <path class="layer l1" d="M0 430 C200 360 380 400 560 370 C760 335 900 410 1100 380 C1300 350 1450 390 1600 360 V600 H0Z" fill="#163a3a"/>
+    <path class="layer l2" d="M0 480 C180 430 330 470 520 445 C720 418 860 480 1060 455 C1250 430 1420 470 1600 440 V600 H0Z" fill="#0f2c2a"/>
+    <g class="layer l3" fill="#0a201d">
+      <path d="M0 530 C200 490 420 520 640 505 C860 490 1080 535 1300 515 C1450 502 1530 515 1600 508 V600 H0Z"/>
+      <path d="M120 520 l18 -60 l18 60z M160 525 l14 -46 l14 46z M300 512 l20 -70 l20 70z M340 515 l14 -44 l14 44z M1180 520 l18 -62 l18 62z M1220 522 l13 -40 l13 40z M1380 514 l20 -68 l20 68z M1420 516 l14 -48 l14 48z M820 505 l16 -52 l16 52z"/>
+    </g>
+    <path class="layer l4" d="M0 600 V560 C260 540 520 575 800 560 C1080 545 1340 575 1600 556 V600Z" fill="#061512"/>
+  </svg>
+  <div class="finale-copy">
+    <p class="eyebrow green reveal">One planet</p>
+    <h2 class="section-title reveal">Measured honestly.<br>Protected wisely.</h2>
+    <p class="muted-lg reveal">Every trend is a story about a place: its air, its rain, its forests, its heat. TrendTrace helps anyone tell that story with evidence, not guesses.</p>
+    <div class="hero-cta reveal"><a class="btn btn-primary magnetic" href="#lab"><span>Investigate your city</span></a><a class="btn btn-ghost magnetic" href="#top"><span>Back to orbit ↑</span></a></div>
   </div>
 </section>
 

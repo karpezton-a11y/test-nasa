@@ -1,6 +1,11 @@
 // TrendTrace motion layer: boot sequence, globe wiring, scroll story, counters, tilt, magnetic buttons.
 // Plain ES module, no dependencies besides globe.js. Everything respects prefers-reduced-motion.
 import { createGlobe } from "/static/globe.js";
+import { startRocket } from "/static/rocket.js";
+import { startMascot } from "/static/mascot.js";
+
+startRocket();
+startMascot();
 
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const FINE = matchMedia("(pointer: fine)").matches;
@@ -26,12 +31,18 @@ function openInLab(region, variable) {
 // ---------- globe ----------
 const statusEl = $("#layer-status span");
 const LABELS = { aod: "Aerosol haze (MODIS)", no2: "NO₂ (OMI)", air_temperature: "Air temperature (NASA POWER)", rainfall: "Rainfall (GPM IMERG / NASA POWER)" };
+const hudLL = $("#hud-ll"), hudAlt = $("#hud-alt"), hudLayer = $("#hud-layer");
 let globe = null;
 createGlobe($("#globe-wrap"), {
   layer: "aod",
   onSelect: openInLab,
+  onCamera(lat, lon, alt) {
+    hudLL.textContent = `${Math.abs(lat).toFixed(1)}°${lat >= 0 ? "N" : "S"} ${Math.abs(lon).toFixed(1)}°${lon >= 0 ? "E" : "W"}`;
+    hudAlt.textContent = `${Math.round(alt).toLocaleString("en")} km`;
+  },
   onLayer(layer, data, source) {
     $$(".layer-bar .chip").forEach((c) => c.classList.toggle("active", c.dataset.layer === layer));
+    hudLayer.textContent = (LABELS[layer] || layer).split(" (")[0].toUpperCase();
     if (!data) return;
     statusEl.textContent = `${source === "live" ? "Live" : "Last computed"} · ${LABELS[layer] || layer} · ${data.summary}`;
     $("#layer-status").classList.toggle("live", source === "live");
@@ -153,3 +164,100 @@ $$("#lab-tabs button").forEach((b) => b.addEventListener("click", () => requestA
 new ResizeObserver(moveGlider).observe($("#lab-tabs"));
 document.fonts?.ready.then(moveGlider);
 new MutationObserver(moveGlider).observe($("#lab-tabs"), { attributes: true, subtree: true, attributeFilter: ["class"] });
+
+// ---------- mission clock ----------
+const utc = $("#utc"), met = $("#met"), t0 = Date.now();
+const pad = (n) => String(n).padStart(2, "0");
+setInterval(() => {
+  const d = new Date(), e = Math.floor((Date.now() - t0) / 1000);
+  utc.textContent = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
+  met.textContent = `T+${pad(Math.floor(e / 3600))}:${pad(Math.floor(e / 60) % 60)}:${pad(e % 60)}`;
+}, 1000);
+
+// ---------- climate pulse: warming stripes from the live engine ----------
+const API = "/api/v1";
+const stripeCache = new Map();
+function stripeColor(v, max) {   // diverging blue - white - red
+  const t = Math.max(-1, Math.min(1, v / max));
+  const lerp = (a, b, k) => Math.round(a + (b - a) * k);
+  const [c0, c1] = t < 0 ? [[247, 247, 247], [33, 102, 172]] : [[247, 247, 247], [178, 24, 43]];
+  const k = Math.abs(t);
+  return `rgb(${lerp(c0[0], c1[0], k)},${lerp(c0[1], c1[1], k)},${lerp(c0[2], c1[2], k)})`;
+}
+async function stripesFor(region) {
+  if (stripeCache.has(region)) return stripeCache.get(region);
+  const res = await fetch(`${API}/analyze/detail`, { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ region_id: region, variable: "air_temperature", season: "all" }) });
+  const json = await res.json();
+  if (!json.result) throw new Error(json.error ? json.error.message : "No data");
+  const byYear = {};
+  for (const f of json.result.analysis.fit) {
+    if (f.analysed === null || f.analysed === undefined) continue;
+    const y = f.date.slice(0, 4); (byYear[y] ||= []).push(f.analysed);
+  }
+  const years = Object.keys(byYear).sort().filter((y) => byYear[y].length >= 9)
+    .map((y) => ({ year: y, v: byYear[y].reduce((a, b) => a + b, 0) / byYear[y].length }));
+  const out = { years, trend: json.result.trend };
+  stripeCache.set(region, out);
+  return out;
+}
+async function showStripes(region) {
+  $$(".stripe-tabs .chip").forEach((c) => c.classList.toggle("active", c.dataset.region === region));
+  const box = $("#stripes"), axis = $("#stripes-axis"), verdict = $("#stripes-verdict");
+  box.classList.add("loading");
+  try {
+    const { years, trend } = await stripesFor(region);
+    const max = Math.max(0.2, ...years.map((y) => Math.abs(y.v)));
+    box.replaceChildren(...years.map((y, i) => {
+      const s = document.createElement("span");
+      s.style.background = stripeColor(y.v, max); s.style.setProperty("--i", i);
+      s.title = `${y.year}: ${y.v >= 0 ? "+" : "−"}${Math.abs(y.v).toFixed(2)} °C vs this place's average`;
+      return s;
+    }));
+    axis.innerHTML = `<span>${years[0].year}</span><span>${years[years.length - 1].year}</span>`;
+    const slope = trend.sen_slope, sig = trend.significant;
+    verdict.innerHTML = `<b class="${sig ? (slope > 0 ? "warm" : "cool") : "flat"}">${slope >= 0 ? "+" : "−"}${Math.abs(slope).toFixed(2)} °C per decade</b>
+      <span>${sig ? "statistically significant" : "not statistically significant: could be noise"} · p ${trend.p_value < 0.001 ? "< 0.001" : "= " + trend.p_value.toFixed(3)}</span>`;
+  } catch (e) {
+    box.replaceChildren(Object.assign(document.createElement("p"), { className: "muted", textContent: `Could not load: ${e.message}` }));
+  } finally { box.classList.remove("loading"); }
+}
+$$(".stripe-tabs .chip").forEach((c) => c.addEventListener("click", () => showStripes(c.dataset.region)));
+new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { showStripes("AMAZON_ARC"); obs.disconnect(); } }, { rootMargin: "300px" }).observe($("#climate"));
+
+// ---------- vital signs from the variable catalogue ----------
+const THEME_ICON = {
+  air: '<path d="M6 14h22a5 5 0 1 0-5-5M6 20h30a5 5 0 1 1-5 5M6 26h14"/>',
+  heat: '<path d="M20 6a4 4 0 0 1 4 4v14a7 7 0 1 1-8 0V10a4 4 0 0 1 4-4z"/><path d="M20 16v12"/>',
+  water: '<path d="M20 6c6 8 10 13 10 18a10 10 0 0 1-20 0c0-5 4-10 10-18z"/>',
+  land: '<path d="M20 34V18"/><path d="M20 22c-8 0-12-6-12-12 8 0 12 5 12 12zM20 18c0-7 4-12 12-12 0 7-4 12-12 12z"/>',
+  ice: '<path d="M20 4v32M6 12l28 16M6 28l28-16M16 6l4 4 4-4M16 34l4-4 4 4"/>',
+  ocean: '<path d="M4 16c4-4 8-4 12 0s8 4 12 0 6-3 8-2M4 24c4-4 8-4 12 0s8 4 12 0 6-3 8-2M4 32c4-4 8-4 12 0s8 4 12 0 6-3 8-2"/>',
+};
+async function loadVitals() {
+  const grid = $("#vitals-grid");
+  try {
+    const { result } = await (await fetch(`${API}/catalog`)).json();
+    grid.replaceChildren(...Object.entries(result.themes).map(([key, label], i) => {
+      const vars = result.variables.filter((v) => v.themes.includes(key));
+      const card = document.createElement("article");
+      card.className = `vital tilt reveal in theme-${key}`; card.style.setProperty("--d", `${i * 80}ms`);
+      card.innerHTML = `<div class="vital-head"><svg viewBox="0 0 40 40" aria-hidden="true">${THEME_ICON[key] || ""}</svg>
+        <div><h3>${key[0].toUpperCase() + key.slice(1)}</h3><p>${label}</p></div></div>
+        <ul>${vars.map((v) => `<li class="${v.available_now ? "live" : ""}"><span>${v.name}</span><small>${v.mission}${v.available_now ? " · <b>live</b>" : ""}</small></li>`).join("")}</ul>`;
+      return card;
+    }));
+  } catch { grid.textContent = "The variable catalogue could not be loaded."; }
+}
+new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { loadVitals(); obs.disconnect(); } }, { rootMargin: "400px" }).observe($("#vitals"));
+
+// ---------- finale parallax ----------
+const finale = $("#finale"), layers = $$("#finale .layer"), sunEl = $("#finale .sun");
+addEventListener("scroll", () => {
+  if (REDUCED) return;
+  const r = finale.getBoundingClientRect();
+  if (r.top > innerHeight || r.bottom < 0) return;
+  const k = 1 - (r.top + r.height) / (innerHeight + r.height);   // 0 → 1 while it crosses the screen
+  layers.forEach((l, i) => { l.style.transform = `translateY(${(1 - k) * (i + 1) * 18}px)`; });
+  sunEl.style.transform = `translateY(${(1 - k) * 90}px)`;
+}, { passive: true });

@@ -245,6 +245,68 @@ export async function createGlobe(wrap, opts = {}) {
   const arc = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(arcPts), 240, 0.004, 8, false), arcMat);
   scene.add(arc);
 
+  // ---------- satellites: Aqua and Aura (A-Train, near-polar) and GPM (65°). Orbits not to scale. ----------
+  scene.add(new THREE.AmbientLight(0xbfd4ff, 0.7));
+  const sun = new THREE.DirectionalLight(0xffffff, 2.2); sun.position.set(5, 3, 4); scene.add(sun);
+  function panelTexture() {
+    const c = document.createElement("canvas"); c.width = 256; c.height = 64; const x = c.getContext("2d");
+    const gr = x.createLinearGradient(0, 0, 256, 64); gr.addColorStop(0, "#0b2f6b"); gr.addColorStop(0.5, "#1d5fb8"); gr.addColorStop(1, "#0a2a5e");
+    x.fillStyle = gr; x.fillRect(0, 0, 256, 64); x.strokeStyle = "rgba(160,210,255,.55)"; x.lineWidth = 2;
+    for (let i = 0; i <= 256; i += 21) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, 64); x.stroke(); }
+    for (let j = 0; j <= 64; j += 16) { x.beginPath(); x.moveTo(0, j); x.lineTo(256, j); x.stroke(); }
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  }
+  const panelMat = new THREE.MeshStandardMaterial({ map: panelTexture(), metalness: 0.35, roughness: 0.35, emissive: 0x0a2a55, emissiveIntensity: 0.6, side: THREE.DoubleSide });
+  const foilMat = new THREE.MeshStandardMaterial({ color: 0xe0b44a, metalness: 0.85, roughness: 0.3, emissive: 0x3a2806, emissiveIntensity: 0.6 });
+  const whiteMat = new THREE.MeshStandardMaterial({ color: 0xf2f5fa, metalness: 0.2, roughness: 0.5 });
+  const satBeamShader = {
+    vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+    fragmentShader: `uniform float uTime; uniform vec3 uColor; varying vec2 vUv;
+      void main(){ float scan = 0.6 + 0.4 * sin(uTime * 4.0 + vUv.y * 18.0);
+        gl_FragColor = vec4(uColor, (0.04 + 0.22 * (1.0 - vUv.y)) * scan); }`,
+  };
+  function buildSatellite(color) {
+    const g = new THREE.Group();
+    g.add(new THREE.Mesh(new THREE.BoxGeometry(0.026, 0.026, 0.042), foilMat));
+    const strut = new THREE.Mesh(new THREE.CylinderGeometry(0.0016, 0.0016, 0.05, 6), whiteMat); strut.rotation.z = Math.PI / 2; g.add(strut);
+    for (const sx of [-1, 1]) { const p = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.0016, 0.028), panelMat); p.position.x = sx * 0.07; g.add(p); }
+    const dish = new THREE.Mesh(new THREE.ConeGeometry(0.011, 0.007, 20, 1, true), whiteMat); dish.rotation.x = -Math.PI / 2; dish.position.z = -0.026; g.add(dish);
+    const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.0045, 10, 8), new THREE.MeshBasicMaterial({ color })); beacon.position.y = 0.017; g.add(beacon);
+    g.userData.beacon = beacon;
+    return g;
+  }
+  const SATS = [
+    { name: "Aqua", tag: "MODIS · aerosol", r: 1.24, incl: 98.2, raan: 0.6, phase: 0.0, speed: 0.14, color: 0x7cc4ff },
+    { name: "Aura", tag: "OMI · NO₂", r: 1.24, incl: 98.2, raan: 0.6, phase: -0.42, speed: 0.14, color: 0xffc86b },
+    { name: "GPM", tag: "rainfall", r: 1.19, incl: 65, raan: 2.3, phase: 2.0, speed: 0.17, color: 0x4ade80 },
+  ];
+  const satellites = [];
+  const orbitPlanes = new Map();
+  for (const cfg of SATS) {
+    const key = `${cfg.incl}:${cfg.raan}:${cfg.r}`;
+    let pivot = orbitPlanes.get(key);
+    if (!pivot) {
+      pivot = new THREE.Group(); pivot.rotation.order = "YXZ"; pivot.rotation.set(cfg.incl * DEG, cfg.raan, 0);
+      const ring = [];
+      for (let i = 0; i <= 256; i++) { const a = (i / 256) * Math.PI * 2; ring.push(new THREE.Vector3(Math.cos(a) * cfg.r, 0, Math.sin(a) * cfg.r)); }
+      const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(ring),
+        new THREE.LineDashedMaterial({ color: 0x7cc4ff, dashSize: 0.025, gapSize: 0.02, transparent: true, opacity: 0.28 }));
+      line.computeLineDistances(); pivot.add(line); scene.add(pivot); orbitPlanes.set(key, pivot);
+    }
+    const sat = buildSatellite(cfg.color);
+    const h = cfg.r - 1.0;
+    const coneGeo = new THREE.ConeGeometry(0.075, h, 32, 1, true); coneGeo.rotateX(-Math.PI / 2); coneGeo.translate(0, 0, h / 2);
+    const beam = new THREE.Mesh(coneGeo, new THREE.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(cfg.color) } },
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, ...satBeamShader }));
+    const holder = new THREE.Group(); holder.add(sat); holder.add(beam); pivot.add(holder);
+    const label = document.createElement("div"); label.className = "globe-label sat";
+    label.innerHTML = `<i></i><span>${cfg.name}</span><small>${cfg.tag}</small>`;
+    label.style.setProperty("--c", `#${cfg.color.toString(16).padStart(6, "0")}`);
+    labelLayer.append(label);
+    satellites.push({ cfg, holder, sat, beam, label, angle: cfg.phase });
+  }
+  const satWorld = new THREE.Vector3(), origin = new THREE.Vector3(0, 0, 0);
+
   // ---------- state, layers and live data ----------
   const state = { layer: opts.layer || "aod", snapshot: null, live: {}, hoverCountry: null, hoverRegion: null, flying: null, spin: !REDUCED };
   function kindOf(row) {
@@ -358,7 +420,7 @@ export async function createGlobe(wrap, opts = {}) {
   function setShift(f) { opts.shift = f; resize(); }
 
   // ---------- render loop (paused when off screen) ----------
-  let visible = true, last = performance.now(), time = 0;
+  let visible = true, last = performance.now(), time = 0, lastHud = 0;
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(wrap);
   const tmp = new THREE.Vector3(), camDir = new THREE.Vector3();
   function frame(now) {
@@ -387,6 +449,25 @@ export async function createGlobe(wrap, opts = {}) {
       m.label.style.pointerEvents = show ? "auto" : "none";
       const sx = ((tmp.x + 1) / 2) * w, sy = ((1 - tmp.y) / 2) * h;
       m.label.style.transform = `translate(${sx}px, ${sy}px)` + (sx > w - 200 ? " translateX(calc(-100% - 20px))" : "");
+    }
+    for (const st of satellites) {
+      st.angle += (REDUCED ? 0 : dt) * st.cfg.speed;
+      st.holder.position.set(Math.cos(st.angle) * st.cfg.r, 0, Math.sin(st.angle) * st.cfg.r);
+      st.holder.getWorldPosition(satWorld);
+      st.holder.lookAt(origin);
+      st.beam.material.uniforms.uTime.value = time;
+      st.sat.userData.beacon.visible = Math.sin(time * 6 + st.cfg.phase * 3) > 0;
+      const facing = satWorld.clone().normalize().dot(camDir);
+      tmp.copy(satWorld).project(camera);
+      const sx = ((tmp.x + 1) / 2) * w, sy = ((1 - tmp.y) / 2) * h;
+      const show = facing > -0.12;
+      st.label.style.opacity = show ? 1 : 0;
+      st.label.style.transform = `translate(${sx}px, ${sy}px)` + (sx > w - 200 ? " translateX(calc(-100% - 20px))" : "");
+    }
+    if (opts.onCamera && now - lastHud > 150) {
+      lastHud = now;
+      const ll = vec3ToLatLon(camera.position);
+      opts.onCamera(ll.lat, ll.lon, (camera.position.length() - 1) * 6371);
     }
     updateHover();
     renderer.render(scene, camera);

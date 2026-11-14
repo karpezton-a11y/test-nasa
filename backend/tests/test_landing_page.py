@@ -27,7 +27,7 @@ def test_landing_assets_are_served_and_compressed(client):
     page = client.get("/")
     for src in ("/static/fx.js", "/static/globe.js", "/static/vendor/three.module.min.js",
                 "/static/vendor/OrbitControls.js", "/static/data/countries.json", "/static/data/globe_snapshot.json",
-                "/static/logo.svg"):
+                "/static/logo.svg", "/static/rocket.js", "/static/mascot.js"):
         res = client.get(src, headers={"Accept-Encoding": "gzip"})
         assert res.status_code == 200, src
     big = client.get("/static/vendor/three.module.min.js", headers={"Accept-Encoding": "gzip"})
@@ -94,3 +94,18 @@ def test_no_nasa_insignia_and_a_clear_disclaimer():
     assert not any(k in n for n in names for k in ("meatball", "insignia", "nasa-logo", "nasa_logo", "worm"))
     html = (FRONTEND / "index.html").read_text(encoding="utf-8")
     assert "not endorsed by NASA" in html
+
+
+def test_mission_sections_and_their_data_routes(real_client):
+    html = (FRONTEND / "index.html").read_text(encoding="utf-8")
+    for section in ("missions", "climate", "vitals", "finale"):
+        assert f'id="{section}"' in html, section
+    # Warming stripes ask /analyze/detail for air temperature in each listed place: every one must be served.
+    for region in re.findall(r'class="chip(?: active)?" data-region="(\w+)"', html):
+        res = real_client.post("/api/v1/analyze/detail", json={"region_id": region, "variable": "air_temperature", "season": "all"})
+        assert res.status_code == 200, region
+        assert len(res.json()["result"]["analysis"]["fit"]) >= 9 * 12
+    # Vital signs read the catalogue themes.
+    catalog = real_client.get("/api/v1/catalog").json()["result"]
+    assert {"air", "heat", "water", "land", "ice", "ocean"} <= set(catalog["themes"])
+    assert sum(v["available_now"] for v in catalog["variables"]) == 4
