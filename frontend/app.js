@@ -366,24 +366,35 @@ async function playDemo(demo, log) {
   log.append(el("p", { class: "muted" }, "What to notice: " + demo.what_to_notice));
 }
 
-// The landing page (globe markers, case files) opens a region + variable here.
-window.ttOpenAnalysis = (regionId, variable) => {
+// The landing page (globe markers, case files, the detective flow) opens a region + variable here.
+let metaReady = null;
+const ensureMeta = () => (metaReady ||= loadMeta());
+window.ttOpenAnalysis = async (regionId, variable) => {
+  await ensureMeta();
   if (![...$("#region").options].some((o) => o.value === regionId)) return;
   $("#region").value = regionId; fillVariables();
   if ([...$("#variable").options].some((o) => o.value === variable)) $("#variable").value = variable;
   describeVariable(); openTab("analyze"); $("#analyze-form").requestSubmit();
 };
 
-// Show a first result straight away so the page is never empty.
-loadMeta().then(() => {
-  if ([...$("#variable").options].some((o) => o.value === "aod")) { $("#variable").value = "aod"; describeVariable(); }
-  if ($("#region").options.length) $("#analyze-form").requestSubmit();
-  // Deep links such as #more=interaction open that view directly (handy for demos).
-  const sm = location.hash.match(/^#scan=(\w+)/);
-  if (sm) { $("#scan-variable").value = sm[1]; openTab("scan"); }
-  const lab = location.hash.match(/^#lab=(\w+):(\w+)/);
-  if (lab) window.ttOpenAnalysis(lab[1], lab[2]);
-  const m = location.hash.match(/^#more=(\w+)/);
-  if (m) { $("#more-form").elements.what.value = m[1]; openTab("more"); $("#more-form").requestSubmit(); }
-});
-loadDemos();
+// The lab loads its data only when it is about to be seen (or a deep link asks for it),
+// so the landing page appears fast and the server is not busy at start-up.
+let labStarted = false;
+function startLab() {
+  if (labStarted) return; labStarted = true;
+  ensureMeta().then(() => {
+    const lab = location.hash.match(/^#lab=(\w+):(\w+)/);
+    const sm = location.hash.match(/^#scan=(\w+)/);
+    const m = location.hash.match(/^#more=(\w+)/);
+    if (lab) window.ttOpenAnalysis(lab[1], lab[2]);
+    else if (sm) { $("#scan-variable").value = sm[1]; openTab("scan"); }
+    else if (m) { $("#more-form").elements.what.value = m[1]; openTab("more"); $("#more-form").requestSubmit(); }
+    else if (!$("#analyze-out").childElementCount) {
+      if ([...$("#variable").options].some((o) => o.value === "aod")) { $("#variable").value = "aod"; describeVariable(); }
+      if ($("#region").options.length) $("#analyze-form").requestSubmit();
+    }
+  });
+  loadDemos();
+}
+if (/^#(lab=|scan=|more=)/.test(location.hash)) { startLab(); document.getElementById("lab").scrollIntoView(); }
+new IntersectionObserver(([e], o) => { if (e.isIntersecting) { startLab(); o.disconnect(); } }, { rootMargin: "900px" }).observe(document.getElementById("lab"));

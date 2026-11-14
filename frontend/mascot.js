@@ -49,6 +49,9 @@ const ASTRONAUT = `
 </svg>`;
 
 const TIPS = {
+  investigate: "Answer three quick questions and I'll find NASA variables that fit. Live ones can be tested right away.",
+  demos: "Press a demo and watch: each step runs the real trend engine and tells you what's happening.",
+  glossary: "Tap any dotted word on the page for a plain-English meaning.",
   hero: "Drag the globe and hover any country. The glowing markers are real NASA trends, coloured live.",
   missions: "These are the spacecraft behind our data. Aqua and Aura fly in the same orbit, minutes apart.",
   cases: "Watch for “not significant”. Delhi's NO₂ dips, but it could be noise, and saying so is honest science.",
@@ -83,7 +86,7 @@ export function startMascot() {
     for (const e of entries) {
       if (!e.isIntersecting) continue;
       current = e.target.id;
-      if (!seen.has(current) && current !== "hero" && document.body.classList.contains("intro-done")) {
+      if (!seen.has(current) && current !== "hero" && !dock.classList.contains("greeting") && innerWidth >= 760) {
         seen.add(current); say(TIPS[current], 5500);
         dock.classList.add("wave"); setTimeout(() => dock.classList.remove("wave"), 1600);
       }
@@ -91,40 +94,30 @@ export function startMascot() {
   }, { rootMargin: "-40% 0px -40% 0px" });
   Object.keys(TIPS).forEach((id) => { const n = document.getElementById(id); if (n) io.observe(n); });
 
-  // ---------- arrival: float in, wave, say hello ----------
+  // ---------- arrival: Trace waves hello from the corner. Nothing blocks the page. ----------
   let skip = false;
-  try { skip = sessionStorage.getItem("tt-intro") === "1"; } catch { /* storage blocked: show it */ }
-  if (skip) { document.body.classList.add("intro-done"); return; }
-  const intro = document.createElement("div");
-  intro.className = "intro";
-  intro.innerHTML = `<div class="intro-stage">${ASTRONAUT}
-      <div class="intro-bubble"><span class="mono">Incoming transmission</span><p class="typed"></p>
-        <div class="intro-actions"><button class="btn btn-primary" type="button" data-go><span>Let's investigate</span></button>
-        <button class="btn btn-ghost" type="button" data-skip><span>Skip</span></button></div></div></div>`;
-  document.body.append(intro);
-  const msg = "Hi, I'm Trace! I fly with NASA satellite data. Let's find out what's really changing on Earth, and what's just noise.";
-  const typed = intro.querySelector(".typed");
-  function begin() {
-    intro.classList.add("show");
-    if (REDUCED) { typed.textContent = msg; return; }
-    let i = 0; const t = setInterval(() => { typed.textContent = msg.slice(0, ++i); if (i >= msg.length) clearInterval(t); }, 22);
-    setTimeout(finish, 11000);  // never hold the page hostage
-  }
-  let done = false;
-  function finish() {
-    if (done) return; done = true;
-    try { sessionStorage.setItem("tt-intro", "1"); } catch { /* ignore */ }
-    const from = intro.querySelector(".astro").getBoundingClientRect(), to = dock.querySelector(".astro").getBoundingClientRect();
-    const fly = intro.querySelector(".astro");
-    fly.style.transition = REDUCED ? "none" : "transform .9s cubic-bezier(.6,-0.2,.3,1.2)";
-    fly.style.transformOrigin = "top left";
-    fly.style.transform = `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${to.width / from.width})`;
-    intro.classList.add("leaving");
-    setTimeout(() => { intro.remove(); document.body.classList.add("intro-done"); }, REDUCED ? 0 : 950);
-  }
-  intro.querySelector("[data-go]").addEventListener("click", finish);
-  intro.querySelector("[data-skip]").addEventListener("click", finish);
-  addEventListener("keydown", (e) => { if (e.key === "Escape" && intro.isConnected) finish(); });
-  const whenReady = () => (document.body.classList.contains("ready") ? begin() : setTimeout(whenReady, 120));
-  whenReady();
+  try { skip = sessionStorage.getItem("tt-intro") === "1"; } catch { /* storage blocked */ }
+  document.body.classList.add("intro-done");
+  if (skip) return;
+  try { sessionStorage.setItem("tt-intro", "1"); } catch { /* ignore */ }
+  dock.classList.add("greeting");
+  bubble.querySelector("p").innerHTML = "";
+  const msg = "Hi, I'm Trace! I fly with NASA satellite data. Want to find out what's really changing on Earth?";
+  const actions = document.createElement("div");
+  actions.className = "greet-actions";
+  actions.innerHTML = `<a class="btn btn-primary btn-small" href="#investigate"><span>Start investigating</span></a><a class="btn btn-ghost btn-small" href="#demos"><span>▶ Watch a demo</span></a>`;
+  bubble.append(actions);
+  bubble.hidden = false; dock.classList.add("talking", "wave");
+  let k = 0;
+  const type = setInterval(() => { text.textContent = msg.slice(0, ++k); if (k >= msg.length) clearInterval(type); }, REDUCED ? 0 : 20);
+  const end = () => {
+    clearInterval(type);
+    if (!dock.classList.contains("greeting")) return;
+    dock.classList.remove("greeting", "wave"); actions.remove(); bubble.hidden = true; dock.classList.remove("talking");
+    removeEventListener("scroll", onScroll);
+  };
+  const onScroll = () => { if (scrollY > innerHeight * 0.6) end(); };
+  addEventListener("scroll", onScroll, { passive: true });
+  actions.addEventListener("click", end);
+  setTimeout(end, 14000);
 }

@@ -12,7 +12,8 @@ export function startRocket() {
   canvas.setAttribute("aria-hidden", "true");
   document.body.append(canvas);
   const ctx = canvas.getContext("2d");
-  let W = 0, H = 0, dpr = 1, enabled = false;
+  // Only a narrow strip on the right is drawn (not the whole screen): far fewer pixels per frame.
+  let W = 0, H = 0, VW = 0, dpr = 1, enabled = false, S = 0.8, compact = false;
 
   // Pre-rendered soft sprites (cheap to draw thousands of times).
   function sprite(r, g, b) {
@@ -23,17 +24,28 @@ export function startRocket() {
   }
   const FIRE = [sprite(255, 232, 170), sprite(255, 178, 70), sprite(255, 120, 35), sprite(220, 60, 25), sprite(110, 35, 20)];
   const SMOKE = sprite(150, 158, 172);
+  const GLOW = sprite(255, 140, 50);
 
   const fire = [], smoke = [];
   let p = 0, pShown = 0, lastY = scrollY, vel = 0, thrust = 0, tilt = 0, lastT = performance.now(), stage = "", stageFlash = 0;
 
   function resize() {
-    dpr = Math.min(devicePixelRatio, 2); W = innerWidth; H = innerHeight;
-    canvas.width = W * dpr; canvas.height = H * dpr; canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
-    enabled = W >= 1240;
+    VW = innerWidth; H = innerHeight;
+    enabled = VW >= 600;
+    // Scale with the screen so it is visible at any zoom level; the page reserves a matching rail (--rail).
+    S = VW >= 1500 ? 0.8 : VW >= 1100 ? 0.66 : VW >= 800 ? 0.54 : 0.44;
+    compact = VW < 1100;
+    W = compact ? 120 : 210;
+    dpr = Math.min(devicePixelRatio, 1.5);
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
     canvas.hidden = !enabled;
+    document.documentElement.style.setProperty("--rail", enabled ? `${Math.round(60 * S / 0.8)}px` : "0px");
+    dirty = true;
   }
-  addEventListener("resize", resize); resize();
+  let dirty = true;
+  addEventListener("scroll", () => { dirty = true; }, { passive: true });
+  addEventListener("resize", resize);
 
   const progress = () => { const max = document.documentElement.scrollHeight - innerHeight; return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0; };
   const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
@@ -71,11 +83,11 @@ export function startRocket() {
   function flame(x, y, a, k, t) {
     // big ambient glow
     ctx.save(); ctx.globalCompositeOperation = "lighter";
-    const gr = ctx.createRadialGradient(x, y + 18, 0, x, y + 18, 90 * k + 20);
-    gr.addColorStop(0, `rgba(255,140,50,${0.28 * k})`); gr.addColorStop(1, "rgba(255,120,40,0)");
-    ctx.fillStyle = gr; ctx.fillRect(x - 130, y - 110, 260, 260);
+    const gR = (90 * k + 20) * S / 0.8;
+    ctx.globalAlpha = 0.45 * k; ctx.drawImage(GLOW, x - gR, y + 18 - gR, gR * 2, gR * 2); ctx.globalAlpha = 1;
     // plume core: outer orange, inner white-blue (teardrop), length flickers
     ctx.translate(x, y); ctx.rotate(a);
+    ctx.scale(S / 0.8, S / 0.8);
     const L = (40 + 85 * k) * (0.9 + Math.random() * 0.18), wid = 8 + 4 * k;
     for (const [w, len, c0, c1] of [[wid * 1.5, L, "rgba(255,100,30,.6)", "rgba(255,50,15,0)"], [wid, L * 0.72, "rgba(255,190,90,.85)", "rgba(255,120,40,0)"], [wid * 0.45, L * 0.4, "rgba(255,250,235,.95)", "rgba(170,210,255,0)"]]) {
       const g2 = ctx.createLinearGradient(0, 6, 0, 6 + len); g2.addColorStop(0, c0); g2.addColorStop(1, c1);
@@ -96,24 +108,28 @@ export function startRocket() {
 
   function emit(x, y, a, k, dt) {
     const nx = x - Math.sin(a) * 8, ny = y + Math.cos(a) * 8;
-    const nFire = Math.round((40 + 140 * k) * dt * 6);
+    const nFire = Math.round((24 + 80 * k) * dt * 6);
+    const z = S / 0.8;
     for (let i = 0; i < nFire; i++) {
       const sp = 260 + 420 * k * Math.random();
-      fire.push({ x: nx + (Math.random() - 0.5) * 8, y: ny, vx: (Math.random() - 0.5) * 70 - Math.sin(a) * sp * 0.3, vy: sp, life: 0, max: 0.18 + Math.random() * 0.32, size: 9 + 16 * k * Math.random() });
+      fire.push({ x: nx + (Math.random() - 0.5) * 8 * z, y: ny, vx: ((Math.random() - 0.5) * 70 - Math.sin(a) * sp * 0.3) * z, vy: sp * z, life: 0, max: 0.18 + Math.random() * 0.32, size: (10 + 18 * k * Math.random()) * z });
     }
-    const nSmoke = Math.round((6 + 30 * k) * dt * 6);
+    const nSmoke = Math.round((4 + 16 * k) * dt * 6);
     for (let i = 0; i < nSmoke; i++) {
-      smoke.push({ x: nx + (Math.random() - 0.5) * 16, y: ny + 40 + Math.random() * 40 * k, vx: (Math.random() - 0.5) * 50, vy: 40 + 90 * Math.random() * k, life: 0, max: 1.4 + Math.random() * 1.4, size: 16 + Math.random() * 14, a: 0.09 + Math.random() * 0.1 });
+      smoke.push({ x: nx + (Math.random() - 0.5) * 16 * z, y: ny + (40 + Math.random() * 40 * k) * z, vx: (Math.random() - 0.5) * 40 * z, vy: (40 + 90 * Math.random() * k) * z, life: 0, max: 1.2 + Math.random() * 1.2, size: (18 + Math.random() * 14) * z, a: 0.1 + Math.random() * 0.1 });
     }
   }
   function steam(x, y, dt) {   // idle venting on the pad
-    if (Math.random() < dt * 8) smoke.push({ x: x + (Math.random() - 0.5) * 30, y: y + 4, vx: (Math.random() - 0.5) * 40, vy: -10 - Math.random() * 20, life: 0, max: 1.6, size: 10, a: 0.08 });
+    if (Math.random() < dt * 5) smoke.push({ x: x + (Math.random() - 0.5) * 30, y: y + 4, vx: (Math.random() - 0.5) * 40, vy: -10 - Math.random() * 20, life: 0, max: 1.6, size: 10, a: 0.08 });
   }
 
   function frame(now) {
     requestAnimationFrame(frame);
     const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
     if (!enabled || document.hidden) return;
+    // Nothing moving (in orbit, or parked with no particles): skip the frame entirely.
+    if (!dirty && thrust < 0.01 && fire.length === 0 && smoke.length === 0 && Math.abs(p - pShown) < 0.0005 && pShown > 0.006) return;
+    dirty = false;
     p = progress();
     const dy = scrollY - lastY; lastY = scrollY;
     vel += ((dy / Math.max(dt, 0.001)) - vel) * Math.min(1, dt * 5);
@@ -124,31 +140,32 @@ export function startRocket() {
     thrust += (target - thrust) * Math.min(1, dt * 5);
     tilt += ((Math.max(-0.14, Math.min(0.14, vel * 0.00012)) + (thrust > 0.1 ? Math.sin(now / 90) * 0.01 * thrust : 0)) - tilt) * Math.min(1, dt * 4);
 
-    const x = W - 46 + Math.sin(now / 1400) * (onPad ? 0 : 3), top = 200, bottom = H - 40;
+    const tx = W - Math.round(46 * S / 0.8), x = tx + Math.sin(now / 1400) * (onPad ? 0 : 3), top = 200, bottom = H - 40;
     const y = bottom - (bottom - top) * ease(pShown);
-    const s = 0.82;
+    const s = S;
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
 
     // flight track and stage marks
     ctx.strokeStyle = "rgba(124,196,255,.16)"; ctx.setLineDash([3, 6]); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(W - 46, top - 40); ctx.lineTo(W - 46, bottom + 10); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(tx, top - 40); ctx.lineTo(tx, bottom + 10); ctx.stroke(); ctx.setLineDash([]);
     const prog = ctx.createLinearGradient(0, bottom, 0, top); prog.addColorStop(0, "rgba(255,122,69,.7)"); prog.addColorStop(1, "rgba(124,196,255,.7)");
-    ctx.strokeStyle = prog; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W - 46, bottom + 10); ctx.lineTo(W - 46, y + 10); ctx.stroke();
+    ctx.strokeStyle = prog; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(tx, bottom + 10); ctx.lineTo(tx, y + 10); ctx.stroke();
     ctx.font = "600 10px 'JetBrains Mono', monospace"; ctx.textAlign = "right";
     for (const [at, name] of STAGES.slice(1)) {
       const yy = bottom - (bottom - top) * ease(at), passed = pShown >= at;
       ctx.fillStyle = passed ? "rgba(255,200,107,.9)" : "rgba(143,163,191,.45)";
-      ctx.beginPath(); ctx.arc(W - 46, yy, passed ? 3 : 2, 0, Math.PI * 2); ctx.fill();
-      if (Math.abs(yy - y) > 140) ctx.fillText(name, W - 58, yy + 3.5);
+      ctx.beginPath(); ctx.arc(tx, yy, passed ? 3 : 2, 0, Math.PI * 2); ctx.fill();
+      if (!compact && Math.abs(yy - y) > 140) ctx.fillText(name, tx - 12, yy + 3.5);
     }
     // launch pad
     if (pShown < 0.08) {
       ctx.globalAlpha = 1 - pShown / 0.08;
-      ctx.fillStyle = "#1c2740"; ctx.fillRect(W - 80, bottom + 8, 68, 5);
+      const z = S / 0.8, tw = tx - 30 * z;
+      ctx.fillStyle = "#1c2740"; ctx.fillRect(tx - 34 * z, bottom + 8, 68 * z, 5);
       ctx.strokeStyle = "#3b4c6e"; ctx.lineWidth = 2; ctx.beginPath();
-      ctx.moveTo(W - 76, bottom + 8); ctx.lineTo(W - 76, bottom - 112); ctx.moveTo(W - 76, bottom - 80); ctx.lineTo(W - 60, bottom - 80);
-      for (let i = 0; i < 6; i++) { ctx.moveTo(W - 80, bottom + 8 - i * 20); ctx.lineTo(W - 72, bottom - 12 - i * 20); }
+      ctx.moveTo(tw, bottom + 8); ctx.lineTo(tw, bottom - 112 * z); ctx.moveTo(tw, bottom - 80 * z); ctx.lineTo(tw + 16 * z, bottom - 80 * z);
+      for (let i = 0; i < 6; i++) { ctx.moveTo(tw - 4 * z, bottom + 8 - i * 20 * z); ctx.lineTo(tw + 4 * z, bottom - 12 * z - i * 20 * z); }
       ctx.stroke(); ctx.globalAlpha = 1;
     }
 
@@ -169,8 +186,8 @@ export function startRocket() {
         ctx.globalAlpha = (1 - t) * (t < 0.2 ? 0.45 : 0.6); ctx.drawImage(img, q.x - r, q.y - r, r * 2, r * 2);
       }
       ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
-      if (fire.length > 1600) fire.splice(0, fire.length - 1600);
-      if (smoke.length > 500) smoke.splice(0, smoke.length - 500);
+      if (fire.length > 420) fire.splice(0, fire.length - 420);
+      if (smoke.length > 140) smoke.splice(0, smoke.length - 140);
     }
     if (thrust > 0.02) flame(x - Math.sin(tilt) * 6 * s, y + Math.cos(tilt) * 4 * s, tilt, REDUCED ? 0.4 : thrust, now);
     drawRocket(x, y, tilt, s);
@@ -180,6 +197,7 @@ export function startRocket() {
     let name = STAGES[0][1]; for (const [at, n] of STAGES) if (pShown >= at) name = n;
     if (name !== stage) { stage = name; stageFlash = 1.6; }
     stageFlash = Math.max(0, stageFlash - dt);
+    if (compact) return;   // small screens: rocket and flame only, no text
     ctx.textAlign = "right"; ctx.font = "600 11px 'JetBrains Mono', monospace";
     ctx.fillStyle = "rgba(232,238,247,.85)"; ctx.fillText(`ALT ${alt} km`, x - 44, y - 70);
     ctx.fillStyle = "rgba(143,163,191,.8)"; ctx.fillText(`THR ${Math.round(thrust * 100)}%`, x - 44, y - 56);
@@ -189,5 +207,6 @@ export function startRocket() {
       ctx.globalAlpha = 1;
     }
   }
+  resize();
   requestAnimationFrame(frame);
 }

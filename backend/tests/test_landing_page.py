@@ -109,3 +109,33 @@ def test_mission_sections_and_their_data_routes(real_client):
     catalog = real_client.get("/api/v1/catalog").json()["result"]
     assert {"air", "heat", "water", "land", "ice", "ocean"} <= set(catalog["themes"])
     assert sum(v["available_now"] for v in catalog["variables"]) == 4
+
+
+def test_guided_ux_sections_and_glossary_terms(client):
+    html = client.get("/").text
+    for section in ("investigate", "demos", "glossary"):
+        assert f'id="{section}"' in html, section
+    assert client.get("/static/guide.js").status_code == 200
+    guide = (FRONTEND / "guide.js").read_text(encoding="utf-8")
+    glossary_block = guide[guide.index("export const GLOSSARY"):guide.index("// ----", guide.index("export const GLOSSARY"))]
+    known = set(re.findall(r'^\s+"?([\w-]+)"?: \[', glossary_block, flags=re.M))
+    used = set(re.findall(r'data-term="([\w-]+)"', html)) | set(re.findall(r'term\("([\w-]+)"', guide))
+    assert used and used <= known, used - known
+
+
+def test_wizard_choices_match_the_discover_api(client):
+    guide = (FRONTEND / "guide.js").read_text(encoding="utf-8")
+    choices = client.get("/api/v1/discover/questions").json()["result"]["choices"]
+    themes = set(re.findall(r'\["(\w+)", "[^"]+", "[^"]+"\]', guide[guide.index("const THEMES"):guide.index("const PLACE_ICON")]))
+    places = set(re.findall(r'\["(\w+)", "[^"]+", "[^"]+"\]', guide[guide.index("const PLACES"):guide.index("export const GLOSSARY")]))
+    assert themes == set(choices["themes"])
+    assert places == set(choices["place_types"])
+
+
+def test_demo_player_can_play_every_demo(real_client):
+    for demo in real_client.get("/api/v1/demos").json()["result"]:
+        for step in demo["steps"]:
+            if not step.get("method"):
+                continue
+            res = (real_client.post(step["path"], json=step["body"]) if step["method"] == "POST" else real_client.get(step["path"]))
+            assert res.status_code == 200, (demo["id"], step["path"], res.text[:200])

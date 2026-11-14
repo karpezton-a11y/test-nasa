@@ -1,29 +1,17 @@
 // TrendTrace motion layer: boot sequence, globe wiring, scroll story, counters, tilt, magnetic buttons.
 // Plain ES module, no dependencies besides globe.js. Everything respects prefers-reduced-motion.
-import { createGlobe } from "/static/globe.js";
 import { startRocket } from "/static/rocket.js";
 import { startMascot } from "/static/mascot.js";
-
-startRocket();
-startMascot();
+import { initGuide, THEME_ICON } from "/static/guide.js";
 
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const FINE = matchMedia("(pointer: fine)").matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-// ---------- boot ----------
-const boot = $("#boot");
-const bootStart = performance.now();
-function endBoot() {
-  if (!boot || boot.classList.contains("done")) return;
-  const wait = REDUCED ? 0 : Math.max(0, 1300 - (performance.now() - bootStart));
-  setTimeout(() => { boot.classList.add("done"); document.body.classList.add("ready"); }, wait);
-}
-setTimeout(endBoot, 2600); // never block the page
-
 // ---------- open the lab on a region + variable ----------
 function openInLab(region, variable) {
+  window.ttTrack && window.ttTrack("open_lab");
   $("#lab").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" });
   if (window.ttOpenAnalysis) window.ttOpenAnalysis(region, variable);
 }
@@ -33,7 +21,7 @@ const statusEl = $("#layer-status span");
 const LABELS = { aod: "Aerosol haze (MODIS)", no2: "NO₂ (OMI)", air_temperature: "Air temperature (NASA POWER)", rainfall: "Rainfall (GPM IMERG / NASA POWER)" };
 const hudLL = $("#hud-ll"), hudAlt = $("#hud-alt"), hudLayer = $("#hud-layer");
 let globe = null;
-createGlobe($("#globe-wrap"), {
+const startGlobe = () => import("/static/globe.js").then(({ createGlobe }) => createGlobe($("#globe-wrap"), {
   layer: "aod",
   onSelect: openInLab,
   onCamera(lat, lon, alt) {
@@ -47,8 +35,10 @@ createGlobe($("#globe-wrap"), {
     statusEl.textContent = `${source === "live" ? "Live" : "Last computed"} · ${LABELS[layer] || layer} · ${data.summary}`;
     $("#layer-status").classList.toggle("live", source === "live");
   },
-}).then((g) => { globe = g; endBoot(); })
-  .catch(() => { $("#globe-wrap").classList.add("no-webgl"); endBoot(); });
+})).then((g) => { globe = g; if (activeCase) applyCase(activeCase); })
+  .catch(() => { $("#globe-wrap").classList.add("no-webgl"); });
+// Let the page paint and become usable first; the 3D globe arrives a moment later.
+requestAnimationFrame(() => setTimeout(startGlobe, 60));
 
 $$(".layer-bar .chip").forEach((c) => c.addEventListener("click", () => globe && globe.setLayer(c.dataset.layer)));
 $$(".globe-zoom button").forEach((b) => b.addEventListener("click", () => globe && globe.zoom(Number(b.dataset.zoom))));
@@ -63,12 +53,15 @@ const caseObserver = new IntersectionObserver((entries) => {
     if (c === activeCase) continue;
     activeCase = c;
     cases.forEach((x) => x.classList.toggle("active", x === c));
-    if (!globe) continue;
-    globe.setLayer(c.dataset.layer);
-    globe.flyTo(Number(c.dataset.lat), Number(c.dataset.lon), Number(c.dataset.dist) || 2.8);
     runCounters(c);
+    applyCase(c);
   }
 }, { rootMargin: "-45% 0px -45% 0px" });
+function applyCase(c) {
+  if (!globe) return;
+  globe.setLayer(c.dataset.layer);
+  globe.flyTo(Number(c.dataset.lat), Number(c.dataset.lon), Number(c.dataset.dist) || 2.8);
+}
 cases.forEach((c) => {
   caseObserver.observe(c);
   $(".run", c).addEventListener("click", () => openInLab(c.dataset.region, c.dataset.variable));
@@ -151,7 +144,8 @@ if (FINE && !REDUCED) {
 
 // ---------- top bar ----------
 const bar = $(".topbar");
-addEventListener("scroll", () => bar.classList.toggle("scrolled", scrollY > 30), { passive: true });
+let barState = null;
+addEventListener("scroll", () => { const on = scrollY > 30; if (on !== barState) { barState = on; bar.classList.toggle("scrolled", on); } }, { passive: true });
 
 // ---------- lab tab glider ----------
 const glider = $(".tab-glider");
@@ -226,14 +220,6 @@ $$(".stripe-tabs .chip").forEach((c) => c.addEventListener("click", () => showSt
 new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { showStripes("AMAZON_ARC"); obs.disconnect(); } }, { rootMargin: "300px" }).observe($("#climate"));
 
 // ---------- vital signs from the variable catalogue ----------
-const THEME_ICON = {
-  air: '<path d="M6 14h22a5 5 0 1 0-5-5M6 20h30a5 5 0 1 1-5 5M6 26h14"/>',
-  heat: '<path d="M20 6a4 4 0 0 1 4 4v14a7 7 0 1 1-8 0V10a4 4 0 0 1 4-4z"/><path d="M20 16v12"/>',
-  water: '<path d="M20 6c6 8 10 13 10 18a10 10 0 0 1-20 0c0-5 4-10 10-18z"/>',
-  land: '<path d="M20 34V18"/><path d="M20 22c-8 0-12-6-12-12 8 0 12 5 12 12zM20 18c0-7 4-12 12-12 0 7-4 12-12 12z"/>',
-  ice: '<path d="M20 4v32M6 12l28 16M6 28l28-16M16 6l4 4 4-4M16 34l4-4 4 4"/>',
-  ocean: '<path d="M4 16c4-4 8-4 12 0s8 4 12 0 6-3 8-2M4 24c4-4 8-4 12 0s8 4 12 0 6-3 8-2M4 32c4-4 8-4 12 0s8 4 12 0 6-3 8-2"/>',
-};
 async function loadVitals() {
   const grid = $("#vitals-grid");
   try {
@@ -251,13 +237,23 @@ async function loadVitals() {
 }
 new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { loadVitals(); obs.disconnect(); } }, { rootMargin: "400px" }).observe($("#vitals"));
 
-// ---------- finale parallax ----------
-const finale = $("#finale"), layers = $$("#finale .layer"), sunEl = $("#finale .sun");
+// ---------- finale parallax (separate layers, composited transforms only) ----------
+const finale = $("#finale"), layers = $$("#finale .landscape-layer"), sunEl = $("#finale .sun");
+let finaleTick = false;
 addEventListener("scroll", () => {
-  if (REDUCED) return;
-  const r = finale.getBoundingClientRect();
-  if (r.top > innerHeight || r.bottom < 0) return;
-  const k = 1 - (r.top + r.height) / (innerHeight + r.height);   // 0 → 1 while it crosses the screen
-  layers.forEach((l, i) => { l.style.transform = `translateY(${(1 - k) * (i + 1) * 18}px)`; });
-  sunEl.style.transform = `translateY(${(1 - k) * 90}px)`;
+  if (REDUCED || finaleTick) return;
+  finaleTick = true;
+  requestAnimationFrame(() => {
+    finaleTick = false;
+    const r = finale.getBoundingClientRect();
+    if (r.top > innerHeight || r.bottom < 0) return;
+    const k = 1 - (r.top + r.height) / (innerHeight + r.height);
+    layers.forEach((l, i) => { l.style.transform = `translate3d(0, ${((1 - k) * (i + 1) * 22).toFixed(1)}px, 0)`; });
+    sunEl.style.transform = `translate3d(-50%, ${((1 - k) * 110).toFixed(1)}px, 0)`;
+  });
 }, { passive: true });
+
+// ---------- start the light modules ----------
+startRocket();
+startMascot();
+initGuide({ openInLab, flyTo: (id) => { globe && globe.focusRegion(id, 2.8); $("#top").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); } });

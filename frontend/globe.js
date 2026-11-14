@@ -103,6 +103,8 @@ const arcShader = {
 };
 
 // ---------- the globe ----------
+const idle = () => new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(() => r(), { timeout: 120 }) : setTimeout(r, 16)));
+
 export async function createGlobe(wrap, opts = {}) {
   const canvas = wrap.querySelector("canvas");
   const tip = wrap.querySelector(".globe-tip");
@@ -111,7 +113,9 @@ export async function createGlobe(wrap, opts = {}) {
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
   } catch (e) { wrap.classList.add("no-webgl"); throw e; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const maxPR = Math.min(devicePixelRatio, 1.5);
+  let pr = maxPR;                                   // adapted down automatically on slow devices
+  renderer.setPixelRatio(pr);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
@@ -124,30 +128,31 @@ export async function createGlobe(wrap, opts = {}) {
   const countries = await fetch("/static/data/countries.json").then((r) => r.json());
 
   // Surface texture: deep ocean, faint graticule, land fill and glowing borders.
-  const W = 4096, H = 2048, tex = document.createElement("canvas");
+  const W = 2048, H = 1024, tex = document.createElement("canvas");
   tex.width = W; tex.height = H;
   const g = tex.getContext("2d");
   const ocean = g.createLinearGradient(0, 0, 0, H);
   ocean.addColorStop(0, "#04101f"); ocean.addColorStop(0.5, "#061a33"); ocean.addColorStop(1, "#04101f");
   g.fillStyle = ocean; g.fillRect(0, 0, W, H);
-  g.strokeStyle = "rgba(90,150,220,0.10)"; g.lineWidth = 2;
+  g.strokeStyle = "rgba(90,150,220,0.10)"; g.lineWidth = 1;
   for (let lon = -180; lon <= 180; lon += 15) { const x = ((lon + 180) / 360) * W; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
   for (let lat = -75; lat <= 75; lat += 15) { const y = ((90 - lat) / 180) * H; g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
-  g.fillStyle = "#0c2747"; g.strokeStyle = "rgba(110,190,255,0.55)"; g.lineWidth = 2.2;
+  g.fillStyle = "#0c2747"; g.strokeStyle = "rgba(110,190,255,0.55)"; g.lineWidth = 1.3;
   for (const c of countries) { tracePolys(g, c.p, W, H); g.fill("evenodd"); g.stroke(); }
   const surface = new THREE.CanvasTexture(tex);
   surface.colorSpace = THREE.SRGBColorSpace;
   surface.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-  const globe = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96),
+  await idle();
+  const globe = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 64),
     new THREE.ShaderMaterial({ uniforms: { uMap: { value: surface } }, ...baseShader }));
   scene.add(globe);
 
   // Hover highlight lives on its own transparent layer, redrawn only when the country changes.
-  const hl = document.createElement("canvas"); hl.width = 2048; hl.height = 1024;
+  const hl = document.createElement("canvas"); hl.width = 1024; hl.height = 512;
   const hg = hl.getContext("2d"), hlTex = new THREE.CanvasTexture(hl);
   hlTex.colorSpace = THREE.SRGBColorSpace;
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.0015, 96, 72),
+  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.0015, 64, 48),
     new THREE.MeshBasicMaterial({ map: hlTex, transparent: true, depthWrite: false })));
 
   // Land dots: an even Fibonacci lattice, kept where the land mask is filled.
@@ -155,18 +160,20 @@ export async function createGlobe(wrap, opts = {}) {
   const mg = mask.getContext("2d", { willReadFrequently: true });
   mg.fillStyle = "#fff"; for (const c of countries) { tracePolys(mg, c.p, 1024, 512); mg.fill("evenodd"); }
   const md = mg.getImageData(0, 0, 1024, 512).data;
-  const N = 70000, pos = [], rnd = [], golden = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < N; i++) {
+  await idle();
+  const N = 46000, pos = [], rnd = [], golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < N; i++) {          // plain maths, no allocations: this loop runs once at start-up
     const y = 1 - (i / (N - 1)) * 2, rad = Math.sqrt(1 - y * y), th = golden * i;
-    const v = new THREE.Vector3(Math.cos(th) * rad, y, Math.sin(th) * rad);
-    const { lat, lon } = vec3ToLatLon(v);
+    const x = Math.cos(th) * rad, z = Math.sin(th) * rad;
+    let lon = Math.atan2(z, -x) / DEG - 180; if (lon < -180) lon += 360;
+    const lat = 90 - Math.acos(y) / DEG;
     const px = Math.min(1023, Math.floor(((lon + 180) / 360) * 1024)), py = Math.min(511, Math.floor(((90 - lat) / 180) * 512));
-    if (md[(py * 1024 + px) * 4] > 128) { v.multiplyScalar(1.004); pos.push(v.x, v.y, v.z); rnd.push(Math.random()); }
+    if (md[(py * 1024 + px) * 4] > 128) { pos.push(x * 1.004, y * 1.004, z * 1.004); rnd.push(Math.random()); }
   }
   const dotGeo = new THREE.BufferGeometry();
   dotGeo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
   dotGeo.setAttribute("aRand", new THREE.Float32BufferAttribute(rnd, 1));
-  const dotMat = new THREE.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uSize: { value: 9 * renderer.getPixelRatio() } },
+  const dotMat = new THREE.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uSize: { value: 10.5 * pr } },
     transparent: true, depthWrite: false, ...dotShader });
   scene.add(new THREE.Points(dotGeo, dotMat));
 
@@ -176,7 +183,7 @@ export async function createGlobe(wrap, opts = {}) {
 
   // Starfield.
   const sp = [], sr = [];
-  for (let i = 0; i < 5000; i++) {
+  for (let i = 0; i < 2500; i++) {
     const v = new THREE.Vector3().randomDirection().multiplyScalar(40 + Math.random() * 40);
     sp.push(v.x, v.y, v.z); sr.push(Math.random());
   }
@@ -245,6 +252,7 @@ export async function createGlobe(wrap, opts = {}) {
   const arc = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(arcPts), 240, 0.004, 8, false), arcMat);
   scene.add(arc);
 
+  await idle();
   // ---------- satellites: Aqua and Aura (A-Train, near-polar) and GPM (65°). Orbits not to scale. ----------
   scene.add(new THREE.AmbientLight(0xbfd4ff, 0.7));
   const sun = new THREE.DirectionalLight(0xffffff, 2.2); sun.position.set(5, 3, 4); scene.add(sun);
@@ -350,14 +358,15 @@ export async function createGlobe(wrap, opts = {}) {
 
   // ---------- hover: markers first, then countries ----------
   const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
-  let pointer = null;
-  canvas.addEventListener("pointermove", (e) => { const r = canvas.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width, h: r.height }; });
+  const unitSphere = new THREE.Sphere(new THREE.Vector3(), 1), hitPoint = new THREE.Vector3();
+  let pointer = null, pointerDirty = false, lastHover = 0;
+  canvas.addEventListener("pointermove", (e) => { const r = canvas.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width, h: r.height }; pointerDirty = true; });
   canvas.addEventListener("pointerleave", () => { pointer = null; setHover(null, null); tip.hidden = true; });
   canvas.addEventListener("click", () => { if (state.hoverRegion && opts.onSelect) opts.onSelect(state.hoverRegion, state.layer); });
   function drawHighlight(c) {
-    hg.clearRect(0, 0, 2048, 1024);
-    if (c) { hg.fillStyle = "rgba(255,138,76,0.28)"; hg.strokeStyle = "rgba(255,170,120,0.95)"; hg.lineWidth = 2.5;
-             tracePolys(hg, c.p, 2048, 1024); hg.fill("evenodd"); hg.stroke(); }
+    hg.clearRect(0, 0, 1024, 512);
+    if (c) { hg.fillStyle = "rgba(255,138,76,0.28)"; hg.strokeStyle = "rgba(255,170,120,0.95)"; hg.lineWidth = 1.6;
+             tracePolys(hg, c.p, 1024, 512); hg.fill("evenodd"); hg.stroke(); }
     hlTex.needsUpdate = true;
   }
   function setHover(country, regionId) {
@@ -369,13 +378,16 @@ export async function createGlobe(wrap, opts = {}) {
       if (m.group.visible && lat >= s && lat <= n && lon >= w && lon <= e) return m; }
     return null;
   }
-  function updateHover() {
+  function updateHover(now) {
     if (!pointer) return;
+    if (!pointerDirty && now - lastHover < 120) return;   // globe still turns under a resting pointer
+    pointerDirty = false; lastHover = now;
     mouse.set((pointer.x / pointer.w) * 2 - 1, -(pointer.y / pointer.h) * 2 + 1);
     ray.setFromCamera(mouse, camera);
     const mh = ray.intersectObjects(hitTargets.filter((h) => h.parent.visible), false)[0];
-    const gh = ray.intersectObject(globe, false)[0];
-    if (!gh && !mh) { setHover(null, null); tip.hidden = true; return; }
+    const gp = ray.ray.intersectSphere(unitSphere, hitPoint);   // exact and ~free, no triangle tests
+    const gh = gp ? { point: gp } : null;
+    if (!gh && !mh) { setHover(null, null); if (!tip.hidden) tip.hidden = true; return; }
     const ll = vec3ToLatLon((gh || mh).point);
     const country = gh ? countryAt(countries, ll.lat, ll.lon) : null;
     const m = mh ? markers.get(mh.object.userData.regionId) : regionHere(ll.lat, ll.lon);
@@ -397,7 +409,8 @@ export async function createGlobe(wrap, opts = {}) {
   let shift = 0;
   function resize() {
     const w = wrap.clientWidth, h = wrap.clientHeight;
-    renderer.setSize(w, h, false);
+    renderer.setPixelRatio(pr); renderer.setSize(w, h, false);
+    dotMat.uniforms.uSize.value = 10.5 * pr;
     camera.aspect = w / h;
     shift = w > 980 ? -w * (opts.shift ?? 0.2) : 0;
     camera.setViewOffset(w, h, shift, 0, w, h);
@@ -423,10 +436,24 @@ export async function createGlobe(wrap, opts = {}) {
   let visible = true, last = performance.now(), time = 0, lastHud = 0;
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(wrap);
   const tmp = new THREE.Vector3(), camDir = new THREE.Vector3();
+  function setLabel(el, opacity, sx, sy, w, clickable) {   // touch the DOM only when something changed
+    const tf = `translate3d(${sx}px, ${sy}px, 0)` + (sx > w - 200 ? " translateX(calc(-100% - 20px))" : "");
+    if (el._tf !== tf) { el.style.transform = tf; el._tf = tf; }
+    if (el._op !== opacity) { el.style.opacity = opacity; el._op = opacity; el.style.pointerEvents = clickable ? "auto" : "none"; }
+  }
+  let frames = 0, frameTime = 0;
   function frame(now) {
     requestAnimationFrame(frame);
     if (!visible || document.hidden) { last = now; return; }
-    const dt = Math.min(0.05, (now - last) / 1000); last = now; time += REDUCED ? 0 : dt;
+    const raw = now - last, dt = Math.min(0.05, raw / 1000); last = now; time += REDUCED ? 0 : dt;
+    // Adaptive quality: if frames are slow, render fewer pixels (sharpness drops a little, smoothness stays).
+    frames++; frameTime += raw;
+    if (frames === 90) {
+      const avg = frameTime / frames;
+      if (avg > 24 && pr > 0.75) { pr = Math.max(0.75, pr - 0.25); resize(); }
+      else if (avg < 12 && pr < maxPR) { pr = Math.min(maxPR, pr + 0.25); resize(); }
+      frames = 0; frameTime = 0;
+    }
     if (state.flying) {
       const f = state.flying, t = Math.min(1, Math.max(0, (now - f.t0) / f.ms)), k = ease(t);
       const qq = new THREE.Quaternion().slerp(f.qa, k);
@@ -445,10 +472,8 @@ export async function createGlobe(wrap, opts = {}) {
       const facing = m.normal.dot(camDir);
       tmp.copy(m.normal).multiplyScalar(1.03).project(camera);
       const show = facing > 0.18;
-      m.label.style.opacity = show ? Math.min(1, (facing - 0.18) * 4) : 0;
-      m.label.style.pointerEvents = show ? "auto" : "none";
-      const sx = ((tmp.x + 1) / 2) * w, sy = ((1 - tmp.y) / 2) * h;
-      m.label.style.transform = `translate(${sx}px, ${sy}px)` + (sx > w - 200 ? " translateX(calc(-100% - 20px))" : "");
+      const sx = Math.round(((tmp.x + 1) / 2) * w), sy = Math.round(((1 - tmp.y) / 2) * h);
+      setLabel(m.label, show ? Math.min(1, (facing - 0.18) * 4).toFixed(2) : "0", sx, sy, w, show);
     }
     for (const st of satellites) {
       st.angle += (REDUCED ? 0 : dt) * st.cfg.speed;
@@ -461,18 +486,19 @@ export async function createGlobe(wrap, opts = {}) {
       tmp.copy(satWorld).project(camera);
       const sx = ((tmp.x + 1) / 2) * w, sy = ((1 - tmp.y) / 2) * h;
       const show = facing > -0.12;
-      st.label.style.opacity = show ? 1 : 0;
-      st.label.style.transform = `translate(${sx}px, ${sy}px)` + (sx > w - 200 ? " translateX(calc(-100% - 20px))" : "");
+      setLabel(st.label, show ? "1" : "0", Math.round(sx), Math.round(sy), w, false);
     }
     if (opts.onCamera && now - lastHud > 150) {
       lastHud = now;
       const ll = vec3ToLatLon(camera.position);
       opts.onCamera(ll.lat, ll.lon, (camera.position.length() - 1) * 6371);
     }
-    updateHover();
+    updateHover(now);
     renderer.render(scene, camera);
   }
+  try { await renderer.compileAsync(scene, camera); } catch { /* older browsers compile on first frame */ }
   requestAnimationFrame(frame);
+  wrap.classList.add("globe-ready");
 
   return {
     flyTo, setSpin, setShift,

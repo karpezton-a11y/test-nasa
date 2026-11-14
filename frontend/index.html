@@ -9,27 +9,16 @@
 <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"></noscript>
 <link rel="stylesheet" href="/static/style.css">
 <script type="importmap">{ "imports": { "three": "/static/vendor/three.module.min.js" } }</script>
+<link rel="modulepreload" href="/static/vendor/three.module.min.js">
+<link rel="modulepreload" href="/static/globe.js">
+<link rel="preload" as="fetch" href="/static/data/countries.json" crossorigin>
 </head>
 <body>
 <a class="skip" href="#lab">Skip to the analysis lab</a>
-
-<!-- Boot sequence: hides as soon as the globe is ready (max ~2 s). -->
-<div id="boot" aria-hidden="true">
-  <div class="boot-inner">
-    <svg class="boot-logo" viewBox="0 0 64 64"><use href="#tt-mark"/></svg>
-    <ol class="boot-lines mono">
-      <li>Linking Aqua MODIS aerosol…</li>
-      <li>Linking Aura OMI nitrogen dioxide…</li>
-      <li>Linking GPM IMERG rainfall…</li>
-      <li>Linking MERRA-2 and NASA POWER…</li>
-      <li>Trend engine online.</li>
-    </ol>
-    <div class="boot-bar"><i></i></div>
-  </div>
-</div>
 
 <!-- Our own mark (an orbit and a rising trend line). Not a NASA logo. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -51,9 +40,9 @@
   </a>
   <div class="mission-clock mono" aria-hidden="true"><span><i class="rec"></i>UTC <b id="utc">--:--:--</b></span><span>MET <b id="met">T+00:00:00</b></span></div>
   <nav class="toplinks" aria-label="Sections">
-    <a href="#cases">Case files</a><a href="#missions">Missions</a><a href="#climate">Climate</a><a href="#how">How it works</a><a href="#impact">Impact</a><a href="#trust">Trust</a><a href="#lab">Lab</a>
+    <a href="#investigate">Investigate</a><a href="#demos">Demos</a><a href="#cases">Case files</a><a href="#climate">Climate</a><a href="#missions">Missions</a><a href="#glossary">Glossary</a><a href="#lab">Lab</a>
   </nav>
-  <a class="btn btn-primary magnetic" href="#lab"><span>Open the lab</span></a>
+  <a class="btn btn-primary magnetic topcta" href="#investigate"><span class="long">Start investigating</span><span class="short">Investigate</span></a>
 </header>
 
 <!-- ============ STAGE: sticky 3D globe under the hero and the case files ============ -->
@@ -79,10 +68,10 @@
         <span class="hl">Is Earth really</span>
         <span class="hl"><span class="grad-text scramble" data-words="changing here?|warming here?|getting hazier?|getting cleaner?">changing here?</span></span>
       </h1>
-      <p class="hero-sub reveal">TrendTrace tests 22 years of real NASA satellite data the way scientists do, and tells you what is changing, where, by how much, and whether it is real or just noise.</p>
+      <p class="hero-sub reveal">Answer three quick questions, and TrendTrace finds the right NASA variables, tests 22 years of real satellite data the way scientists do, and tells you in plain words whether a change is <button type="button" class="term" data-term="significant">real or just noise</button>.</p>
       <div class="hero-cta reveal">
-        <a class="btn btn-primary magnetic" href="#cases"><span>Start the investigation</span></a>
-        <a class="btn btn-ghost magnetic" href="#lab"><span>Test any region</span></a>
+        <a class="btn btn-primary magnetic" href="#investigate"><span>Start investigating</span></a>
+        <a class="btn btn-ghost magnetic" href="#demos"><span>▶ Watch a demo</span></a>
       </div>
       <div class="layer-bar reveal interactive" role="group" aria-label="Globe data layer">
         <span class="layer-title mono">Globe layer</span>
@@ -115,7 +104,7 @@
         <div class="case-head mono"><span>Case 01</span><span>Aura OMI · NO₂ · 2005–2024</span></div>
         <h3>Los Angeles: the air got cleaner</h3>
         <div class="case-big down"><b class="count" data-to="-51.5" data-dec="1">0</b><small>% per decade</small></div>
-        <p>Nitrogen dioxide, a traffic and industry gas, fell by half every ten years. The test is clear-cut: p &lt; 0.001, and it survives the many-test check.</p>
+        <p>Nitrogen dioxide, a traffic and industry gas, fell by half every ten years. The test is clear-cut: <button type="button" class="term" data-term="p-value">p</button> &lt; 0.001, and it survives the <button type="button" class="term" data-term="fdr">many-test check</button>.</p>
         <div class="case-foot"><span class="verdict yes">Significant fall</span><button class="btn btn-small run" type="button">Run it live →</button></div>
       </div>
     </article>
@@ -125,7 +114,7 @@
         <div class="case-head mono"><span>Case 02</span><span>Same satellite · same years</span></div>
         <h3>Delhi: no proven change</h3>
         <div class="case-big flat"><b class="count" data-to="-4.2" data-dec="1">0</b><small>% per decade</small></div>
-        <p>The estimate dips slightly, but p = 0.27, so it could be noise. Only the Oct–Dec season falls significantly (−11% per decade). One satellite, two cities, two different stories.</p>
+        <p>The estimate dips slightly, but <button type="button" class="term" data-term="p-value">p</button> = 0.27, so it could be noise. Only the Oct–Dec season falls significantly (−11% per decade). One satellite, two cities, two different stories.</p>
         <p class="caveat">TrendTrace shows patterns, not causes.</p>
         <div class="case-foot"><span class="verdict no">Not significant</span><button class="btn btn-small run" type="button">Run it live →</button></div>
       </div>
@@ -136,7 +125,7 @@
         <div class="case-head mono"><span>Case 03</span><span>Aqua MODIS · aerosol · 2003–2024</span></div>
         <h3>Indo-Gangetic Plain: the haze is thickening</h3>
         <div class="case-big up"><b class="count" data-to="15.7" data-dec="1" data-plus="1">0</b><small>% per decade</small></div>
-        <p>Aerosol optical depth rose for two decades over one of the most crowded farm-and-city belts on Earth. Terra MODIS and MERRA-2 agree on the direction.</p>
+        <p><button type="button" class="term" data-term="aod">Aerosol optical depth</button> rose for two decades over one of the most crowded farm-and-city belts on Earth. Terra MODIS and MERRA-2 agree on the direction.</p>
         <p class="caveat">AOD is haze in the whole air column, not ground-level PM2.5.</p>
         <div class="case-foot"><span class="verdict yes up">Significant rise</span><button class="btn btn-small run" type="button">Run it live →</button></div>
       </div>
@@ -179,9 +168,92 @@
   <div class="stat reveal"><b class="count" data-to="21">0</b><span>Earth variables</span></div>
   <div class="stat reveal"><b class="count" data-to="6">0</b><span>NASA missions and models</span></div>
   <div class="stat reveal"><b class="count" data-to="22">0</b><span>years of monthly data</span></div>
-  <div class="stat reveal"><b class="count" data-to="643">0</b><span>automated tests passing</span></div>
+  <div class="stat reveal"><b class="count" data-to="646">0</b><span>automated tests passing</span></div>
 </section>
 
+
+<!-- ============ INVESTIGATE: the guided 3-question flow ============ -->
+<section id="investigate" class="block">
+  <p class="eyebrow reveal">Be a data detective</p>
+  <h2 class="section-title reveal">Three questions. The right NASA data. A tested answer.</h2>
+  <p class="muted-lg reveal">Tell us what and where you are curious about. TrendTrace suggests variables that are known to change in that kind of place, explains each one simply, and tests it for a trend.</p>
+  <div class="wizard reveal" id="wizard">
+    <ol class="wiz-steps" aria-label="Progress">
+      <li class="active" data-step="1"><b>1</b><span>What</span></li>
+      <li data-step="2"><b>2</b><span>Where</span></li>
+      <li data-step="3"><b>3</b><span>Your question</span></li>
+      <li data-step="4"><b>4</b><span>Clues</span></li>
+    </ol>
+    <div class="wiz-body">
+      <div class="wiz-panel active" data-panel="1">
+        <h3>What part of the Earth system are you curious about?</h3>
+        <p class="muted">Pick one, or skip to see everything.</p>
+        <div class="tiles" id="wiz-themes"></div>
+        <div class="wiz-nav"><span></span><button class="btn btn-ghost btn-small" type="button" data-next>Skip →</button></div>
+      </div>
+      <div class="wiz-panel" data-panel="2">
+        <h3>What kind of place do you want to investigate?</h3>
+        <p class="muted">Deserts, rain forests, estuaries and big cities change in different ways.</p>
+        <div class="tiles" id="wiz-places"></div>
+        <div class="wiz-nav"><button class="btn btn-ghost btn-small" type="button" data-back>← Back</button><button class="btn btn-ghost btn-small" type="button" data-next>Skip →</button></div>
+      </div>
+      <div class="wiz-panel" data-panel="3">
+        <h3>In your own words, what do you want to find out?</h3>
+        <p class="muted">Optional. Keywords help: haze, rain, heat, snow, forest, pollution…</p>
+        <form id="wiz-form" class="wiz-form">
+          <input id="wiz-q" name="q" autocomplete="off" placeholder="Is the air in my city getting more polluted?">
+          <button class="btn btn-primary" type="submit"><span>Find my clues 🔍</span></button>
+        </form>
+        <div class="example-chips"><span class="muted">Try:</span>
+          <button type="button" class="chip" data-example="Is the air in my city getting more polluted?">Polluted city air?</button>
+          <button type="button" class="chip" data-example="Is it getting hotter in the rain forest?">Hotter rain forest?</button>
+          <button type="button" class="chip" data-example="Is the monsoon rain changing?">Changing monsoon?</button>
+        </div>
+        <div class="wiz-nav"><button class="btn btn-ghost btn-small" type="button" data-back>← Back</button><span></span></div>
+      </div>
+      <div class="wiz-panel" data-panel="4">
+        <div id="wiz-results" aria-live="polite"></div>
+        <div class="wiz-nav"><button class="btn btn-ghost btn-small" type="button" data-restart>↺ New investigation</button><span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMOS you can watch ============ -->
+<section id="demos" class="block">
+  <p class="eyebrow reveal">Watch it work</p>
+  <h2 class="section-title reveal">Short demos. Real data. Press play.</h2>
+  <p class="muted-lg reveal">Each demo runs the real trend engine step by step and narrates what is happening, so you can learn the method before trying it yourself.</p>
+  <div class="demo-shell reveal">
+    <div class="demo-list" id="demo-list" role="tablist" aria-label="Demos"></div>
+    <div class="demo-player" id="demo-player">
+      <div class="demo-empty"><p class="muted">Pick a demo to start.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIMATE PULSE ============ -->
+<section id="climate" class="block climate">
+  <p class="eyebrow green reveal">Climate pulse</p>
+  <h2 class="section-title reveal">Warming, one stripe at a time.</h2>
+  <p class="muted-lg reveal">Each stripe is one year of near-surface air temperature for a real place, coloured by how far it sat from that place's own 2003–2024 average. Built live from NASA POWER data by our trend engine.</p>
+  <div class="stripe-tabs reveal" role="tablist" aria-label="Choose a place">
+    <button class="chip active" data-region="AMAZON_ARC">Southern Amazon</button>
+    <button class="chip" data-region="DELHI">Delhi</button>
+    <button class="chip" data-region="LA_BASIN">Los Angeles</button>
+    <button class="chip" data-region="IGP">Indo-Gangetic Plain</button>
+    <button class="chip" data-region="TN">Tamil Nadu</button>
+  </div>
+  <div class="stripes-card reveal">
+    <div class="stripes" id="stripes" aria-live="polite"><p class="muted">Waiting for the data…</p></div>
+    <div class="stripes-axis mono" id="stripes-axis"></div>
+    <div class="stripes-foot">
+      <div class="stripes-verdict" id="stripes-verdict"></div>
+      <div class="stripes-legend mono"><span>cooler</span><i></i><span>warmer</span></div>
+    </div>
+  </div>
+  <p class="caveat reveal">A short regional record can show a warming trend that differs from the global one. Stripes show the pattern; the verdict tells you whether it is statistically real.</p>
+</section>
 
 <!-- ============ MISSIONS ============ -->
 <section id="missions" class="block">
@@ -212,29 +284,6 @@
   </div>
 </section>
 
-<!-- ============ CLIMATE PULSE ============ -->
-<section id="climate" class="block climate">
-  <p class="eyebrow green reveal">Climate pulse</p>
-  <h2 class="section-title reveal">Warming, one stripe at a time.</h2>
-  <p class="muted-lg reveal">Each stripe is one year of near-surface air temperature for a real place, coloured by how far it sat from that place's own 2003–2024 average. Built live from NASA POWER data by our trend engine.</p>
-  <div class="stripe-tabs reveal" role="tablist" aria-label="Choose a place">
-    <button class="chip active" data-region="AMAZON_ARC">Southern Amazon</button>
-    <button class="chip" data-region="DELHI">Delhi</button>
-    <button class="chip" data-region="LA_BASIN">Los Angeles</button>
-    <button class="chip" data-region="IGP">Indo-Gangetic Plain</button>
-    <button class="chip" data-region="TN">Tamil Nadu</button>
-  </div>
-  <div class="stripes-card reveal">
-    <div class="stripes" id="stripes" aria-live="polite"><p class="muted">Waiting for the data…</p></div>
-    <div class="stripes-axis mono" id="stripes-axis"></div>
-    <div class="stripes-foot">
-      <div class="stripes-verdict" id="stripes-verdict"></div>
-      <div class="stripes-legend mono"><span>cooler</span><i></i><span>warmer</span></div>
-    </div>
-  </div>
-  <p class="caveat reveal">A short regional record can show a warming trend that differs from the global one. Stripes show the pattern; the verdict tells you whether it is statistically real.</p>
-</section>
-
 <!-- ============ EARTH'S VITAL SIGNS ============ -->
 <section id="vitals" class="block">
   <p class="eyebrow green reveal">Earth's vital signs</p>
@@ -251,11 +300,19 @@
     <svg class="pipe-line" viewBox="0 0 1000 8" preserveAspectRatio="none" aria-hidden="true"><path d="M0 4 H1000"/></svg>
     <div class="pipe-step reveal"><div class="pipe-icon">?</div><h3>Ask</h3><p>Pick a variable and a place, or start from a plain question like “is my city's air getting worse?”</p></div>
     <div class="pipe-step reveal"><div class="pipe-icon">⇣</div><h3>Fetch</h3><p>Real monthly NASA data: MODIS, OMI, GPM IMERG, MERRA-2, NASA POWER. Gaps stay gaps.</p></div>
-    <div class="pipe-step reveal"><div class="pipe-icon">∿</div><h3>De-season</h3><p>Remove the yearly cycle, so a monsoon or a fire season can't fake a trend.</p></div>
-    <div class="pipe-step reveal"><div class="pipe-icon">∑</div><h3>Test</h3><p>Mann–Kendall (corrected for autocorrelation), Theil–Sen slope with its range, OLS check, FDR across regions.</p></div>
+    <div class="pipe-step reveal"><div class="pipe-icon">∿</div><h3>De-season</h3><p>Remove the yearly cycle (<button type="button" class="term" data-term="deseason">de-seasonalise</button>), so a monsoon or a fire season can't fake a trend.</p></div>
+    <div class="pipe-step reveal"><div class="pipe-icon">∑</div><h3>Test</h3><p><button type="button" class="term" data-term="mann-kendall">Mann–Kendall</button> test, <button type="button" class="term" data-term="theil-sen">Theil–Sen slope</button> with its <button type="button" class="term" data-term="range">likely range</button>, a second check, and the <button type="button" class="term" data-term="fdr">many-test check</button>.</p></div>
     <div class="pipe-step reveal"><div class="pipe-icon">◍</div><h3>Map</h3><p>See where it rises, falls or stays flat, on the globe and on the map.</p></div>
     <div class="pipe-step reveal"><div class="pipe-icon">✦</div><h3>Explain</h3><p>AI rewrites the computed numbers in plain words, and code checks it changed none of them.</p></div>
   </div>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<section id="glossary" class="block">
+  <p class="eyebrow green reveal">Detective's glossary</p>
+  <h2 class="section-title reveal">The words you need, in plain English.</h2>
+  <p class="muted-lg reveal">Tap any <span class="term-demo">dotted word</span> on this page to see its meaning. Here they all are in one place.</p>
+  <div class="gloss-grid" id="gloss-grid"></div>
 </section>
 
 <!-- ============ IMPACT ============ -->
@@ -275,7 +332,7 @@
   <h2 class="section-title reveal">Every result is tested, cross-checked and labelled.</h2>
   <div class="trust-grid">
     <div class="trust reveal"><b>Validated</b><p>Our trend engine matches SciPy and pymannkendall on the same data.</p></div>
-    <div class="trust reveal"><b>643 tests</b><p>Automated tests run on every change, on Python 3.11 and 3.13.</p></div>
+    <div class="trust reveal"><b>646 tests</b><p>Automated tests run on every change, on Python 3.11 and 3.13.</p></div>
     <div class="trust reveal"><b>Many-test check</b><p>Benjamini–Hochberg q-values stop lucky results when scanning many regions.</p></div>
     <div class="trust reveal"><b>Gaps stay gaps</b><p>Missing months are never filled in; low-coverage months are flagged.</p></div>
     <div class="trust reveal"><b>AI can't change numbers</b><p>Explanations are checked by code; any changed number is rejected.</p></div>
@@ -397,29 +454,21 @@
 
 <!-- ============ FINALE: nature ============ -->
 <section id="finale" class="finale" aria-label="One planet">
-  <svg class="landscape" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#030812"/><stop offset=".45" stop-color="#0d2448"/><stop offset=".78" stop-color="#3a3f6e"/><stop offset="1" stop-color="#ff9a6b"/></linearGradient>
-      <radialGradient id="sunglow"><stop offset="0" stop-color="#ffe2b0"/><stop offset=".3" stop-color="#ffb36b" stop-opacity=".8"/><stop offset="1" stop-color="#ff7a45" stop-opacity="0"/></radialGradient>
-    </defs>
-    <rect width="1600" height="600" fill="url(#sky)"/>
-    <g class="sun"><circle cx="1060" cy="470" r="220" fill="url(#sunglow)"/><circle cx="1060" cy="470" r="56" fill="#ffe7c2"/></g>
-    <g class="birds" stroke="#0b1a30" stroke-width="3" fill="none" stroke-linecap="round">
-      <path d="M0 0 q8 -8 16 0 q8 -8 16 0" transform="translate(380 230)"/><path d="M0 0 q6 -6 12 0 q6 -6 12 0" transform="translate(430 205)"/><path d="M0 0 q7 -7 14 0 q7 -7 14 0" transform="translate(470 240)"/>
-    </g>
-    <path class="layer l1" d="M0 430 C200 360 380 400 560 370 C760 335 900 410 1100 380 C1300 350 1450 390 1600 360 V600 H0Z" fill="#163a3a"/>
-    <path class="layer l2" d="M0 480 C180 430 330 470 520 445 C720 418 860 480 1060 455 C1250 430 1420 470 1600 440 V600 H0Z" fill="#0f2c2a"/>
-    <g class="layer l3" fill="#0a201d">
+  <div class="finale-sky" aria-hidden="true"></div>
+  <div class="sun" aria-hidden="true"></div>
+  <svg class="birds-svg" viewBox="0 0 200 60" aria-hidden="true"><g stroke="#0b1a30" stroke-width="3" fill="none" stroke-linecap="round">
+    <path d="M10 30 q8 -8 16 0 q8 -8 16 0"/><path d="M60 12 q6 -6 12 0 q6 -6 12 0"/><path d="M100 40 q7 -7 14 0 q7 -7 14 0"/></g></svg>
+  <svg class="landscape-layer l1" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 430 C200 360 380 400 560 370 C760 335 900 410 1100 380 C1300 350 1450 390 1600 360 V600 H0Z" fill="#163a3a"/></svg>
+  <svg class="landscape-layer l2" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 480 C180 430 330 470 520 445 C720 418 860 480 1060 455 C1250 430 1420 470 1600 440 V600 H0Z" fill="#0f2c2a"/></svg>
+  <svg class="landscape-layer l3" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g fill="#0a201d">
       <path d="M0 530 C200 490 420 520 640 505 C860 490 1080 535 1300 515 C1450 502 1530 515 1600 508 V600 H0Z"/>
-      <path d="M120 520 l18 -60 l18 60z M160 525 l14 -46 l14 46z M300 512 l20 -70 l20 70z M340 515 l14 -44 l14 44z M1180 520 l18 -62 l18 62z M1220 522 l13 -40 l13 40z M1380 514 l20 -68 l20 68z M1420 516 l14 -48 l14 48z M820 505 l16 -52 l16 52z"/>
-    </g>
-    <path class="layer l4" d="M0 600 V560 C260 540 520 575 800 560 C1080 545 1340 575 1600 556 V600Z" fill="#061512"/>
-  </svg>
+      <path d="M120 520 l18 -60 l18 60z M160 525 l14 -46 l14 46z M300 512 l20 -70 l20 70z M340 515 l14 -44 l14 44z M1180 520 l18 -62 l18 62z M1220 522 l13 -40 l13 40z M1380 514 l20 -68 l20 68z M1420 516 l14 -48 l14 48z M820 505 l16 -52 l16 52z"/></g></svg>
+  <svg class="landscape-layer l4" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 600 V560 C260 540 520 575 800 560 C1080 545 1340 575 1600 556 V600Z" fill="#061512"/></svg>
   <div class="finale-copy">
     <p class="eyebrow green reveal">One planet</p>
     <h2 class="section-title reveal">Measured honestly.<br>Protected wisely.</h2>
     <p class="muted-lg reveal">Every trend is a story about a place: its air, its rain, its forests, its heat. TrendTrace helps anyone tell that story with evidence, not guesses.</p>
-    <div class="hero-cta reveal"><a class="btn btn-primary magnetic" href="#lab"><span>Investigate your city</span></a><a class="btn btn-ghost magnetic" href="#top"><span>Back to orbit ↑</span></a></div>
+    <div class="hero-cta reveal"><a class="btn btn-primary magnetic" href="#investigate"><span>Investigate your city</span></a><a class="btn btn-ghost magnetic" href="#top"><span>Back to orbit ↑</span></a></div>
   </div>
 </section>
 
@@ -430,8 +479,8 @@
 </footer>
 
 <div class="cursor-glow" aria-hidden="true"></div>
-<script src="/static/world.js"></script>
-<script src="/static/app.js"></script>
+<script src="/static/world.js" defer></script>
+<script src="/static/app.js" defer></script>
 <script type="module" src="/static/fx.js"></script>
 </body>
 </html>
