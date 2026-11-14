@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGM.07/2020/3B-MO.MS.MRG.3IMERG.20200101-S000000-E235959.01.V07B.HDF5",
+    "status": 401,
+    "error": "HTTP Error 401: Unauthorized"
+  },
+  {
+    "url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2020/01/3B-DAY.MS.MRG.3IMERG.20200101-S000000-E235959.V07B.nc4",
+    "status": 401,
+    "error": "HTTP Error 401: Unauthorized"
+  },
+  {
+    "url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2019335.061.2020003015628.hdf",
+    "status": 401,
+    "error": "HTTP Error 401: Unauthorized"
+  },
+  {
+    "url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_D3/MYD08_D3.A2019365.061.2020003013834.hdf",
+    "status": 401,
+    "error": "HTTP Error 401: Unauthorized"
+  }
+]

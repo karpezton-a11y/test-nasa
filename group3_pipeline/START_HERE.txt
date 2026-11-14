@@ -1,0 +1,30 @@
+SRITHARAN — GROUP 3 MEMBER 1 — REAL-DATA UPDATE
+
+1. Open presentation/Sritharan_Observed_Research.pptx.
+   This is the expanded research deck with actual NASA data, native charts,
+   study maps, images, methods and findings. It is not the final submission deck.
+2. Read docs/research_findings.md for the complete written scientific account.
+3. Send the data package and presentation/message_to_aadarsh.txt to Aadarsh.
+   He must independently review it and supply his statistical/interaction code.
+
+COMPLETED WITH REAL DATA
+12 original NASA CSV exports for 2003–2024; cleaning and QC; raw hashes;
+unit conversion; measured temporal availability; monthly anomalies; annual
+and seasonal regional rainfall indicators; Terra/MERRA-2 comparisons;
+daily–monthly rainfall checks; reproducible figures and documentation.
+
+YOUR MAIN DATA FILES
+results/timeseries_monthly_primary.csv — four primary monthly series
+results/timeseries_daily.csv — daily rainfall and Aqua AOD for both regions
+results/anomalies_monthly_primary.csv — actual monthly anomaly outcomes
+results/rainfall_indicators_annual.csv — annual and seasonal indicators
+results/provenance.json — original metadata and hashes
+results/research_findings.json — exact descriptive findings and chart values
+
+WHAT STILL REQUIRES TEAM WORK
+Independent data/method review; Aadarsh’s trend/evidence/interaction functions
+and statistical validation; the team’s app integration, screenshots and demo.
+No statistical trend significance or causal explanation has been invented.
+
+Read README.md for exact reproduction commands. All regional boxes remain
+approximate rectangles. Daily AOD spatial coverage was not exported.

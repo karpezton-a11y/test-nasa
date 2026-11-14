@@ -1,0 +1,13 @@
+[
+  {
+    "variable": "rainfall",
+    "daily_unit": "mm/day",
+    "monthly_unit": "mm/month"
+  },
+  {
+    "variable": "aod",
+    "daily_unit": "1",
+    "monthly_unit": "1",
+    "description": "Combined 550 nm column aerosol optical depth"
+  }
+]

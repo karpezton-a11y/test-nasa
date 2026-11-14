@@ -1,0 +1,31 @@
+No input files supplied. No environmental results calculated.
+Processed 1 real exports. Outputs: C:\Users\nallu\AppData\Local\Packages\sandbox.{2ac8596d-fc8d-4961-bf3e-41ff0ea65bb5}\AC\Temp\tmphcnyxcje\out. Aadarsh review still required.
+Processed 2 real exports. Outputs: C:\Users\nallu\AppData\Local\Packages\sandbox.{2ac8596d-fc8d-4961-bf3e-41ff0ea65bb5}\AC\Temp\tmpjw7e4122\out. Aadarsh review still required.
+
+test_aod_log_edge (test_science.ScientificChecks.test_aod_log_edge) ... ok
+test_aod_zero_variation_safe (test_science.ScientificChecks.test_aod_zero_variation_safe) ... ok
+test_combined_flags (test_science.ScientificChecks.test_combined_flags) ... ok
+test_coverage_counts_calendar_days (test_science.ScientificChecks.test_coverage_counts_calendar_days) ... ok
+test_csv_metadata_and_fill (test_science.ScientificChecks.test_csv_metadata_and_fill) ... ok
+test_daily_units_unchanged (test_science.ScientificChecks.test_daily_units_unchanged) ... ok
+test_dry_spell_missing_break (test_science.ScientificChecks.test_dry_spell_missing_break) ... ok
+test_duplicate_rejected (test_science.ScientificChecks.test_duplicate_rejected) ... ok
+test_empty_inputs_never_fake_results (test_science.ScientificChecks.test_empty_inputs_never_fake_results) ... ok
+test_extreme_aod_flag (test_science.ScientificChecks.test_extreme_aod_flag) ... ok
+test_full_test_only_pipeline (test_science.ScientificChecks.test_full_test_only_pipeline) ... ok
+test_gap_remains_missing (test_science.ScientificChecks.test_gap_remains_missing) ... ok
+test_incomplete_year_null (test_science.ScientificChecks.test_incomplete_year_null) ... ok
+test_missing_coverage_blocks_rain_flags (test_science.ScientificChecks.test_missing_coverage_blocks_rain_flags) ... ok
+test_monthly_conversion_leap_year (test_science.ScientificChecks.test_monthly_conversion_leap_year) ... ok
+test_no_double_conversion (test_science.ScientificChecks.test_no_double_conversion) ... ok
+test_no_wet_day_denominator (test_science.ScientificChecks.test_no_wet_day_denominator) ... ok
+test_nonoverlapping_chunks_join_without_filling_gaps (test_science.ScientificChecks.test_nonoverlapping_chunks_join_without_filling_gaps) ... ok
+test_normally_dry_baseline (test_science.ScientificChecks.test_normally_dry_baseline) ... ok
+test_percent_share_known (test_science.ScientificChecks.test_percent_share_known) ... ok
+test_season_boundaries (test_science.ScientificChecks.test_season_boundaries) ... ok
+test_unknown_units_rejected (test_science.ScientificChecks.test_unknown_units_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.585s
+
+OK

@@ -1,0 +1,7 @@
+{
+  "status": "awaiting_Aadarsh_executable_adapter",
+  "results": [],
+  "reason": "The supplied handbook has method descriptions, not executable trend/evidence functions. Run run_reference.py when the actual adapter is supplied.",
+  "data_available": true,
+  "not_a_statistical_result": true
+}

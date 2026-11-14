@@ -23,8 +23,9 @@ def item_facts(result) -> dict:
         label = f"{result.region_id} {result.variable}"
         significance = f"{label}: the trend is {'statistically significant' if result.significant else 'not statistically significant'}."
         direction = {"increasing": "increased", "decreasing": "decreased", "no_significant_trend": "had no statistically significant trend"}[result.direction]
-        slope = f"{num(result.sen_slope, result.variable)} {result.slope_unit}"
-        ci = f"{num(result.slope_ci[0], result.variable)} to {num(result.slope_ci[1], result.variable)} {result.slope_unit}"
+        unit = "per decade" if result.slope_unit.startswith("1 ") else result.slope_unit  # dimensionless AOD
+        slope = f"{num(result.sen_slope, result.variable)} {unit}"
+        ci = f"{num(result.slope_ci[0], result.variable)} to {num(result.slope_ci[1], result.variable)} {unit}"
         return {"kind": "trend", "label": label, "period": f"{result.period.start} to {result.period.end}",
                 "season": result.season, "direction": direction, "significant": result.significant,
                 "significance_statement": significance, "slope": slope, "range": ci,

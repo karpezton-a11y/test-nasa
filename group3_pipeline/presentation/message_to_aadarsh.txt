@@ -1,0 +1,7 @@
+Bro, my G3 M1 data work is now run on real NASA observations for 2003–2024. The package includes the eight primary monthly/daily series for IGP and TN, plus Terra and MERRA-2 monthly AOD comparisons. Originals, exact headers, hashes, QC, units, coverage, anomalies, rainfall indicators, charts and Part A are included.
+
+Use results/timeseries_monthly_primary.csv for the primary monthly analysis and results/timeseries_daily.csv for daily inputs. The larger monthly CSV also contains comparison sources: filter source_id explicitly. Missing AOD dates remain missing; daily spatial coverage is unknown. One TN daily AOD value is non-positive and needs range/usage review. Daily rainfall sums differ from monthly-product totals by −1.83% in IGP and −0.97% in TN overall; the exact paired differences are supplied.
+
+Please independently check the data, thresholds and regional-mean indicator definitions. Then send your executable trend/evidence/interaction functions or repository and exact dependencies. I can run the analyze_series adapter to generate the reference file, but it currently contains only a pending status because your PDF is a handbook, not callable code. You own statistical validation Part B and the interaction analysis.
+
+The illustrated research deck now includes observed findings. We must add only your reviewed statistical results, then integrate with Group 1/2 and record the actual app demo. Please review docs/decisions.md before freezing the final methods.

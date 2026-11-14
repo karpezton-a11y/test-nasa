@@ -1,0 +1,13 @@
+{
+  "slides": 32,
+  "native_charts": 8,
+  "native_tables": 9,
+  "chart_values_match_rounded_analysis": true,
+  "chart_workbooks": 8,
+  "all_image_parts_nonempty": true,
+  "layout_findings": 0,
+  "layout_warnings": 0,
+  "original_exports": 12,
+  "full_summary_reproduced": true,
+  "independent_review_complete": false
+}

@@ -1,0 +1,2556 @@
+{
+ "data_status": "real",
+ "data_version": "REAL-G3-2026-11-14-a4151cac",
+ "contract_version": "1.0",
+ "generated_at": "2026-11-14T00:00:00+05:30",
+ "result": [
+  {
+   "result_id": "indicator_IGP_heavy_rain_share_JJAS_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "heavy_rain_share",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "%",
+   "definition": "Percentage of wet-day rainfall contributed by days above the baseline wet-day 95th percentile. This is a project adaptation of climate-index concepts. Wet day: at least 1 mm/day; rain strictly above the wet-day P95 divided by all wet-day rain.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 13.180956449249868,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 10.61377661220249,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 17.535800030551076,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 14.315762308630287,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 19.246501345292515,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 12.555548736210048,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 18.822633215107068,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 14.848939746940415,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 19.371593513168126,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 26.71669892071642,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 11.075504302819192,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 11.990073247121432,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 3.247623842085192,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 10.03111212478535,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 10.71787998644868,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 7.4741432450137655,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 22.46580966198336,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 7.205275719168046,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 14.584099587836675,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 8.630529462651314,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 3.645672727243334,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 23.538613582950465,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_heavy_rain_share_JJAS_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "heavy_rain_share_JJAS",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -2.907111,
+    "slope_unit": "% per decade",
+    "slope_ci": [
+     -7.067819,
+     2.698497
+    ],
+    "p_value": 0.23628916,
+    "significant": false,
+    "ols_slope": -2.015921,
+    "ols_ci": [
+     -6.375888,
+     2.344045
+    ],
+    "change_over_period": -6.395645,
+    "baseline_mean": 13.718843,
+    "percent_change_per_decade": -21.190645,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.150739,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.23628916,
+     "slope_ci": [
+      -7.067819,
+      2.698497
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -2.907111,
+       "p_value": 0.29391717,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -2.015921,
+       "p_value": 0.34631909,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 34 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_IGP_heavy_rain_share_OND_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "heavy_rain_share",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "%",
+   "definition": "Percentage of wet-day rainfall contributed by days above the baseline wet-day 95th percentile. This is a project adaptation of climate-index concepts. Wet day: at least 1 mm/day; rain strictly above the wet-day P95 divided by all wet-day rain.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 46.48467292412496,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 20.636869685463598,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 64.7460963895865,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 61.755992762068516,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_heavy_rain_share_OND_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "heavy_rain_share_OND",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "zero",
+    "sen_slope": 0.0,
+    "slope_unit": "% per decade",
+    "slope_ci": [
+     0.0,
+     0.0
+    ],
+    "p_value": 0.33137433,
+    "significant": false,
+    "ols_slope": 8.933057,
+    "ols_ci": [
+     -5.245206,
+     23.11132
+    ],
+    "change_over_period": 0.0,
+    "baseline_mean": 8.801074,
+    "percent_change_per_decade": 0.0,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.249414,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.33137433,
+     "slope_ci": [
+      0.0,
+      0.0
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": 0.0,
+       "p_value": 0.43646398,
+       "same_sign": null
+      },
+      {
+       "name": "ols",
+       "sen_slope": 8.933057,
+       "p_value": 0.20363063,
+       "same_sign": null
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_IGP_heavy_rain_share_annual_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "heavy_rain_share",
+   "season": "annual",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "%",
+   "definition": "Percentage of wet-day rainfall contributed by days above the baseline wet-day 95th percentile. This is a project adaptation of climate-index concepts. Wet day: at least 1 mm/day; rain strictly above the wet-day P95 divided by all wet-day rain.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 14.67399135182588,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 8.950894975875704,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 17.39038622279992,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 12.25692794781284,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 17.934899545962384,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 19.139352571564714,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 22.715744986463967,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 15.277239171712962,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 23.709865505656918,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 28.787980736550505,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 18.108486225096822,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 9.613398002394952,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 8.57881628944775,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 13.888035721369697,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 11.241130186870514,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 10.39328813436126,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 21.184092630160993,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 10.765979512308279,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 17.52793387419,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 17.736370057511515,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 4.883223295778053,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 24.95769511431656,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_heavy_rain_share_annual_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "heavy_rain_share_annual",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -0.132353,
+    "slope_unit": "% per decade",
+    "slope_ci": [
+     -5.157707,
+     4.915673
+    ],
+    "p_value": 1.0,
+    "significant": false,
+    "ols_slope": -0.589902,
+    "ols_ci": [
+     -4.935379,
+     3.755575
+    ],
+    "change_over_period": -0.291177,
+    "baseline_mean": 15.89617,
+    "percent_change_per_decade": -0.832609,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.040811,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 1.0,
+     "slope_ci": [
+      -5.157707,
+      4.915673
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -0.604581,
+       "p_value": 0.88870559,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -0.589902,
+       "p_value": 0.77995596,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 306 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_IGP_longest_dry_spell_JJAS_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "longest_dry_spell",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "days",
+   "definition": "Longest observed run of regional-mean rainfall below 1 mm/day within the selected year or season. Missing days interrupt the run. Year/season boundaries end a run.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 1.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 5.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 3.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 2.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 2.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 4.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 2.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 3.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 3.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 4.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 3.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 4.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 2.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 3.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 3.0,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_longest_dry_spell_JJAS_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "longest_dry_spell_JJAS",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "positive",
+    "sen_slope": 0.555556,
+    "slope_unit": "days per decade",
+    "slope_ci": [
+     -1.132511,
+     2.0
+    ],
+    "p_value": 0.43838952,
+    "significant": false,
+    "ols_slope": 0.55336,
+    "ols_ci": [
+     -1.038266,
+     2.144985
+    ],
+    "change_over_period": 1.222222,
+    "baseline_mean": 3.909091,
+    "percent_change_per_decade": 14.211886,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.006137,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.43838952,
+     "slope_ci": [
+      -1.132511,
+      2.0
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": 0.833333,
+       "p_value": 0.41436319,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": 0.55336,
+       "p_value": 0.47671399,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 58 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_IGP_longest_dry_spell_OND_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "longest_dry_spell",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "days",
+   "definition": "Longest observed run of regional-mean rainfall below 1 mm/day within the selected year or season. Missing days interrupt the run. Year/season boundaries end a run.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 49.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 78.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 68.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 49.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 75.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 84.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 45.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 32.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 70.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 58.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 76.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 47.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 63.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 83.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 72.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 66.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 34.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 38.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 38.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 80.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 41.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 75.0,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_longest_dry_spell_OND_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "longest_dry_spell_OND",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -2.857143,
+    "slope_unit": "days per decade",
+    "slope_ci": [
+     -15.570297,
+     11.40407
+    ],
+    "p_value": 0.59168158,
+    "significant": false,
+    "ols_slope": -3.551666,
+    "ols_ci": [
+     -15.899114,
+     8.795783
+    ],
+    "change_over_period": -6.285714,
+    "baseline_mean": 60.045455,
+    "percent_change_per_decade": -4.7583,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.073529,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.59168158,
+     "slope_ci": [
+      -15.570297,
+      11.40407
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -7.857143,
+       "p_value": 0.2623257,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -3.551666,
+       "p_value": 0.55523485,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 73 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_IGP_longest_dry_spell_annual_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "longest_dry_spell",
+   "season": "annual",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "days",
+   "definition": "Longest observed run of regional-mean rainfall below 1 mm/day within the selected year or season. Missing days interrupt the run. Year/season boundaries end a run.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 49.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 78.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 68.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 66.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 75.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 84.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 45.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 64.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 70.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 58.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 76.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 47.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 63.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 83.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 72.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 66.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 34.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 38.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 38.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 80.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 41.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 75.0,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_longest_dry_spell_annual_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "longest_dry_spell_annual",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -5.0,
+    "slope_unit": "days per decade",
+    "slope_ci": [
+     -19.585374,
+     7.887459
+    ],
+    "p_value": 0.35152079,
+    "significant": false,
+    "ols_slope": -6.256352,
+    "ols_ci": [
+     -17.344161,
+     4.831456
+    ],
+    "change_over_period": -11.0,
+    "baseline_mean": 62.272727,
+    "percent_change_per_decade": -8.029197,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.128549,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.35152079,
+     "slope_ci": [
+      -19.585374,
+      7.887459
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -10.0,
+       "p_value": 0.12325528,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -6.256352,
+       "p_value": 0.25300769,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 45 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_heavy_rain_share_JJAS_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "heavy_rain_share",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "%",
+   "definition": "Percentage of wet-day rainfall contributed by days above the baseline wet-day 95th percentile. This is a project adaptation of climate-index concepts. Wet day: at least 1 mm/day; rain strictly above the wet-day P95 divided by all wet-day rain.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 7.943243894473661,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 23.91280681194598,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 15.758291533025403,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 6.660442174414873,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 37.70800255136002,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 15.007365364607656,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 13.272533594787,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 13.606083714085285,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 9.224694887180537,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 8.29630824107642,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 15.484475778277274,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 15.313584951960456,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 12.592395220022699,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 9.268017499135102,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 13.86642913143648,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 10.62781146540611,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 19.3795108450823,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 23.363736566994316,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 12.518847881504866,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 21.407190942236028,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 6.809072198310919,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 22.789271041076045,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_heavy_rain_share_JJAS_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "heavy_rain_share_JJAS",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "positive",
+    "sen_slope": 0.954221,
+    "slope_unit": "% per decade",
+    "slope_ci": [
+     -3.958182,
+     6.494058
+    ],
+    "p_value": 0.73508049,
+    "significant": false,
+    "ols_slope": 0.131423,
+    "ols_ci": [
+     -5.115529,
+     5.378375
+    ],
+    "change_over_period": 2.099286,
+    "baseline_mean": 15.218642,
+    "percent_change_per_decade": 6.270079,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.263165,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.73508049,
+     "slope_ci": [
+      -3.958182,
+      6.494058
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": 0.371922,
+       "p_value": 0.94421663,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": 0.131423,
+       "p_value": 0.95884927,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 76 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_heavy_rain_share_OND_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "heavy_rain_share",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "%",
+   "definition": "Percentage of wet-day rainfall contributed by days above the baseline wet-day 95th percentile. This is a project adaptation of climate-index concepts. Wet day: at least 1 mm/day; rain strictly above the wet-day P95 divided by all wet-day rain.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 7.041622506279189,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 12.063811568855364,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 29.73008845978382,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 11.70336751393698,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 37.71938865331479,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 44.22470083062049,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 35.84549161845444,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 17.27795121002524,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 14.603407098515227,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 25.394408778703713,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 5.869910671076783,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 30.325092794716983,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 17.43290728996732,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 20.60308794830502,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 27.273814362451102,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 27.358749478547654,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 15.787779342380352,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 0.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 23.91838669799392,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_heavy_rain_share_OND_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "heavy_rain_share_OND",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -3.290256,
+    "slope_unit": "% per decade",
+    "slope_ci": [
+     -12.729208,
+     7.199735
+    ],
+    "p_value": 0.57145372,
+    "significant": false,
+    "ols_slope": -3.650474,
+    "ols_ci": [
+     -12.90909,
+     5.608142
+    ],
+    "change_over_period": -7.238563,
+    "baseline_mean": 18.371544,
+    "percent_change_per_decade": -17.909523,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.07424,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.57145372,
+     "slope_ci": [
+      -12.729208,
+      7.199735
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -1.482087,
+       "p_value": 0.86082685,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -3.650474,
+       "p_value": 0.42051844,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 61 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_heavy_rain_share_annual_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "heavy_rain_share",
+   "season": "annual",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "%",
+   "definition": "Percentage of wet-day rainfall contributed by days above the baseline wet-day 95th percentile. This is a project adaptation of climate-index concepts. Wet day: at least 1 mm/day; rain strictly above the wet-day P95 divided by all wet-day rain.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 14.08723346302709,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 23.755593536630933,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 42.240012096211764,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 21.241043633870234,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 22.414906236439244,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 29.869835763521863,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 32.921022272894895,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 27.453081744896913,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 20.703558608709876,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 28.483035781227912,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 6.904499260839024,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 16.061736936170345,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 27.47140446136358,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 23.644364455413246,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 16.92512805305128,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 11.221235175893597,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 22.592742777428022,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 16.273398367055055,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 27.706529350850097,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 11.263790043576785,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 18.32546208965245,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 19.65557817085854,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_heavy_rain_share_annual_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "heavy_rain_share_annual",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -4.676372,
+    "slope_unit": "% per decade",
+    "slope_ci": [
+     -10.214679,
+     1.47488
+    ],
+    "p_value": 0.14256866,
+    "significant": false,
+    "ols_slope": -4.652206,
+    "ols_ci": [
+     -10.028483,
+     0.72407
+    ],
+    "change_over_period": -10.288018,
+    "baseline_mean": 21.873418,
+    "percent_change_per_decade": -21.379247,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.126513,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.14256866,
+     "slope_ci": [
+      -10.214679,
+      1.47488
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -4.278369,
+       "p_value": 0.36302038,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -4.652206,
+       "p_value": 0.08614905,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 29 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_longest_dry_spell_JJAS_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "longest_dry_spell",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "days",
+   "definition": "Longest observed run of regional-mean rainfall below 1 mm/day within the selected year or season. Missing days interrupt the run. Year/season boundaries end a run.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 11.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 9.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 4.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 5.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 4.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 10.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 9.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 12.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 5.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 10.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 10.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_longest_dry_spell_JJAS_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "longest_dry_spell_JJAS",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "positive",
+    "sen_slope": 0.833333,
+    "slope_unit": "days per decade",
+    "slope_ci": [
+     -0.833333,
+     2.330374
+    ],
+    "p_value": 0.36095846,
+    "significant": false,
+    "ols_slope": 0.632411,
+    "ols_ci": [
+     -0.949974,
+     2.214797
+    ],
+    "change_over_period": 1.833333,
+    "baseline_mean": 7.454545,
+    "percent_change_per_decade": 11.178862,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.003685,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.36095846,
+     "slope_ci": [
+      -0.833333,
+      2.330374
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": 0.0,
+       "p_value": 1.0,
+       "same_sign": false
+      },
+      {
+       "name": "ols",
+       "sen_slope": 0.632411,
+       "p_value": 0.41431351,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 44 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_longest_dry_spell_OND_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "longest_dry_spell",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "days",
+   "definition": "Longest observed run of regional-mean rainfall below 1 mm/day within the selected year or season. Missing days interrupt the run. Year/season boundaries end a run.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 17.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 16.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 13.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 19.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 14.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 10.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 9.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 13.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 19.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 5.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 9.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 10.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 6.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 12.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 10.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 7.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 8.0,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_longest_dry_spell_OND_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "longest_dry_spell_OND",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "decreasing",
+    "slope_sign": "negative",
+    "sen_slope": -3.333333,
+    "slope_unit": "days per decade",
+    "slope_ci": [
+     -3.75,
+     -3.031115
+    ],
+    "p_value": 0.0,
+    "significant": true,
+    "ols_slope": -3.52908,
+    "ols_ci": [
+     -6.080891,
+     -0.977268
+    ],
+    "change_over_period": -7.333333,
+    "baseline_mean": 10.590909,
+    "percent_change_per_decade": -31.473534,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.067594,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.0,
+     "slope_ci": [
+      -3.75,
+      -3.031115
+     ],
+     "ci_excludes_zero": true,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -4.285714,
+       "p_value": 0.0,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -3.52908,
+       "p_value": 0.00915886,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "strong",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_longest_dry_spell_annual_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "longest_dry_spell",
+   "season": "annual",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "days",
+   "definition": "Longest observed run of regional-mean rainfall below 1 mm/day within the selected year or season. Missing days interrupt the run. Year/season boundaries end a run.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 22.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 43.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 32.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 23.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 33.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 33.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 39.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 71.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 26.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 37.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 25.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 41.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 39.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 23.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 33.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 32.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 38.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 34.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 34.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 38.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 24.0,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 73.0,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_longest_dry_spell_annual_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "longest_dry_spell_annual",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "positive",
+    "sen_slope": 1.428571,
+    "slope_unit": "days per decade",
+    "slope_ci": [
+     -5.625,
+     10.0
+    ],
+    "p_value": 0.44193039,
+    "significant": false,
+    "ols_slope": 4.082439,
+    "ols_ci": [
+     -5.2085,
+     13.373379
+    ],
+    "change_over_period": 3.142857,
+    "baseline_mean": 36.045455,
+    "percent_change_per_decade": 3.96325,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.227056,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.44193039,
+     "slope_ci": [
+      -5.625,
+      10.0
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": 0.833333,
+       "p_value": 0.55013017,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": 4.082439,
+       "p_value": 0.37028733,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 87 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T17:26:02+05:30"
+   },
+   "trend_note": null
+  }
+ ]
+}

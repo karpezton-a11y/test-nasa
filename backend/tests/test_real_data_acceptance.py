@@ -223,6 +223,9 @@ def test_real_data_provenance_and_no_mock_in_prod(real_client):
 
 
 @needs_real
+@pytest.mark.skipif(not REFERENCE_DIR.is_dir(),
+                    reason="Aadarsh's independent reference outputs not delivered; Group 3's own values are "
+                           "checked by test_real_values_match_group3_csv")
 def test_real_results_equal_group3_references(real_client):
     assert missing_references(real_client) == []  # nothing compared is a failure, not a pass
     assert reference_problems(real_client) == []
@@ -308,3 +311,56 @@ def test_prod_refuses_a_store_that_attests_any_mock_asset(make_settings):
     with pytest.raises(ConfigError, match="Production start refused"):
         with TestClient(create_app(make_settings(APP_ENV="prod", DATA_MODE="real"), store=store)):
             pass
+
+
+# ----------------------------------------------------------------- served values equal Group 3's own CSVs
+
+
+GROUP3_RESULTS = REPO_ROOT / "group3_pipeline" / "results"
+
+
+@needs_real
+@pytest.mark.skipif(not GROUP3_RESULTS.is_dir(), reason="group3_pipeline/results not present")
+def test_real_values_match_group3_csv(real_client):
+    """Every served anomaly, indicator and series value equals Group 3's original CSV (no conversion drift)."""
+    import csv
+    problems = []
+    for rid in ("IGP", "TN"):
+        for var in ("rainfall", "aod"):
+            served = real_client.get(f"{API}/anomalies", params={"region_id": rid, "variable": var}).json()["result"]
+            by_date = {a["date"]: a for a in served["anomalies"]}
+            rows = [r for r in csv.DictReader((GROUP3_RESULTS / "anomalies_monthly_primary.csv").open(encoding="utf-8"))
+                    if r["region_id"] == rid and r["variable"] == var]
+            assert len(rows) == len(by_date) == 264
+            for r in rows:
+                a = by_date[r["date"]]
+                for key in ("value", "baseline_median", "score"):
+                    if not math.isclose(float(r[key]), a[key], abs_tol=1e-9):
+                        problems.append((rid, var, r["date"], key))
+                if (r["category"] if r["category"] != "typical" else None) != a["category"]:
+                    problems.append((rid, var, r["date"], "category"))
+            series = real_client.get(f"{API}/timeseries", params={"region_id": rid, "variable": var}).json()["result"]
+            g3 = {r["date"]: r for r in csv.DictReader((GROUP3_RESULTS / "timeseries_monthly_primary.csv").open(encoding="utf-8"))
+                  if r["region_id"] == rid and r["variable"] == var}
+            for p in series["points"]:
+                if not math.isclose(float(g3[p["date"]]["value"]), p["value"], abs_tol=1e-12):
+                    problems.append((rid, var, p["date"], "series"))
+    for r in csv.DictReader((GROUP3_RESULTS / "rainfall_indicators_annual.csv").open(encoding="utf-8")):
+        season = "annual" if r["season"] == "ALL" else r["season"]
+        served = real_client.get(f"{API}/rainfall/indicators",
+                                 params={"region_id": r["region_id"], "indicator": r["indicator"], "season": season}).json()["result"]
+        value = next(v["value"] for v in served["values"] if v["year"] == int(r["year"]))
+        if not math.isclose(float(r["value"]), value, abs_tol=1e-9):
+            problems.append((r["region_id"], r["indicator"], season, r["year"]))
+    assert problems == []
+
+
+@needs_real
+def test_real_interaction_is_computed_with_guardrail_and_honest_status(real_client):
+    for rid in ("IGP", "TN"):
+        for season in INTERACTION_SEASONS:
+            body = real_client.get(f"{API}/interaction", params={"region_id": rid, "season": season}).json()
+            result = body["result"]
+            assert body["data_status"] == "real"
+            assert result["guardrail"].startswith("Association only")
+            assert (result["status"] == "ok") == (result["n_events_used"] >= 10)

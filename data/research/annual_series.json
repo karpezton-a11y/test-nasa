@@ -1,8 +1,8 @@
 {
  "dataset": "research_annual",
  "data_status": "real",
- "data_origin": "Group 3 (Sritharan) observed-research export: chart workbooks embedded in research data/Sritharan_Observed_Research.pptx",
- "precision_note": "Chart workbook values are rounded to six decimal places by the export (slide notes). Full-precision monthly/daily files remain in Group 3's results/ package.",
+ "data_origin": "Group 3 (Sritharan) observed-research package, group3_pipeline/results (12 NASA Giovanni exports)",
+ "precision_note": "Full recorded precision from Group 3's processed CSVs.",
  "period": {
   "start": "2003",
   "end": "2024"
@@ -23,95 +23,96 @@
    "frequency": "year",
    "theme": "water",
    "method": "Sum of 12 monthly IMERG Final V07 regional values (GPM_3IMERGM)",
-   "source_slide": 12,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
-     "value": 1204.359296
+     "value": 1204.3592958624
     },
     {
      "year": 2004,
-     "value": 1027.068381
+     "value": 1027.0683809284799
     },
     {
      "year": 2005,
-     "value": 1015.85124
+     "value": 1015.85123973696
     },
     {
      "year": 2006,
-     "value": 941.822694
+     "value": 941.8226939436
     },
     {
      "year": 2007,
-     "value": 1180.520687
+     "value": 1180.52068738728
     },
     {
      "year": 2008,
-     "value": 1233.570246
+     "value": 1233.5702462505599
     },
     {
      "year": 2009,
-     "value": 917.616311
+     "value": 917.61631135968
     },
     {
      "year": 2010,
-     "value": 1058.621417
+     "value": 1058.62141667688
     },
     {
      "year": 2011,
-     "value": 1239.456746
+     "value": 1239.45674624448
     },
     {
      "year": 2012,
-     "value": 1018.656844
+     "value": 1018.65684414696
     },
     {
      "year": 2013,
-     "value": 1268.647031
+     "value": 1268.6470311540002
     },
     {
      "year": 2014,
-     "value": 980.645069
+     "value": 980.6450691360001
     },
     {
      "year": 2015,
-     "value": 959.299908
+     "value": 959.2999075332
     },
     {
      "year": 2016,
-     "value": 1082.391498
+     "value": 1082.391498494952
     },
     {
      "year": 2017,
-     "value": 923.85361
+     "value": 923.8536101976
     },
     {
      "year": 2018,
-     "value": 1023.978295
+     "value": 1023.9782951928
     },
     {
      "year": 2019,
-     "value": 1088.148642
+     "value": 1088.1486417192
     },
     {
      "year": 2020,
-     "value": 1101.453476
+     "value": 1101.45347617824
     },
     {
      "year": 2021,
-     "value": 1301.841965
+     "value": 1301.8419650860799
     },
     {
      "year": 2022,
-     "value": 1081.264544
+     "value": 1081.26454432896
     },
     {
      "year": 2023,
-     "value": 986.958119
+     "value": 986.95811879472
     },
     {
      "year": 2024,
-     "value": 1147.266131
+     "value": 1147.2661311024
     }
    ]
   },
@@ -125,95 +126,96 @@
    "frequency": "year",
    "theme": "water",
    "method": "Sum of 12 monthly IMERG Final V07 regional values (GPM_3IMERGM)",
-   "source_slide": 12,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
-     "value": 990.315793
+     "value": 990.3157934976
     },
     {
      "year": 2004,
-     "value": 1354.696826
+     "value": 1354.69682649672
     },
     {
      "year": 2005,
-     "value": 1488.685145
+     "value": 1488.6851450616
     },
     {
      "year": 2006,
-     "value": 1247.930662
+     "value": 1247.9306624179198
     },
     {
      "year": 2007,
-     "value": 1325.224667
+     "value": 1325.22466700376
     },
     {
      "year": 2008,
-     "value": 1403.428903
+     "value": 1403.428903488
     },
     {
      "year": 2009,
-     "value": 1164.610495
+     "value": 1164.61049488368
     },
     {
      "year": 2010,
-     "value": 1407.930449
+     "value": 1407.9304491811201
     },
     {
      "year": 2011,
-     "value": 1215.762493
+     "value": 1215.7624927704
     },
     {
      "year": 2012,
-     "value": 932.457281
+     "value": 932.4572808144
     },
     {
      "year": 2013,
-     "value": 1013.42499
+     "value": 1013.424990048
     },
     {
      "year": 2014,
-     "value": 1227.094289
+     "value": 1227.0942888528
     },
     {
      "year": 2015,
-     "value": 1448.314407
+     "value": 1448.31440715
     },
     {
      "year": 2016,
-     "value": 799.295377
+     "value": 799.29537739776
     },
     {
      "year": 2017,
-     "value": 1181.50859
+     "value": 1181.5085898552
     },
     {
      "year": 2018,
-     "value": 1035.759541
+     "value": 1035.75954147072
     },
     {
      "year": 2019,
-     "value": 1178.533157
+     "value": 1178.53315696584
     },
     {
      "year": 2020,
-     "value": 1178.216278
+     "value": 1178.21627843208
     },
     {
      "year": 2021,
-     "value": 1646.335417
+     "value": 1646.3354171424
     },
     {
      "year": 2022,
-     "value": 1255.187183
+     "value": 1255.1871829176
     },
     {
      "year": 2023,
-     "value": 1240.042695
+     "value": 1240.0426954992
     },
     {
      "year": 2024,
-     "value": 1347.564145
+     "value": 1347.56414526744
     }
    ]
   },
@@ -227,95 +229,96 @@
    "frequency": "year",
    "theme": "air",
    "method": "Mean of 12 monthly Aqua MODIS MYD08_M3 C6.1 combined DT/DB AOD at 550 nm",
-   "source_slide": 14,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
-     "value": 0.4528
+     "value": 0.45279969933333336
     },
     {
      "year": 2004,
-     "value": 0.492724
+     "value": 0.4927238176666667
     },
     {
      "year": 2005,
-     "value": 0.431053
+     "value": 0.43105269858333334
     },
     {
      "year": 2006,
-     "value": 0.439833
+     "value": 0.4398325646666667
     },
     {
      "year": 2007,
-     "value": 0.460282
+     "value": 0.46028171616666663
     },
     {
      "year": 2008,
-     "value": 0.517065
+     "value": 0.5170645598333333
     },
     {
      "year": 2009,
-     "value": 0.471262
+     "value": 0.47126158449999994
     },
     {
      "year": 2010,
-     "value": 0.497273
+     "value": 0.4972734286666667
     },
     {
      "year": 2011,
-     "value": 0.540215
+     "value": 0.5402146624166667
     },
     {
      "year": 2012,
-     "value": 0.519589
+     "value": 0.519588737
     },
     {
      "year": 2013,
-     "value": 0.522482
+     "value": 0.52248220175
     },
     {
      "year": 2014,
-     "value": 0.522656
+     "value": 0.5226556503333334
     },
     {
      "year": 2015,
-     "value": 0.541087
+     "value": 0.5410872376666667
     },
     {
      "year": 2016,
-     "value": 0.572985
+     "value": 0.5729854050833333
     },
     {
      "year": 2017,
-     "value": 0.525225
+     "value": 0.5252249840833333
     },
     {
      "year": 2018,
-     "value": 0.59218
+     "value": 0.5921798548333334
     },
     {
      "year": 2019,
-     "value": 0.590756
+     "value": 0.5907558958333333
     },
     {
      "year": 2020,
-     "value": 0.56557
+     "value": 0.5655704314166666
     },
     {
      "year": 2021,
-     "value": 0.6199
+     "value": 0.6199001936666667
     },
     {
      "year": 2022,
-     "value": 0.600169
+     "value": 0.6001691740833334
     },
     {
      "year": 2023,
-     "value": 0.573313
+     "value": 0.57331282375
     },
     {
      "year": 2024,
-     "value": 0.60601
+     "value": 0.6060100413333334
     }
    ]
   },
@@ -329,95 +332,96 @@
    "frequency": "year",
    "theme": "air",
    "method": "Mean of 12 monthly Aqua MODIS MYD08_M3 C6.1 combined DT/DB AOD at 550 nm",
-   "source_slide": 14,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
-     "value": 0.243613
+     "value": 0.24361281375
     },
     {
      "year": 2004,
-     "value": 0.244267
+     "value": 0.24426660108333334
     },
     {
      "year": 2005,
-     "value": 0.259132
+     "value": 0.259131769
     },
     {
      "year": 2006,
-     "value": 0.259956
+     "value": 0.25995558775
     },
     {
      "year": 2007,
-     "value": 0.275952
+     "value": 0.27595237224999997
     },
     {
      "year": 2008,
-     "value": 0.294015
+     "value": 0.29401471791666667
     },
     {
      "year": 2009,
-     "value": 0.304321
+     "value": 0.30432081275
     },
     {
      "year": 2010,
-     "value": 0.291265
+     "value": 0.29126461566666667
     },
     {
      "year": 2011,
-     "value": 0.335548
+     "value": 0.33554776375
     },
     {
      "year": 2012,
-     "value": 0.311109
+     "value": 0.31110944841666666
     },
     {
      "year": 2013,
-     "value": 0.307961
+     "value": 0.307960965
     },
     {
      "year": 2014,
-     "value": 0.335665
+     "value": 0.33566463125
     },
     {
      "year": 2015,
-     "value": 0.279731
+     "value": 0.27973055058333335
     },
     {
      "year": 2016,
-     "value": 0.327809
+     "value": 0.3278093676666667
     },
     {
      "year": 2017,
-     "value": 0.328095
+     "value": 0.32809471549999997
     },
     {
      "year": 2018,
-     "value": 0.387764
+     "value": 0.3877638695
     },
     {
      "year": 2019,
-     "value": 0.313133
+     "value": 0.31313254283333336
     },
     {
      "year": 2020,
-     "value": 0.295869
+     "value": 0.29586895175
     },
     {
      "year": 2021,
-     "value": 0.321994
+     "value": 0.3219940935
     },
     {
      "year": 2022,
-     "value": 0.387256
+     "value": 0.38725598499999997
     },
     {
      "year": 2023,
-     "value": 0.34679
+     "value": 0.34679045341666664
     },
     {
      "year": 2024,
-     "value": 0.354104
+     "value": 0.35410387233333335
     }
    ]
   },
@@ -431,7 +435,8 @@
    "frequency": "year",
    "theme": "water",
    "method": "Longest run of IMERG daily regional-mean rainfall below 1 mm/day within each calendar year",
-   "source_slide": 21,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
@@ -533,7 +538,8 @@
    "frequency": "year",
    "theme": "water",
    "method": "Longest run of IMERG daily regional-mean rainfall below 1 mm/day within each calendar year",
-   "source_slide": 21,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
@@ -635,95 +641,96 @@
    "frequency": "year",
    "theme": "water",
    "method": "Rain strictly above the 2003-2024 wet-day P95 divided by all wet-day rain (IMERG daily, regional mean)",
-   "source_slide": 22,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
-     "value": 14.673991
+     "value": 14.67399135182588
     },
     {
      "year": 2004,
-     "value": 8.950895
+     "value": 8.950894975875704
     },
     {
      "year": 2005,
-     "value": 17.390386
+     "value": 17.39038622279992
     },
     {
      "year": 2006,
-     "value": 12.256928
+     "value": 12.25692794781284
     },
     {
      "year": 2007,
-     "value": 17.9349
+     "value": 17.934899545962384
     },
     {
      "year": 2008,
-     "value": 19.139353
+     "value": 19.139352571564714
     },
     {
      "year": 2009,
-     "value": 22.715745
+     "value": 22.715744986463967
     },
     {
      "year": 2010,
-     "value": 15.277239
+     "value": 15.277239171712962
     },
     {
      "year": 2011,
-     "value": 23.709866
+     "value": 23.709865505656918
     },
     {
      "year": 2012,
-     "value": 28.787981
+     "value": 28.787980736550505
     },
     {
      "year": 2013,
-     "value": 18.108486
+     "value": 18.108486225096822
     },
     {
      "year": 2014,
-     "value": 9.613398
+     "value": 9.613398002394952
     },
     {
      "year": 2015,
-     "value": 8.578816
+     "value": 8.57881628944775
     },
     {
      "year": 2016,
-     "value": 13.888036
+     "value": 13.888035721369697
     },
     {
      "year": 2017,
-     "value": 11.24113
+     "value": 11.241130186870514
     },
     {
      "year": 2018,
-     "value": 10.393288
+     "value": 10.39328813436126
     },
     {
      "year": 2019,
-     "value": 21.184093
+     "value": 21.184092630160993
     },
     {
      "year": 2020,
-     "value": 10.76598
+     "value": 10.765979512308279
     },
     {
      "year": 2021,
-     "value": 17.527934
+     "value": 17.52793387419
     },
     {
      "year": 2022,
-     "value": 17.73637
+     "value": 17.736370057511515
     },
     {
      "year": 2023,
-     "value": 4.883223
+     "value": 4.883223295778053
     },
     {
      "year": 2024,
-     "value": 24.957695
+     "value": 24.95769511431656
     }
    ]
   },
@@ -737,95 +744,96 @@
    "frequency": "year",
    "theme": "water",
    "method": "Rain strictly above the 2003-2024 wet-day P95 divided by all wet-day rain (IMERG daily, regional mean)",
-   "source_slide": 22,
+   "source_slide": null,
+   "source_file": "group3_pipeline/results/",
    "values": [
     {
      "year": 2003,
-     "value": 14.087233
+     "value": 14.08723346302709
     },
     {
      "year": 2004,
-     "value": 23.755594
+     "value": 23.755593536630933
     },
     {
      "year": 2005,
-     "value": 42.240012
+     "value": 42.240012096211764
     },
     {
      "year": 2006,
-     "value": 21.241044
+     "value": 21.241043633870234
     },
     {
      "year": 2007,
-     "value": 22.414906
+     "value": 22.414906236439244
     },
     {
      "year": 2008,
-     "value": 29.869836
+     "value": 29.869835763521863
     },
     {
      "year": 2009,
-     "value": 32.921022
+     "value": 32.921022272894895
     },
     {
      "year": 2010,
-     "value": 27.453082
+     "value": 27.453081744896913
     },
     {
      "year": 2011,
-     "value": 20.703559
+     "value": 20.703558608709876
     },
     {
      "year": 2012,
-     "value": 28.483036
+     "value": 28.483035781227912
     },
     {
      "year": 2013,
-     "value": 6.904499
+     "value": 6.904499260839024
     },
     {
      "year": 2014,
-     "value": 16.061737
+     "value": 16.061736936170345
     },
     {
      "year": 2015,
-     "value": 27.471404
+     "value": 27.47140446136358
     },
     {
      "year": 2016,
-     "value": 23.644364
+     "value": 23.644364455413246
     },
     {
      "year": 2017,
-     "value": 16.925128
+     "value": 16.92512805305128
     },
     {
      "year": 2018,
-     "value": 11.221235
+     "value": 11.221235175893597
     },
     {
      "year": 2019,
-     "value": 22.592743
+     "value": 22.592742777428022
     },
     {
      "year": 2020,
-     "value": 16.273398
+     "value": 16.273398367055055
     },
     {
      "year": 2021,
-     "value": 27.706529
+     "value": 27.706529350850097
     },
     {
      "year": 2022,
-     "value": 11.26379
+     "value": 11.263790043576785
     },
     {
      "year": 2023,
-     "value": 18.325462
+     "value": 18.32546208965245
     },
     {
      "year": 2024,
-     "value": 19.655578
+     "value": 19.65557817085854
     }
    ]
   }

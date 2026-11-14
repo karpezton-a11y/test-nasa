@@ -58,3 +58,9 @@ def test_pdf_reuses_guarded_cached_llm_text(make_settings, tmp_path):
         assert response.status_code == 200, response.text
         text = " ".join(p.extract_text() for p in PdfReader(io.BytesIO(client.get(response.json()["result"]["url"]).content)).pages)
         assert "AI-generated explanation of computed results" in text and len(calls) == 1
+
+
+def test_methods_text_is_safe_for_real_reports():
+    """docs/methods.md is printed in real-data PDFs, which refuse development wording (checks.py)."""
+    from app.reports.checks import unintended_placeholders
+    assert unintended_placeholders([(REPO_ROOT / "docs/methods.md").read_text()]) == []

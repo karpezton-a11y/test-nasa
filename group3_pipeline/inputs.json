@@ -1,0 +1,347 @@
+{
+  "start": "2003-01-01",
+  "end": "2024-12-31",
+  "data_version": "real_giovanni_2003_2024_2026_11_14",
+  "contract_version": "proposed_1.0",
+  "min_anomaly_baseline": 15,
+  "low_coverage_threshold": 0.3,
+  "indicator_seasons": [
+    "ALL",
+    "JJAS",
+    "OND"
+  ],
+  "primary_source_ids": [
+    "IMERG_V07_FINAL_MONTHLY",
+    "MODIS_AQUA_C61_MONTHLY"
+  ],
+  "daily_monthly_source_pairs": {
+    "IMERG_V07_FINAL_DAILY": "IMERG_V07_FINAL_MONTHLY",
+    "MODIS_AQUA_C61_DAILY": "MODIS_AQUA_C61_MONTHLY"
+  },
+  "inputs": [
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.GPM_3IMERGDF_07_precipitation.20030101-20241231.76E_24N_88E_30N.csv",
+      "region_id": "IGP",
+      "variable": "rainfall",
+      "frequency": "day",
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "unit": "mm/day",
+      "date_column": "time",
+      "value_column": " mean_GPM_3IMERGDF_07_precipitation",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76,24,88,30&data=GPM_3IMERGDF_07_precipitation&dataKeyword=GPM_3IMERGDF&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.0,
+        24.0,
+        88.0,
+        30.0
+      ],
+      "source_variable": "precipitation",
+      "product": "GPM_3IMERGDF",
+      "version": "07",
+      "accessed_at": "2026-11-13T19:43:43.830270+00:00",
+      "fill_values": [
+        -9999.9
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.05,24.05,87.95,29.95"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.GPM_3IMERGDF_07_precipitation.20030101-20241231.76E_8N_80E_13N.csv",
+      "region_id": "TN",
+      "variable": "rainfall",
+      "frequency": "day",
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "unit": "mm/day",
+      "date_column": "time",
+      "value_column": " mean_GPM_3IMERGDF_07_precipitation",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76.5,8,80.5,13.5&data=GPM_3IMERGDF_07_precipitation&dataKeyword=GPM_3IMERGDF&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.5,
+        8.0,
+        80.5,
+        13.5
+      ],
+      "source_variable": "precipitation",
+      "product": "GPM_3IMERGDF",
+      "version": "07",
+      "accessed_at": "2026-11-13T19:43:43.831269+00:00",
+      "fill_values": [
+        -9999.9
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.55,8.05,80.45,13.45"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.GPM_3IMERGM_07_precipitation.20030101-20241231.76E_24N_88E_30N.csv",
+      "region_id": "IGP",
+      "variable": "rainfall",
+      "frequency": "month",
+      "source_id": "IMERG_V07_FINAL_MONTHLY",
+      "unit": "mm/hr",
+      "date_column": "time",
+      "value_column": " mean_GPM_3IMERGM_07_precipitation",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76,24,88,30&data=GPM_3IMERGM_07_precipitation&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.0,
+        24.0,
+        88.0,
+        30.0
+      ],
+      "source_variable": "precipitation",
+      "product": "GPM_3IMERGM",
+      "version": "07",
+      "accessed_at": "2026-11-13T19:43:43.832273+00:00",
+      "fill_values": [
+        -9999.9
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.05,24.05,87.95,29.95"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.GPM_3IMERGM_07_precipitation.20030101-20241231.76E_8N_80E_13N.csv",
+      "region_id": "TN",
+      "variable": "rainfall",
+      "frequency": "month",
+      "source_id": "IMERG_V07_FINAL_MONTHLY",
+      "unit": "mm/hr",
+      "date_column": "time",
+      "value_column": " mean_GPM_3IMERGM_07_precipitation",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76.5,8,80.5,13.5&data=GPM_3IMERGM_07_precipitation&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.5,
+        8.0,
+        80.5,
+        13.5
+      ],
+      "source_variable": "precipitation",
+      "product": "GPM_3IMERGM",
+      "version": "07",
+      "accessed_at": "2026-11-13T19:43:43.832778+00:00",
+      "fill_values": [
+        -9999.9
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.55,8.05,80.45,13.45"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.M2TMNXAER_5_12_4_TOTEXTTAU.20030101-20241231.76E_24N_88E_30N.csv",
+      "region_id": "IGP",
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MERRA2_MONTHLY_TOTEXTTAU",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " M2TMNXAER_5_12_4_TOTEXTTAU",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76,24,88,30&data=MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean%2CM2TMNXAER_5_12_4_TOTEXTTAU&dataKeyword=M2TMNXAER%20TOTEXTTAU&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.0,
+        24.0,
+        88.0,
+        30.0
+      ],
+      "source_variable": "TOTEXTTAU",
+      "product": "M2TMNXAER",
+      "version": "5.12.4",
+      "accessed_at": "2026-11-13T19:43:43.860560+00:00",
+      "fill_values": [
+        1000000000000000.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.25,24,87.5,30"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.M2TMNXAER_5_12_4_TOTEXTTAU.20030101-20241231.76E_8N_80E_13N.csv",
+      "region_id": "TN",
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MERRA2_MONTHLY_TOTEXTTAU",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " M2TMNXAER_5_12_4_TOTEXTTAU",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76.5,8,80.5,13.5&data=MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean%2CM2TMNXAER_5_12_4_TOTEXTTAU&dataKeyword=M2TMNXAER%20TOTEXTTAU&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.5,
+        8.0,
+        80.5,
+        13.5
+      ],
+      "source_variable": "TOTEXTTAU",
+      "product": "M2TMNXAER",
+      "version": "5.12.4",
+      "accessed_at": "2026-11-13T19:43:43.891816+00:00",
+      "fill_values": [
+        1000000000000000.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.875,8,80,13.5"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean.20030101-20241231.76E_24N_88E_30N.csv",
+      "region_id": "IGP",
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MODIS_TERRA_C61_MONTHLY",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " mean_MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76,24,88,30&data=MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean%2CM2TMNXAER_5_12_4_TOTEXTTAU&dataKeyword=M2TMNXAER%20TOTEXTTAU&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.0,
+        24.0,
+        88.0,
+        30.0
+      ],
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "product": "MOD08_M3",
+      "version": "6.1",
+      "accessed_at": "2026-11-13T19:43:43.916844+00:00",
+      "fill_values": [
+        -9999.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.5,24.5,87.5,29.5"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean.20030101-20241231.76E_8N_80E_13N.csv",
+      "region_id": "TN",
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MODIS_TERRA_C61_MONTHLY",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " mean_MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76.5,8,80.5,13.5&data=MOD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean%2CM2TMNXAER_5_12_4_TOTEXTTAU&dataKeyword=M2TMNXAER%20TOTEXTTAU&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.5,
+        8.0,
+        80.5,
+        13.5
+      ],
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "product": "MOD08_M3",
+      "version": "6.1",
+      "accessed_at": "2026-11-13T19:43:43.942075+00:00",
+      "fill_values": [
+        -9999.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.5,8.5,80.5,13.5"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.MYD08_D3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean.20030101-20241231.76E_24N_88E_30N.csv",
+      "region_id": "IGP",
+      "variable": "aod",
+      "frequency": "day",
+      "source_id": "MODIS_AQUA_C61_DAILY",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " mean_MYD08_D3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76,24,88,30&data=MYD08_D3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean&variableFacets=dataFieldDiscipline%3AAerosols%3B&dataKeyword=MYD08_D3&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.0,
+        24.0,
+        88.0,
+        30.0
+      ],
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean",
+      "product": "MYD08_D3",
+      "version": "6.1",
+      "accessed_at": "2026-11-13T19:43:43.943215+00:00",
+      "fill_values": [
+        -9999.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.5,24.5,87.5,29.5"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.MYD08_D3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean.20030101-20241231.76E_8N_80E_13N.csv",
+      "region_id": "TN",
+      "variable": "aod",
+      "frequency": "day",
+      "source_id": "MODIS_AQUA_C61_DAILY",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " mean_MYD08_D3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76.5,8,80.5,13.5&data=MYD08_D3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean&variableFacets=dataFieldDiscipline%3AAerosols%3B&dataKeyword=MYD08_D3&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.5,
+        8.0,
+        80.5,
+        13.5
+      ],
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean",
+      "product": "MYD08_D3",
+      "version": "6.1",
+      "accessed_at": "2026-11-13T19:43:43.945220+00:00",
+      "fill_values": [
+        -9999.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.5,8.5,80.5,13.5"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.MYD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean.20030101-20241231.76E_24N_88E_30N.csv",
+      "region_id": "IGP",
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MODIS_AQUA_C61_MONTHLY",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " mean_MYD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76,24,88,30&data=MYD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean&variableFacets=dataFieldDiscipline%3AAerosols%3B&dataKeyword=MYD08_M3&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.0,
+        24.0,
+        88.0,
+        30.0
+      ],
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "product": "MYD08_M3",
+      "version": "6.1",
+      "accessed_at": "2026-11-13T19:43:43.946220+00:00",
+      "fill_values": [
+        -9999.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.5,24.5,87.5,29.5"
+    },
+    {
+      "path": "data/raw/g4.areaAvgTimeSeries.MYD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean.20030101-20241231.76E_8N_80E_13N.csv",
+      "region_id": "TN",
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MODIS_AQUA_C61_MONTHLY",
+      "unit": "1",
+      "date_column": "time",
+      "value_column": " mean_MYD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2003-01-01T00:00:00Z&endtime=2024-12-31T23:59:59Z&bbox=76.5,8,80.5,13.5&data=MYD08_M3_6_1_AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean&variableFacets=dataFieldDiscipline%3AAerosols%3B&dataKeyword=MYD08_M3&portal=GIOVANNI&format=json",
+      "bbox": [
+        76.5,
+        8.0,
+        80.5,
+        13.5
+      ],
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "product": "MYD08_M3",
+      "version": "6.1",
+      "accessed_at": "2026-11-13T19:43:43.946220+00:00",
+      "fill_values": [
+        -9999.0
+      ],
+      "method": "Giovanni Time Series, Area-Averaged; decoded exported values; inspect original metadata and source weighting",
+      "coverage_definition": "daily spatial coverage unknown; monthly temporal coverage derived from matched daily product when supplied",
+      "data_bbox": "76.5,8.5,80.5,13.5"
+    }
+  ]
+}

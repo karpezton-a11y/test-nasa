@@ -1,0 +1,32 @@
+{
+  "data_status": "real",
+  "observational_results_computed": true,
+  "original_export_count": 12,
+  "completed": [
+    "Primary monthly and daily acquisition for both boxes",
+    "Terra and MERRA-2 monthly comparison acquisition",
+    "Cleaning, units, provenance and temporal availability",
+    "Monthly anomalies and combined flags",
+    "Annual and seasonal regional rainfall indicators",
+    "Executed data validation Part A",
+    "Climatologies, figures and descriptive cross-product comparisons",
+    "Illustrated real-data presentation and written findings"
+  ],
+  "pending": [
+    "Independent scientific review",
+    "Aadarsh executable trend/evidence/interaction functions",
+    "Reference statistical results and validation Part B",
+    "Team app integration and actual demo recording"
+  ],
+  "limitations": [
+    "Approximate rectangular regions",
+    "Daily AOD spatial sampling fractions unknown",
+    "One non-positive daily TN AOD retrieval retained for review",
+    "Documented daily/monthly rainfall differences",
+    "No causal or statistically validated trend claims"
+  ],
+  "software_tests": {
+    "passed": 22,
+    "failed": 0
+  }
+}

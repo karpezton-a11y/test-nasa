@@ -1,0 +1,13 @@
+{
+  "data_version": "real_giovanni_2003_2024_2026_11_14",
+  "contract_version": "proposed_1.0",
+  "data_status": "real",
+  "generated_at": "2026-11-14T06:13:02.097691+00:00",
+  "spatial_method": "Documented per source in provenance.json",
+  "monthly_valid_fraction": "Valid regional daily values / calendar days, when daily source pair exists",
+  "daily_valid_fraction": "Spatial valid-cell fraction only when supplied, otherwise unknown",
+  "review_status": "awaiting_independent_review_by_Aadarsh",
+  "anomaly_min_baseline": 15,
+  "method_decisions": "docs/methods.md",
+  "statistical_results": "Aadarsh adapter required for trend/evidence results"
+}

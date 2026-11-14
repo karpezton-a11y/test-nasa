@@ -17,6 +17,7 @@
   <button data-tab="analyze" class="active">Analyze</button>
   <button data-tab="scan">What's changing?</button>
   <button data-tab="discover">Discover</button>
+  <button data-tab="more">Unusual months &amp; rain</button>
   <button data-tab="real">Real data</button>
   <button data-tab="demos">Demos</button>
 </nav>
@@ -65,6 +66,26 @@
       <button type="submit">Suggest variables</button>
     </form>
     <div id="discover-out"></div>
+  </section>
+
+  <!-- Anomalies, rainfall indicators, rain-haze interaction -->
+  <section id="tab-more" hidden>
+    <form id="more-form" class="row">
+      <label>Region <select name="region_id" id="more-region"></select></label>
+      <label>Show
+        <select name="what">
+          <option value="anomalies">Unusual months (rainfall and AOD)</option>
+          <option value="heavy_rain_share">Heavy-rain share per year</option>
+          <option value="longest_dry_spell">Longest dry spell per year</option>
+          <option value="interaction">Rain events and haze (association)</option>
+        </select>
+      </label>
+      <label>Season
+        <select name="season"><option value="annual">Whole year</option><option value="JJAS">Jun–Sep</option><option value="OND">Oct–Dec</option></select>
+      </label>
+      <button type="submit">Show</button>
+    </form>
+    <div id="more-out"></div>
   </section>
 
   <!-- Real research series + Giovanni upload -->

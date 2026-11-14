@@ -1,0 +1,215 @@
+{
+  "start": "2003-01-01",
+  "end": "2024-12-31",
+  "data_version": "REPLACE_AFTER_REAL_EXPORT",
+  "contract_version": "proposed_1.0",
+  "min_anomaly_baseline": 15,
+  "low_coverage_threshold": 0.3,
+  "indicator_seasons": [
+    "ALL",
+    "JJAS",
+    "OND"
+  ],
+  "primary_source_ids": [
+    "IMERG_V07_FINAL_MONTHLY",
+    "MODIS_AQUA_C61_MONTHLY"
+  ],
+  "daily_monthly_source_pairs": {
+    "IMERG_V07_FINAL_DAILY": "IMERG_V07_FINAL_MONTHLY",
+    "MODIS_AQUA_C61_DAILY": "MODIS_AQUA_C61_MONTHLY"
+  },
+  "inputs": [
+    {
+      "path": "data/raw/IGP_GPM_3IMERGM_2003_2024.csv",
+      "region_id": "IGP",
+      "bbox": [
+        76,
+        24,
+        88,
+        30
+      ],
+      "variable": "rainfall",
+      "frequency": "month",
+      "source_id": "IMERG_V07_FINAL_MONTHLY",
+      "product": "GPM_3IMERGM",
+      "version": "07",
+      "source_variable": "precipitation",
+      "unit": "mm/hr",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    },
+    {
+      "path": "data/raw/IGP_GPM_3IMERGDF_2003_2024.csv",
+      "region_id": "IGP",
+      "bbox": [
+        76,
+        24,
+        88,
+        30
+      ],
+      "variable": "rainfall",
+      "frequency": "day",
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "product": "GPM_3IMERGDF",
+      "version": "07",
+      "source_variable": "precipitation",
+      "unit": "mm/day",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    },
+    {
+      "path": "data/raw/IGP_MYD08_M3_2003_2024.csv",
+      "region_id": "IGP",
+      "bbox": [
+        76,
+        24,
+        88,
+        30
+      ],
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MODIS_AQUA_C61_MONTHLY",
+      "product": "MYD08_M3",
+      "version": "6.1",
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "unit": "1",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    },
+    {
+      "path": "data/raw/IGP_MYD08_D3_2003_2024.csv",
+      "region_id": "IGP",
+      "bbox": [
+        76,
+        24,
+        88,
+        30
+      ],
+      "variable": "aod",
+      "frequency": "day",
+      "source_id": "MODIS_AQUA_C61_DAILY",
+      "product": "MYD08_D3",
+      "version": "6.1",
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean",
+      "unit": "1",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    },
+    {
+      "path": "data/raw/TN_GPM_3IMERGM_2003_2024.csv",
+      "region_id": "TN",
+      "bbox": [
+        76.5,
+        8,
+        80.5,
+        13.5
+      ],
+      "variable": "rainfall",
+      "frequency": "month",
+      "source_id": "IMERG_V07_FINAL_MONTHLY",
+      "product": "GPM_3IMERGM",
+      "version": "07",
+      "source_variable": "precipitation",
+      "unit": "mm/hr",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    },
+    {
+      "path": "data/raw/TN_GPM_3IMERGDF_2003_2024.csv",
+      "region_id": "TN",
+      "bbox": [
+        76.5,
+        8,
+        80.5,
+        13.5
+      ],
+      "variable": "rainfall",
+      "frequency": "day",
+      "source_id": "IMERG_V07_FINAL_DAILY",
+      "product": "GPM_3IMERGDF",
+      "version": "07",
+      "source_variable": "precipitation",
+      "unit": "mm/day",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    },
+    {
+      "path": "data/raw/TN_MYD08_M3_2003_2024.csv",
+      "region_id": "TN",
+      "bbox": [
+        76.5,
+        8,
+        80.5,
+        13.5
+      ],
+      "variable": "aod",
+      "frequency": "month",
+      "source_id": "MODIS_AQUA_C61_MONTHLY",
+      "product": "MYD08_M3",
+      "version": "6.1",
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+      "unit": "1",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    },
+    {
+      "path": "data/raw/TN_MYD08_D3_2003_2024.csv",
+      "region_id": "TN",
+      "bbox": [
+        76.5,
+        8,
+        80.5,
+        13.5
+      ],
+      "variable": "aod",
+      "frequency": "day",
+      "source_id": "MODIS_AQUA_C61_DAILY",
+      "product": "MYD08_D3",
+      "version": "6.1",
+      "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean",
+      "unit": "1",
+      "date_column": "REPLACE_WITH_EXACT_DATE_COLUMN",
+      "value_column": "REPLACE_WITH_EXACT_VALUE_COLUMN",
+      "fill_values": [],
+      "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+      "accessed_at": "REPLACE_WITH_ACTUAL_DOWNLOAD_TIME",
+      "method": "Giovanni area-averaged time series; confirm export metadata",
+      "notes": "TEMPLATE ONLY. Replace column names and units from the actual file. Do not guess fill or scaling metadata."
+    }
+  ]
+}

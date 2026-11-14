@@ -1,0 +1,15 @@
+{
+  "originals_hashed": 12,
+  "monthly_rows": 2112,
+  "daily_rows": 32144,
+  "primary_monthly_rows": 1056,
+  "primary_anomaly_rows": 1056,
+  "headline_annual_rain_checks": "passed",
+  "duplicate_primary_keys": 0,
+  "anomaly_counts_match_csv": true,
+  "software_tests": {
+    "passed": 22,
+    "failed": 0
+  },
+  "independent_peer_review": false
+}

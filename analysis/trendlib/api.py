@@ -462,3 +462,65 @@ def analyze_values(dates: Iterable[Any], values: Iterable[Any], *, frequency: st
     out["evidence_label"] = evidence_label(record_years=out["record_years"], valid_obs_pct=valid_pct,
                                            p_value=out["mk_p_value"], alpha=alpha, ci_excludes_zero=ci_excl, sensitivity=runs)
     return out
+
+
+def compute_annual_trend(years: Iterable[int], values: Iterable[float | None], *, region_id: str, variable: str,
+                         source_id: str, unit: str, alpha: float = 0.05, season: str = "annual",
+                         series_type: str = "annual_indicator", limitations: list[str] | None = None) -> dict[str, Any]:
+    """Contract TrendResult for one value per year (decision J-2: annual indicators).
+
+    Counts are in years; low_coverage_months is 0. Sensitivity: end_2021 (when >= 10 years remain) and OLS.
+    """
+    years, values = list(years), list(values)
+    p = prepare_values([f"{y}-01-01" for y in years], values, "year")
+    a = analyze_prepared(p, alpha)
+    sen, mk, ols = a["sen"], a["mk"], a["ols"]
+    slope_dec = sen.slope * 10
+    sen_slope = _round(slope_dec)
+    p_value = _round(min(max(mk.p_value, 0.0), 1.0), 8)
+    significant = p_value < alpha
+    start, end = f"{min(years)}-01", f"{max(years)}-12"
+    record_years = float(max(years) - min(years) + 1)
+    n_expected, n_valid = len(years), int(p.n_valid_months)
+    valid_pct = 100.0 * n_valid / n_expected if n_expected else 0.0
+    ci = [min(_round(sen.lower * 10), sen_slope), max(_round(sen.upper * 10), sen_slope)]
+    ci_excl = ci[0] > 0 or ci[1] < 0
+    runs: list[dict[str, Any]] = []
+    cut = [(y, v) for y, v in zip(years, values) if y <= 2021]
+    if max(years) > 2021 and len([v for _, v in cut if v is not None]) >= MIN_YEARLY_VALUES:
+        q = prepare_values([f"{y}-01-01" for y, _ in cut], [v for _, v in cut], "year")
+        r = analyze_prepared(q, alpha)
+        runs.append({"name": "end_2021", "sen_slope": _round(r["sen"].slope * 10), "p_value": _round(r["mk"].p_value, 8),
+                     "same_sign": None if slope_dec == 0 else bool(np.sign(r["sen"].slope) == np.sign(slope_dec))})
+    runs.append({"name": "ols", "sen_slope": _round(ols.slope * 10), "p_value": _round(ols.p_value, 8),
+                 "same_sign": None if slope_dec == 0 else bool(np.sign(ols.slope) == np.sign(slope_dec))})
+    label = evidence_label(record_years=record_years, valid_obs_pct=valid_pct, p_value=p_value, alpha=alpha,
+                           ci_excludes_zero=ci_excl, sensitivity=runs)
+    baseline = float(np.mean(p.raw))
+    notes = ["Label rule defined by the team (v1); see docs/methods.md.",
+             "Annual series: counts are years; the seasonal cycle does not apply."]
+    if not significant and a["years_to_detect"] is not None:
+        notes.append(f"At the current rate and noise, about {a['years_to_detect']:.0f} years of record would be needed "
+                     "to detect this trend (Weatherhead et al. 1998, 90% power).")
+    return {
+        "result_id": f"trend_{region_id}_{variable}_{season}_{start}_{end}",
+        "region_id": region_id, "variable": variable, "source_id": source_id,
+        "period": {"start": start, "end": end}, "season": season, "series_type": series_type,
+        "method": {"test": "mann_kendall_hamed_rao", "slope": "theil_sen", "alpha": alpha, "ci_level": round(1 - alpha, 4)},
+        "direction": _direction(significant, sen_slope), "slope_sign": _sign(sen_slope),
+        "sen_slope": sen_slope, "slope_unit": f"{unit} per decade".strip(), "slope_ci": ci,
+        "p_value": p_value, "significant": significant,
+        "ols_slope": _round(ols.slope * 10), "ols_ci": [_round(ols.lower * 10), _round(ols.upper * 10)],
+        "change_over_period": _round(sen.slope * record_years), "baseline_mean": _round(baseline),
+        "percent_change_per_decade": _round(100 * slope_dec / baseline) if baseline else 0.0,
+        "n_expected": n_expected, "n_valid": n_valid, "missing_pct": _round(100 - valid_pct),
+        "record_years": record_years, "lag1_autocorrelation": _round(a["phi"]),
+        "limitations": list(limitations or []) + [
+            "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."],
+        "evidence": {"record_years": record_years, "n_valid": n_valid, "n_expected": n_expected,
+                     "valid_obs_pct": _round(valid_pct), "mean_valid_fraction": None, "low_coverage_months": 0,
+                     "p_value": p_value, "slope_ci": ci, "ci_excludes_zero": ci_excl, "sensitivity": runs,
+                     "evidence_label": label, "label_rule_version": LABEL_RULE_VERSION, "notes": notes},
+        "trendlib_version": VERSION,
+        "computed_at": datetime.now(IST).replace(microsecond=0).isoformat(),
+    }

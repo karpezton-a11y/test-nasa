@@ -9,11 +9,12 @@ from app.config import REPO_ROOT
 START = "uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT"
 
 
-def test_render_blueprint_is_a_labelled_staging_deploy():
+def test_render_blueprint_serves_real_data_on_staging():
     text = (REPO_ROOT / "render.yaml").read_text()
     assert f"startCommand: {START}" in text
     assert "healthCheckPath: /api/v1/health" in text
-    assert "key: APP_ENV\n        value: dev" in text and "key: DATA_MODE\n        value: mock" in text
+    assert "key: APP_ENV\n        value: dev" in text and "key: DATA_MODE\n        value: real" in text
+    assert (REPO_ROOT / "data" / "processed" / "manifest.json").is_file()  # real mode needs the delivered files
     assert "value: prod" not in text  # prod + mock is refused by the app; staging must stay dev
     assert "key: LLM_API_KEY\n        sync: false" in text  # secrets never committed
 

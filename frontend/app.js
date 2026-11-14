@@ -59,14 +59,17 @@ function chart(fit, yLabel) {
     add("text", { x: X(new Date(`${yr}-07-01`).getTime()), y: H - 12, "text-anchor": "middle", "font-size": 11, fill: "#666" }).textContent = yr;
   });
   add("text", { x: 12, y: 14, "font-size": 12, fill: "#444" }).textContent = yLabel;
+  const hasTrend = fit[0].fitted !== null && fit[0].fitted !== undefined;
   // band
+  if (hasTrend) {
   const upper = fit.map((f, i) => `${X(t[i])},${Y(f.upper)}`);
   const lower = fit.map((f, i) => `${X(t[i])},${Y(f.lower)}`).reverse();
   add("polygon", { points: [...upper, ...lower].join(" "), fill: "rgba(214,69,47,.18)" });
+  }
   // data points (connected thinly) and fitted line
   add("polyline", { points: fit.map((f, i) => `${X(t[i])},${Y(f.analysed)}`).join(" "), fill: "none", stroke: "#9cbbe0", "stroke-width": 1 });
   fit.forEach((f, i) => add("circle", { cx: X(t[i]), cy: Y(f.analysed), r: fit.length > 60 ? 2 : 3.5, fill: "#0b5fae" }));
-  add("line", { x1: X(t[0]), y1: Y(fit[0].fitted), x2: X(t[t.length - 1]), y2: Y(fit[fit.length - 1].fitted), stroke: "#d6452f", "stroke-width": 2.5 });
+  if (hasTrend) add("line", { x1: X(t[0]), y1: Y(fit[0].fitted), x2: X(t[t.length - 1]), y2: Y(fit[fit.length - 1].fitted), stroke: "#d6452f", "stroke-width": 2.5 });
   return el("div", {}, svg, el("div", { class: "legend" },
     el("span", {}, el("i", { class: "dot" }), " data"), el("span", {}, el("i", { class: "line" }), " Theil–Sen trend"),
     el("span", {}, el("i", { class: "band" }), " likely range of the trend")));
@@ -92,6 +95,7 @@ async function loadMeta() {
     const [r, v, cat, res] = await Promise.all([call("/regions"), call("/variables"), call("/catalog"), call("/research/series")]);
     regions = r.result.regions; variables = v.result; catalog = cat.result.variables;
     $("#region").replaceChildren(...regions.map((x) => el("option", { value: x.region_id }, x.name)));
+    $("#more-region").replaceChildren(...regions.map((x) => el("option", { value: x.region_id }, x.name)));
     fillVariables();
     $("#region").addEventListener("change", fillVariables);
     $("#variable").addEventListener("change", describeVariable);
@@ -219,6 +223,62 @@ $("#upload-form").addEventListener("submit", async (e) => {
   } catch (err) { fail(out, err); }
 });
 
+// ---------- Unusual months, indicators, interaction ----------
+$("#more-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = new FormData(e.target), out = $("#more-out"), rid = f.get("region_id"), what = f.get("what");
+  loading(out);
+  try {
+    if (what === "anomalies") {
+      const { result } = await call(`/anomalies?region_id=${rid}&variable=both`);
+      const cards = result.results.map((r) => {
+        const flagged = r.anomalies.filter((a) => a.category);
+        return el("div", { class: "card" },
+          el("h3", {}, r.variable === "aod" ? "AOD (haze)" : "Rainfall", " ",
+             el("span", { class: "muted" }, `${flagged.length} unusual of ${r.anomalies.length} months; same-calendar-month baseline ${r.baseline.start} to ${r.baseline.end}`)),
+          el("table", {}, el("tr", {}, ["Month", "Value", "Usual (median)", "Flag", "Note"].map((h) => el("th", {}, h))),
+            flagged.map((a) => el("tr", {}, el("td", {}, a.date.slice(0, 7)), el("td", {}, fmt(a.value)),
+              el("td", {}, fmt(a.baseline_median)), el("td", {}, a.category.replaceAll("_", " ")), el("td", {}, a.note)))));
+      });
+      const both = result.combined_flags.length
+        ? el("div", { class: "card" }, el("b", {}, "Months unusual in both: "),
+            result.combined_flags.map((c) => `${c.date.slice(0, 7)} (${c.category.replaceAll("_", " ")})`).join(", "),
+            el("p", { class: "muted" }, "Co-occurrence only; it does not show that one caused the other."))
+        : el("p", { class: "muted" }, "No month was unusual in both rainfall and AOD.");
+      show(out, both, ...cards);
+    } else if (what === "interaction") {
+      const season = f.get("season") === "annual" ? "all" : f.get("season");
+      const { result: r } = await call(`/interaction?region_id=${rid}&season=${season}`);
+      const sig = r.p_value !== null && r.p_value < 0.05;
+      show(out, el("div", { class: "card" },
+        el("p", { class: "summary" }, `${r.n_events_used} heavy-rain days (top 10% of ${season === "all" ? "all" : season} days) had haze measured before and after. `
+          + `Median AOD change from 3 days before to 3 days after: ${fmt(r.median_change)} (likely range ${fmt(r.median_change_ci?.[0])} to ${fmt(r.median_change_ci?.[1])}). `
+          + (r.p_value === null ? r.note : `Wilcoxon p = ${pText(r.p_value)}: ${sig ? "a consistent change" : "no consistent change"}. `)
+          + `Ordinary days in the same months changed by ${fmt(r.control.median_change)}.`),
+        statsTable([["Events found / used", `${r.n_events} / ${r.n_events_used}`],
+                    ["Valid AOD days before / after", `${r.valid_aod_pct_before}% / ${r.valid_aod_pct_after}%`],
+                    ["Monthly rain–haze correlation (Spearman, seasons removed)", `rho = ${fmt(r.monthly_association.rho)}, p = ${pText(r.monthly_association.p_value)}, n = ${r.monthly_association.n}`]]),
+        el("p", { class: "muted" }, r.guardrail)));
+    } else {
+      const { result: r } = await call(`/rainfall/indicators?region_id=${rid}&indicator=${what}&season=${f.get("season")}`);
+      const fit = r.values.filter((v) => v.value !== null).map((v) => ({ date: `${v.year}-07-01`, analysed: v.value, fitted: null, lower: null, upper: null }));
+      if (r.trend) {
+        const t = r.trend, mid = fit.reduce((s, p) => s + p.analysed, 0) / fit.length, ym = 2013.5;
+        for (const p of fit) {
+          const dy = (Number(p.date.slice(0, 4)) - ym) / 10;
+          p.fitted = mid + t.sen_slope * dy; p.lower = mid + Math.min(t.slope_ci[0] * dy, t.slope_ci[1] * dy); p.upper = mid + Math.max(t.slope_ci[0] * dy, t.slope_ci[1] * dy);
+        }
+      }
+      const t = r.trend;
+      show(out,
+        el("div", { class: "card" }, t ? verdict(t.significant) : "", el("p", { class: "summary" },
+          t ? `Trend: ${fmt(t.sen_slope)} ${t.slope_unit} (range ${fmt(t.slope_ci[0])} to ${fmt(t.slope_ci[1])}), Mann–Kendall p = ${pText(t.p_value)}.` : r.trend_note),
+          el("p", { class: "muted" }, r.definition)),
+        el("div", { class: "card" }, chart(fit, `${what.replaceAll("_", " ")} (${r.unit})`)));
+    }
+  } catch (err) { fail(out, err); }
+});
+
 // ---------- Demos ----------
 async function loadDemos() {
   const out = $("#demos-out");
@@ -254,5 +314,8 @@ async function playDemo(demo, log) {
 loadMeta().then(() => {
   if ([...$("#variable").options].some((o) => o.value === "aod")) { $("#variable").value = "aod"; describeVariable(); }
   if ($("#region").options.length) $("#analyze-form").requestSubmit();
+  // Deep links such as #more=interaction open that view directly (handy for demos).
+  const m = location.hash.match(/^#more=(\w+)/);
+  if (m) { $("#more-form").elements.what.value = m[1]; openTab("more"); $("#more-form").requestSubmit(); }
 });
 loadDemos();

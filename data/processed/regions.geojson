@@ -1,0 +1,127 @@
+{
+ "data_status": "real",
+ "data_version": "REAL-G3-2026-11-14-a4151cac",
+ "contract_version": "1.0",
+ "generated_at": "2026-11-14T00:00:00+05:30",
+ "result": {
+  "regions": [
+   {
+    "region_id": "IGP",
+    "name": "Indo-Gangetic Plain (analysis box)",
+    "bbox": [
+     76.0,
+     24.0,
+     88.0,
+     30.0
+    ],
+    "status": "provisional",
+    "description": "Rectangular analysis box. Includes neighbouring areas and potentially coastal water. This selection is a rectangular analysis box rather than an exact administrative boundary.",
+    "variables": [
+     "rainfall",
+     "aod"
+    ],
+    "period_available": {
+     "start": "2003-01",
+     "end": "2024-12"
+    }
+   },
+   {
+    "region_id": "TN",
+    "name": "Tamil Nadu region (analysis box)",
+    "bbox": [
+     76.5,
+     8.0,
+     80.5,
+     13.5
+    ],
+    "status": "provisional",
+    "description": "Rectangular analysis box. Includes neighbouring areas and potentially coastal water. This selection is a rectangular analysis box rather than an exact administrative boundary.",
+    "variables": [
+     "rainfall",
+     "aod"
+    ],
+    "period_available": {
+     "start": "2003-01",
+     "end": "2024-12"
+    }
+   }
+  ],
+  "geojson": {
+   "type": "FeatureCollection",
+   "features": [
+    {
+     "type": "Feature",
+     "id": "IGP",
+     "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         76.0,
+         24.0
+        ],
+        [
+         88.0,
+         24.0
+        ],
+        [
+         88.0,
+         30.0
+        ],
+        [
+         76.0,
+         30.0
+        ],
+        [
+         76.0,
+         24.0
+        ]
+       ]
+      ]
+     },
+     "properties": {
+      "region_id": "IGP",
+      "name": "Indo-Gangetic Plain (analysis box)",
+      "status": "provisional"
+     }
+    },
+    {
+     "type": "Feature",
+     "id": "TN",
+     "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         76.5,
+         8.0
+        ],
+        [
+         80.5,
+         8.0
+        ],
+        [
+         80.5,
+         13.5
+        ],
+        [
+         76.5,
+         13.5
+        ],
+        [
+         76.5,
+         8.0
+        ]
+       ]
+      ]
+     },
+     "properties": {
+      "region_id": "TN",
+      "name": "Tamil Nadu region (analysis box)",
+      "status": "provisional"
+     }
+    }
+   ]
+  }
+ }
+}

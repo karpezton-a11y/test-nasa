@@ -51,6 +51,13 @@ class GiovanniSeries:
     metadata: dict[str, str] = field(default_factory=dict)
 
 
+def native_unit(variable_id: str) -> str:
+    """Native unit of a known Giovanni data ID from data/catalog (e.g. IMERG monthly -> mm/hr)."""
+    from .catalog import load_catalog
+    entry = next((v for v in load_catalog()["variables"] if v.get("giovanni_id") == variable_id), None)
+    return entry["native_unit"].split(" ")[0] if entry else ""
+
+
 def _bad(message: str) -> None:
     raise api_error("VALIDATION_ERROR", message, {"param": "giovanni_csv"})
 
@@ -110,13 +117,16 @@ def parse_giovanni_csv(text: str, conversion: str = "none") -> GiovanniSeries:
         _bad("Duplicate dates in the Giovanni CSV.")
     title = meta.get("Title", "")
     unit_match = re.search(r"\]\s*([^\s,]+)\s+over", title)
-    unit = convert_unit or (unit_match.group(1) if unit_match else "")
+    # Current Giovanni exports do not print units; fall back to the catalogue's native unit for the data ID.
+    unit = convert_unit or (unit_match.group(1) if unit_match else "") or native_unit(variable_id)
     bbox = None
-    if "Bounding Box" in meta:
-        try:
-            bbox = [float(x) for x in meta["Bounding Box"].split(",")]
-        except ValueError:
-            bbox = None
+    for key in ("User Bounding Box", "Bounding Box", "Data Bounding Box"):
+        if key in meta:
+            try:
+                bbox = [float(x) for x in meta[key].split(",")]
+                break
+            except ValueError:
+                bbox = None
     gaps = sorted({(b - a).days for a, b in zip(dates, dates[1:])})
     frequency = "month" if gaps and 27 <= gaps[0] and gaps[-1] <= 31 * 12 and all(d.day == 1 for d in dates) else (
         "year" if gaps and gaps[0] >= 365 else "day")

@@ -30,7 +30,7 @@ The documented team evidence rule retains strong, moderate, weak and insufficien
 
 ## Implemented trend engine (analysis/trendlib 1.0.0)
 
-The backend's science adapter calls `trendlib.compute_trend` for every `/analyze`, `/compare`, `/analyze/detail` and `/scan` request, in mock and real mode alike. Implementation choices, each traceable to the handbook:
+The backend's science adapter calls `trendlib.compute_trend` for every `/analyze`, `/compare`, `/analyze/detail` and `/scan` request, in both data modes. Implementation choices, each traceable to the handbook:
 
 - **All-month trends:** each calendar month's mean over the selected period is subtracted (deseasonalised anomalies). A calendar month with fewer than three valid values is left out and named in the limitations, rather than given an invented baseline; more than four such months raise InsufficientDataError.
 - **Seasonal trends (JF, MAM, JJAS, OND):** one mean per year, using only years in which every month of the season is valid (handbook p14). Partial seasons are skipped, never averaged.
@@ -44,6 +44,12 @@ The backend's science adapter calls `trendlib.compute_trend` for every `/analyze
 - **Exceptions:** only `InsufficientDataError` and `DataQualityError` map to INSUFFICIENT_DATA (decision SCI-02).
 
 Real annual results (Group 3 export values, rounded to six decimals, 2003–2024): annual mean Aqua AOD rises by 0.079 per decade in the IGP box and 0.052 per decade in the TN box (Hamed–Rao p < 0.001 for both); annual rainfall, longest dry spell and heavy-rain share show no significant trend at alpha 0.05. These are statistical patterns in box averages, not causal findings.
+
+## Real-data integration (Group 3 package, 14 November 2026)
+
+`scripts/build_real_data.py` converts `group3_pipeline/results/` into the loader layout without changing any value. Served series, anomaly scores and indicator values are checked against Group 3's CSVs in `test_real_values_match_group3_csv`. Group 3 flags rainfall anomalies with linear P10/P90 *values*; the contract states thresholds on the score scale, so the served thresholds are the equivalent mid-rank cut-offs (39/44 and 5/44 with 22 baseline values), verified so that every unflagged month lies strictly between them except months whose dry flag is suppressed. Comparison products (Terra MODIS, MERRA-2) are never blended into the primary series; they appear only as the `terra_monthly` and `merra2` sensitivity runs of AOD trends. Indicator trends use one value per year (decision J-2).
+
+**Rainfall–AOD interaction (trendlib.interaction):** events are days at or above the seasonal P90 of daily regional rainfall over 2003–2024, keeping the first day of any cluster with at least seven days' separation; AOD windows are days −3..−1 and +1..+3 with the event day excluded and at least one valid retrieval per window (non-positive AOD retrievals excluded). Outputs: paired Wilcoxon signed-rank p (tie-corrected normal approximation, agrees with SciPy), bootstrap 95% interval of the median change (5,000 resamples, seed 20261114), up to five random same-month control days per event at least three days from any event, and Spearman correlation of deseasonalised monthly anomalies (agrees with SciPy). Association only.
 
 ## Documented anomalies and rainfall indicators
 

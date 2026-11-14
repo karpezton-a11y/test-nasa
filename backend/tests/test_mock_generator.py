@@ -72,7 +72,9 @@ def test_generator_refuses_processed_and_other_repo_dirs():
         generate(REPO_ROOT / "data" / "processed")
     with pytest.raises(SystemExit):
         generate(REPO_ROOT / "docs")
-    assert not any(p.suffix == ".json" for p in (REPO_ROOT / "data" / "processed").rglob("*"))
+    # data/processed now holds Group 3's real envelopes; the generator must never have written mock files there.
+    assert not any('"data_status": "mock"' in p.read_text(encoding="utf-8")
+                   for p in (REPO_ROOT / "data" / "processed").rglob("*.json"))
 
 
 def test_generation_does_not_touch_examples(tmp_path):
@@ -213,9 +215,10 @@ def test_store_status_must_match_data_mode(make_settings):
             pass
 
 
-def test_prod_real_mode_without_the_loader_refuses_to_start(make_settings):
+def test_prod_real_mode_without_the_loader_refuses_to_start(make_settings, tmp_path):
+    # An empty processed folder: real mode with nothing delivered (data/processed now holds Group 3's files).
     with pytest.raises(ConfigError, match="real_store"):
-        with TestClient(create_app(make_settings(APP_ENV="prod", DATA_MODE="real"))):
+        with TestClient(create_app(make_settings(APP_ENV="prod", DATA_MODE="real", PROCESSED_DIR=str(tmp_path / "empty")))):
             pass
 
 
@@ -227,7 +230,8 @@ def test_prod_real_mode_without_the_loader_refuses_to_start(make_settings):
     ("/export/csv", {"region_id": "IGP", "variable": "aod"}),
 ])
 def test_dev_real_mode_without_the_loader_serves_no_data_and_no_mock(make_settings, tmp_path, path, params):
-    with TestClient(create_app(make_settings(DATA_MODE="real", REPORTS_DIR=str(tmp_path)))) as c:
+    with TestClient(create_app(make_settings(DATA_MODE="real", REPORTS_DIR=str(tmp_path),
+                                             PROCESSED_DIR=str(tmp_path / "empty")))) as c:
         health = c.get("/api/v1/health").json()
         response = c.get(f"/api/v1{path}", params=params)
     assert health["data_status"] == "real" and health["data_version"] == "REAL-DATA-NOT-LOADED"

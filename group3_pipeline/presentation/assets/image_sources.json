@@ -1,0 +1,30 @@
+[
+  {
+    "file": "aqua.jpg",
+    "url": "https://assets.science.nasa.gov/content/dam/science/missions/aqua/aqua_mission_banner.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "source_page": "https://science.nasa.gov/mission/aqua/",
+    "credit": "NASA Aqua mission illustration",
+    "bytes": 244870
+  },
+  {
+    "file": "gpm.jpg",
+    "url": "https://gpm.nasa.gov/sites/default/files/imageGallery/BannerFinal_Large.jpg",
+    "source_page": "https://gpm.nasa.gov/image-gallery/gpm-core-satellite-visualization",
+    "credit": "NASA GPM Core Observatory visualization",
+    "bytes": 1333535
+  },
+  {
+    "file": "india2020.png",
+    "url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/146000/146596/india_tmo_2016-2020_lrg.png",
+    "source_page": "https://science.nasa.gov/earth/earth-observatory/airborne-particle-levels-plummet-in-northern-india-146596/",
+    "credit": "NASA Earth Observatory, Joshua Stevens, Terra MODIS analysis courtesy Pawan Gupta/USRA/NASA",
+    "bytes": 3210412
+  },
+  {
+    "file": "india2020_chart.png",
+    "url": "https://science.nasa.gov/wp-content/uploads/2025/10/india_tmo_2020_chart.png",
+    "source_page": "https://science.nasa.gov/earth/earth-observatory/airborne-particle-levels-plummet-in-northern-india-146596/",
+    "credit": "NASA Earth Observatory published comparison, background evidence only",
+    "bytes": 40072
+  }
+]

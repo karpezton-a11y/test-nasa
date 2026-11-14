@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-14",
+  "source": "User-authorised existing logged-in Giovanni browser",
+  "downloaded_csvs": 12,
+  "originals": "data/raw",
+  "credentials_included": false,
+  "note": "Supersedes the historical anonymous HTTP 401 access limitation. Direct unauthenticated requests can still fail; browser session downloads succeeded."
+}

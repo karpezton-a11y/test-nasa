@@ -1,0 +1,87 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "region_id": "IGP",
+        "status": "provisional",
+        "bbox": [
+          76,
+          24,
+          88,
+          30
+        ],
+        "description": "Rectangular analysis box. Includes neighbouring areas and potentially coastal water."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76,
+              24
+            ],
+            [
+              88,
+              24
+            ],
+            [
+              88,
+              30
+            ],
+            [
+              76,
+              30
+            ],
+            [
+              76,
+              24
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "region_id": "TN",
+        "status": "provisional",
+        "bbox": [
+          76.5,
+          8,
+          80.5,
+          13.5
+        ],
+        "description": "Rectangular analysis box. Includes neighbouring areas and potentially coastal water."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.5,
+              8
+            ],
+            [
+              80.5,
+              8
+            ],
+            [
+              80.5,
+              13.5
+            ],
+            [
+              76.5,
+              13.5
+            ],
+            [
+              76.5,
+              8
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -165,7 +165,8 @@ class RealStore:
     def _coverage_unknown_sources(self) -> set[str]:
         """Area-averaged Giovanni/POWER downloads carry no temporal-coverage field (see import_giovanni.py)."""
         return {s.source_id for s in self._metadata.get("sources", [])
-                if s.access_method.startswith(("NASA Giovanni", "NASA POWER"))}
+                if s.access_method.startswith(("NASA Giovanni", "NASA POWER"))
+                or "temporal coverage not exported" in s.access_method}
 
     def _expected_unit(self, variable: str, frequency: str) -> str | None:
         """Frozen canonical units for the original variables; catalogue variables added later
@@ -302,10 +303,39 @@ class RealStore:
         require_coverage(series, period, season=season)
         result = compute_trend(series, period, season, alpha=alpha,
                                exclude_low_coverage=exclude_low_coverage)
+        result = self._with_comparison_sources(result, region_id, variable, period, season, alpha)
         _reject_mock(result.model_dump(mode="json"), "trendlib result")
         sources = {s.source_id for s in self.sources()}
         self._check_result_sources(result, sources, {r.region_id: r for r in self.regions().regions})
         return result
+
+    # Handbook sensitivity runs: the same test on independent comparison products (never blended into the
+    # primary series). Names match the contract fixtures: terra_monthly, merra2.
+    COMPARISON_RUNS = {"MODIS_TERRA_C61_MONTHLY": "terra_monthly", "MERRA2_MONTHLY_TOTEXTTAU": "merra2"}
+
+    def _with_comparison_sources(self, result, region_id, variable, period, season, alpha):
+        from .science import _trendlib, quality_errors, series_frame
+        runs = []
+        for source_id, name in self.COMPARISON_RUNS.items():
+            series = self._series.get((region_id, variable, "month", source_id))
+            if series is None or source_id == result.source_id:
+                continue
+            try:
+                other = _trendlib().compute_trend(series_frame(slice_series(series, period), period), season=season, alpha=alpha)
+            except quality_errors():
+                runs.append({"name": name, "sen_slope": None, "p_value": None, "same_sign": None})
+                continue
+            same = None if result.sen_slope == 0 else (other["sen_slope"] > 0) == (result.sen_slope > 0) and other["sen_slope"] != 0
+            runs.append({"name": name, "sen_slope": other["sen_slope"], "p_value": other["p_value"], "same_sign": same})
+        if not runs:
+            return result
+        evidence = result.evidence.model_dump()
+        evidence["sensitivity"] = evidence["sensitivity"] + runs
+        evidence["evidence_label"] = _trendlib().evidence_label(
+            record_years=evidence["record_years"], valid_obs_pct=evidence["valid_obs_pct"], p_value=evidence["p_value"],
+            alpha=alpha, ci_excludes_zero=evidence["ci_excludes_zero"], sensitivity=evidence["sensitivity"])
+        evidence["notes"] = evidence["notes"] + ["Sensitivity includes independent Terra MODIS and/or MERRA-2 comparison products."]
+        return TrendResult.model_validate({**result.model_dump(), "evidence": evidence})
 
     def anomalies(self, region_id, variable, period, detrended):
         for result in self._results["anomalies"]:

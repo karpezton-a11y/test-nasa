@@ -1,0 +1,558 @@
+{
+ "data_status": "real",
+ "data_version": "REAL-G3-2026-11-14-a4151cac",
+ "contract_version": "1.0",
+ "generated_at": "2026-11-14T00:00:00+05:30",
+ "result": [
+  {
+   "result_id": "interaction_IGP_all_2003-01_2024-12",
+   "region_id": "IGP",
+   "season": "all",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 239,
+   "n_events_used": 239,
+   "valid_aod_pct_before": 95.12,
+   "valid_aod_pct_after": 93.58,
+   "aod_before_median": 0.586273,
+   "aod_after_median": 0.576389,
+   "median_change": 0.023373,
+   "median_change_ci": [
+    -0.029723,
+    0.058009
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.41695567,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 1102,
+    "median_change": -0.050058
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": 0.055682,
+    "n": 264,
+    "p_value": 0.36751638
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_IGP_JF_2003-01_2024-12",
+   "region_id": "IGP",
+   "season": "JF",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 54,
+   "n_events_used": 54,
+   "valid_aod_pct_before": 100.0,
+   "valid_aod_pct_after": 98.77,
+   "aod_before_median": 0.518819,
+   "aod_after_median": 0.591647,
+   "median_change": 0.021212,
+   "median_change_ci": [
+    -0.03481,
+    0.094176
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.22473217,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 269,
+    "median_change": 0.003928
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": 0.093869,
+    "n": 44,
+    "p_value": 0.54446736
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_IGP_MAM_2003-01_2024-12",
+   "region_id": "IGP",
+   "season": "MAM",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 90,
+   "n_events_used": 90,
+   "valid_aod_pct_before": 100.0,
+   "valid_aod_pct_after": 99.63,
+   "aod_before_median": 0.496861,
+   "aod_after_median": 0.518529,
+   "median_change": -0.014277,
+   "median_change_ci": [
+    -0.076959,
+    0.039912
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.3547327,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 443,
+    "median_change": 0.016442
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": 0.066569,
+    "n": 66,
+    "p_value": 0.59537183
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_IGP_JJAS_2003-01_2024-12",
+   "region_id": "IGP",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 126,
+   "n_events_used": 125,
+   "valid_aod_pct_before": 92.59,
+   "valid_aod_pct_after": 89.68,
+   "aod_before_median": 0.643724,
+   "aod_after_median": 0.666577,
+   "median_change": 0.035064,
+   "median_change_ci": [
+    -0.019138,
+    0.095464
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.20534831,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 625,
+    "median_change": -0.028051
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": 0.127276,
+    "n": 88,
+    "p_value": 0.23732537
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_IGP_OND_2003-01_2024-12",
+   "region_id": "IGP",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 72,
+   "n_events_used": 72,
+   "valid_aod_pct_before": 100.0,
+   "valid_aod_pct_after": 98.61,
+   "aod_before_median": 0.477308,
+   "aod_after_median": 0.476939,
+   "median_change": 0.033475,
+   "median_change_ci": [
+    -0.0017,
+    0.062008
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.15649678,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 360,
+    "median_change": 0.025772
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": -0.004279,
+    "n": 66,
+    "p_value": 0.97279652
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_TN_all_2003-01_2024-12",
+   "region_id": "TN",
+   "season": "all",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 309,
+   "n_events_used": 297,
+   "valid_aod_pct_before": 91.91,
+   "valid_aod_pct_after": 82.85,
+   "aod_before_median": 0.299851,
+   "aod_after_median": 0.302398,
+   "median_change": -0.01287,
+   "median_change_ci": [
+    -0.030525,
+    0.00379
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.40253081,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 1448,
+    "median_change": 0.000242
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": -0.104792,
+    "n": 264,
+    "p_value": 0.08926927
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_TN_JF_2003-01_2024-12",
+   "region_id": "TN",
+   "season": "JF",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 52,
+   "n_events_used": 52,
+   "valid_aod_pct_before": 100.0,
+   "valid_aod_pct_after": 98.08,
+   "aod_before_median": 0.246798,
+   "aod_after_median": 0.24197,
+   "median_change": -0.020758,
+   "median_change_ci": [
+    -0.05606,
+    0.01651
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.19126619,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 259,
+    "median_change": -0.003485
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": 0.161099,
+    "n": 44,
+    "p_value": 0.2961655
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_TN_MAM_2003-01_2024-12",
+   "region_id": "TN",
+   "season": "MAM",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 74,
+   "n_events_used": 71,
+   "valid_aod_pct_before": 92.79,
+   "valid_aod_pct_after": 89.19,
+   "aod_before_median": 0.336805,
+   "aod_after_median": 0.319781,
+   "median_change": 0.010053,
+   "median_change_ci": [
+    -0.016308,
+    0.049177
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.5191822,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 335,
+    "median_change": 0.002014
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": -0.15562,
+    "n": 66,
+    "p_value": 0.21213037
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_TN_JJAS_2003-01_2024-12",
+   "region_id": "TN",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 132,
+   "n_events_used": 130,
+   "valid_aod_pct_before": 89.14,
+   "valid_aod_pct_after": 83.84,
+   "aod_before_median": 0.315889,
+   "aod_after_median": 0.317131,
+   "median_change": -0.001381,
+   "median_change_ci": [
+    -0.034754,
+    0.024314
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.6554901,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 643,
+    "median_change": -0.007287
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": 0.039995,
+    "n": 88,
+    "p_value": 0.71140442
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  },
+  {
+   "result_id": "interaction_TN_OND_2003-01_2024-12",
+   "region_id": "TN",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_ids": {
+    "rainfall_daily": "IMERG_V07_FINAL_DAILY",
+    "aod_daily": "MODIS_AQUA_C61_DAILY",
+    "rainfall_monthly": "IMERG_V07_FINAL_MONTHLY",
+    "aod_monthly": "MODIS_AQUA_C61_MONTHLY"
+   },
+   "event_definition": {
+    "rain_threshold": "seasonal_p90_of_daily_regional_mean",
+    "threshold_period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "min_separation_days": 7,
+    "window_days": 3,
+    "event_day_excluded": true,
+    "min_valid_aod_days_per_window": 1
+   },
+   "status": "ok",
+   "note": null,
+   "n_events": 88,
+   "n_events_used": 84,
+   "valid_aod_pct_before": 95.45,
+   "valid_aod_pct_after": 78.03,
+   "aod_before_median": 0.285244,
+   "aod_after_median": 0.277814,
+   "median_change": -0.031368,
+   "median_change_ci": [
+    -0.067521,
+    0.006355
+   ],
+   "ci_level": 0.95,
+   "ci_method": "bootstrap",
+   "test": "wilcoxon_signed_rank",
+   "p_value": 0.08720587,
+   "control": {
+    "method": "random_non_event_days_same_month",
+    "n": 414,
+    "median_change": 0.011021
+   },
+   "monthly_association": {
+    "method": "spearman_on_deseasonalised_anomalies",
+    "rho": -0.303288,
+    "n": 66,
+    "p_value": 0.01330676
+   },
+   "guardrail": "Association only. AOD is retrieved in clear skies, so rainy days are under-sampled."
+  }
+ ]
+}

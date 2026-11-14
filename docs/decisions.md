@@ -150,3 +150,11 @@ Research received: Aadarsh's TrendTrace-2.pdf (handbook, not executable statisti
 - **TT-07 [ADDED] — Additive routes:** `/catalog`, `/discover/questions`, `/discover`, `/demos`, `/research/series`, `/analyze/detail`, `/analyze/series`, `/scan`. No frozen A–J field or enum changed.
 - **TT-08 [OPEN] — Data package:** Sritharan's `results/` folder, `run_pipeline.py` and `inputs.json` referenced throughout the deck are not in this repository. Commit them so real mode can serve the full monthly record.
 - **TT-09 [OPEN] — Interaction composites:** handbook pp27–29 (event composites, Wilcoxon, bootstrap) are not implemented in trendlib; `/interaction` still serves stored results only.
+
+## Real data integrated — 14 November 2026
+
+- **TT-10 [RESOLVED] — Group 3 package:** Sritharan's complete package is committed as `group3_pipeline/` (code, 12 raw Giovanni exports with hashes, results, docs, audit). `scripts/build_real_data.py` builds `data/processed/`; the Render service now runs `DATA_MODE=real` (APP_ENV=dev). Supersedes TT-08.
+- **TT-11 [PROVISIONAL] — Rainfall anomaly thresholds:** expressed as equivalent mid-rank cut-offs (see methods.md) so Group 3's value-based P10/P90 flags satisfy the frozen score-threshold rule. Owner: Sritharan to confirm.
+- **TT-12 [RESOLVED] — Comparison sensitivities:** Terra MODIS and MERRA-2 AOD trends are added as `terra_monthly`/`merra2` sensitivity runs and enter evidence rule v1. Comparison sources may leave monthly valid_fraction empty (not exported), never filled.
+- **TT-13 [RESOLVED implementation, review pending] — Interaction:** implemented in `trendlib.interaction` per handbook pp27–29 and served for both regions and all five seasons. Supersedes TT-09. Owner: Aadarsh to review; his independent reference outputs remain the open acceptance item.
+- **TT-14 [RESOLVED] — Acceptance:** the reference-folder test skips (with reason) until Aadarsh's independent outputs exist; served values are instead checked against Group 3's own CSVs.

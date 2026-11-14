@@ -16,7 +16,7 @@ TrendTrace helps students and the public become data detectives: pick an Earth s
 | Any variable, today | `POST /analyze/series`: upload a Giovanni CSV or any series and get the full analysis |
 | Demonstration examples | `GET /demos` + `python scripts/run_demo.py`: five walkthroughs, two on **real** NASA-derived series |
 
-**Data status.** The served store is still the labelled **MOCK** development set until Group 3's full-precision `results/` files are placed in `data/processed/`. Statistics, however, are now computed live by `trendlib` on whatever series is loaded, so the slope always matches the plotted data. Real NASA-derived annual series from Group 3's research export (IMERG rainfall, Aqua MODIS AOD, dry spells, heavy-rain share; 2003–2024) ship in `data/research/` and power the real demos. Real headline result: annual AOD rises **+0.079/decade over the Indo-Gangetic Plain** and **+0.052/decade over Tamil Nadu** (both p < 0.001), while rainfall shows no significant trend. Mock data is never a replacement for scientific evidence.
+**Data status: REAL.** The app serves Group 3's observed NASA data: 12 Giovanni exports for 2003–2024 (GPM IMERG V07 rainfall, Aqua MODIS C6.1 AOD, with Terra MODIS and MERRA-2 as comparison series) over the Indo-Gangetic Plain and Tamil Nadu boxes. Sritharan's full pipeline, raw exports and results live in `group3_pipeline/`, and `python scripts/build_real_data.py` turns them into `data/processed/`. Headline results (monthly, seasonal cycle removed): AOD rises **+0.083 per decade over the Indo-Gangetic Plain (+15.7%/decade)** and **+0.049 per decade over Tamil Nadu (+15.9%/decade)**, both p < 0.001 with an evidence label of "strong" (Terra MODIS and MERRA-2 agree in sign). Rainfall shows no significant trend in either box. The labelled mock fixtures remain for tests (`DATA_MODE=mock`).
 
 The backend runs without an AI key. See [docs/challenge-audit.md](docs/challenge-audit.md) for the full review of what changed and what is still open.
 
@@ -148,6 +148,8 @@ Base path: `/api/v1`. Every successful JSON response has `{data_status,data_vers
 | POST | /analyze/detail | Trend plus chart fit/band, change point, years-to-detect and a plain-language summary. |
 | POST | /analyze/series | Analyse a research series, an inline series or a Giovanni CSV (`giovanni_csv`, optional `conversion`). |
 | GET | /scan | All regions × variables with FDR q-values, headlines and opposite-direction flags. |
+
+Web app: `/` (plain HTML/JS in `frontend/`): Analyze, What's changing, Discover, Unusual months & rain (anomalies, indicators, rain–haze interaction), Real data, Demos. Deep links such as `/#more=interaction` open a view directly.
 
 Analyze request example:
 

@@ -1,6 +1,6 @@
 # Render Blueprint (checked against render.com/docs/blueprint-spec on 2026-11-13).
-# STAGING rehearsal: mock data, clearly labelled. Do NOT set APP_ENV=prod until real data
-# (Group 3, H5) and Member 1's loader exist; the app refuses prod + mock by design.
+# Serves Group 3's real NASA data from data/processed/ (built by scripts/build_real_data.py).
+# APP_ENV stays dev on this staging service; the app refuses prod + mock by design.
 services:
   - type: web
     name: trendtrace-api-staging
@@ -15,7 +15,7 @@ services:
       - key: APP_ENV
         value: dev
       - key: DATA_MODE
-        value: mock
+        value: real
       - key: MOCK_SCENARIO
         value: normal
       - key: LOG_LEVEL

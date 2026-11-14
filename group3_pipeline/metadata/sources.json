@@ -1,0 +1,66 @@
+[
+  {
+    "source_id": "IMERG_V07_FINAL_MONTHLY",
+    "product": "GPM_3IMERGM",
+    "version": "07",
+    "collection_concept_id": "C2723754851-GES_DISC",
+    "catalogue_title": "GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07 (GPM_3IMERGM)",
+    "catalogue_start": "1998-01-01T00:00:00.000Z",
+    "catalogue_end": "2025-09-30T23:59:59.999Z",
+    "catalogue_url": "https://cmr.earthdata.nasa.gov/search/concepts/C2723754851-GES_DISC.html",
+    "role": "primary rainfall",
+    "observation_download_status": "downloaded through authenticated Giovanni browser; originals retained"
+  },
+  {
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "product": "GPM_3IMERGDF",
+    "version": "07",
+    "collection_concept_id": "C2723754864-GES_DISC",
+    "catalogue_title": "GPM IMERG Final Precipitation L3 1 day 0.1 degree x 0.1 degree V07 (GPM_3IMERGDF)",
+    "catalogue_start": "1998-01-01T00:00:00.000Z",
+    "catalogue_end": "2025-09-30T23:59:59.999Z",
+    "catalogue_url": "https://cmr.earthdata.nasa.gov/search/concepts/C2723754864-GES_DISC.html",
+    "role": "primary rainfall",
+    "observation_download_status": "downloaded through authenticated Giovanni browser; originals retained"
+  },
+  {
+    "source_id": "MODIS_AQUA_C61_MONTHLY",
+    "product": "MYD08_M3",
+    "version": "6.1",
+    "collection_concept_id": "C1443775657-LAADS",
+    "catalogue_title": "MODIS/Aqua Aerosol Cloud Water Vapor Ozone Monthly L3 Global 1Deg CMG",
+    "catalogue_start": "2002-07-01T00:00:00.000Z",
+    "catalogue_end": null,
+    "catalogue_url": "https://cmr.earthdata.nasa.gov/search/concepts/C1443775657-LAADS.html",
+    "role": "primary AOD",
+    "observation_download_status": "downloaded through authenticated Giovanni browser; originals retained"
+  },
+  {
+    "source_id": "MODIS_AQUA_C61_DAILY",
+    "product": "MYD08_D3",
+    "version": "6.1",
+    "collection_concept_id": "C1443729298-LAADS",
+    "catalogue_title": "MODIS/Aqua Aerosol Cloud Water Vapor Ozone Daily L3 Global 1Deg CMG",
+    "catalogue_start": "2002-07-04T00:00:00.000Z",
+    "catalogue_end": null,
+    "catalogue_url": "https://cmr.earthdata.nasa.gov/search/concepts/C1443729298-LAADS.html",
+    "role": "primary AOD",
+    "observation_download_status": "downloaded through authenticated Giovanni browser; originals retained"
+  },
+  {
+    "source_id": "MODIS_TERRA_C61_MONTHLY",
+    "product": "MOD08_M3",
+    "version": "6.1",
+    "role": "monthly AOD comparison",
+    "catalogue_url": "https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD08_M3",
+    "observation_download_status": "downloaded through authenticated Giovanni browser; originals retained"
+  },
+  {
+    "source_id": "MERRA2_MONTHLY_TOTEXTTAU",
+    "product": "M2TMNXAER",
+    "version": "5.12.4",
+    "role": "monthly AOD comparison",
+    "catalogue_url": "https://disc.gsfc.nasa.gov/datasets/M2TMNXAER_5.12.4/summary",
+    "observation_download_status": "downloaded through authenticated Giovanni browser; originals retained"
+  }
+]

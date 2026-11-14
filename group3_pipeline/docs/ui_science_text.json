@@ -1,0 +1,14 @@
+{
+  "rainfall": "Precipitation reaching the surface, reported as daily depth rate or monthly total after checking source units.",
+  "aod": "Aerosol Optical Depth at 550 nm describes light extinction by particles through the atmospheric column. It is dimensionless.",
+  "aod_surface_warning": "AOD does not directly measure ground-level PM2.5.",
+  "region_warning": "This selection is a rectangular analysis box rather than an exact administrative boundary.",
+  "missing": "No valid observation is available for this time. Missing values are not zero.",
+  "coverage": "Monthly temporal coverage is the proportion of calendar days with a valid regional daily value, when available. Spatial coverage is a separate quantity.",
+  "anomaly": "An unusual value relative to the same calendar month in the stated baseline. A flag is descriptive and depends on coverage and method.",
+  "heavy_rain_share": "Percentage of wet-day rainfall contributed by days above the baseline wet-day 95th percentile. This is a project adaptation of climate-index concepts.",
+  "dry_spell": "Longest observed run of regional-mean rainfall below 1 mm/day within the selected year or season. Missing days interrupt the run.",
+  "regional_indicator_warning": "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+  "interaction_warning": "Associations do not establish causality. MODIS clear-sky retrievals under-sample cloudy and rainy conditions.",
+  "evidence_warning": "Evidence labels follow a documented team convention, not an official NASA confidence score."
+}
