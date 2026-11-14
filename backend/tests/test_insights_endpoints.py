@@ -233,3 +233,15 @@ def test_simple_frontend_is_served_without_hiding_api_errors(client):
     assert client.get("/static/style.css").status_code == 200
     missing = client.get("/api/v1/does-not-exist")
     assert missing.status_code == 404 and missing.json()["error"]["code"] == "NOT_FOUND"
+
+
+def test_discover_next_step_targets_a_region_that_has_the_variable(make_settings):
+    from conftest import build_settings
+    with TestClient(create_app(build_settings(DATA_MODE="real"))) as client:
+        regions = {r["region_id"]: r["variables"] for r in client.get(API + "/regions").json()["result"]["regions"]}
+        for question in ("haze pollution", "rain flood", "heat temperature"):
+            for s in client.post(API + "/discover", json={"question": question}).json()["result"]["suggestions"]:
+                if s["available_now"]:
+                    body = s["next_step"]["body"]
+                    assert s["variable_id"] in regions[body["region_id"]]
+                    assert client.post(API + "/analyze/detail", json=body).status_code == 200

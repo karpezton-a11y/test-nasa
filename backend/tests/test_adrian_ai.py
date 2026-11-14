@@ -206,3 +206,25 @@ def test_template_failure_is_the_only_ai_unavailable_path(client, monkeypatch):
     response = client.post("/api/v1/explain", json={"result_type": "trend", "result_id": "trend_IGP_aod_all_2003-01_2024-12"})
     assert response.status_code == 503 and response.json()["error"]["code"] == "AI_UNAVAILABLE"
     assert "private template details" not in response.text
+
+
+@pytest.mark.parametrize("provider,origin,field", [
+    ("groq", "https://api.groq.com/openai/v1/chat/completions", "max_completion_tokens"),
+    ("gemini", "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", "max_tokens"),
+])
+def test_free_tier_providers_use_fixed_origins(make_settings, monkeypatch, facts, provider, origin, field):
+    from app.ai.client import ProviderClient
+    real_client = httpx.Client
+    captured = []
+    def handler(request):
+        captured.append(request)
+        return httpx.Response(200, json={"choices": [{"message": {"content": valid_output(facts).model_dump_json()}}]})
+    monkeypatch.setattr(httpx, "Client", lambda **kw: real_client(transport=httpx.MockTransport(handler), **kw))
+    settings = make_settings(LLM_API_KEY="test-only", LLM_PROVIDER=provider, LLM_MODEL="m")
+    assert LlmOutput.model_validate_json(ProviderClient(settings).generate(facts))
+    assert str(captured[0].url) == origin and field in json.loads(captured[0].content)
+
+
+def test_unknown_provider_falls_back_to_template(make_settings, trend):
+    service = ExplanationService(make_settings(LLM_API_KEY="k", LLM_PROVIDER="grok", LLM_MODEL="m"))
+    assert service.explain([trend], data_status="mock", data_version="MOCK-test").source == "template"

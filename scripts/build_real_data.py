@@ -204,6 +204,7 @@ def build(out: Path = OUT) -> dict:
                 source_id=items[0]["source_id"], unit=unit, season="annual",
                 limitations=[ui["regional_indicator_warning"]])
             trend["result_id"] = f"trend_{rid}_{ind}_{season}_{PERIOD['start']}_{PERIOD['end']}"
+            trend["computed_at"] = GENERATED  # deterministic rebuilds: identical inputs give identical files
         else:
             note = "Fewer than 10 valid years: no trend is reported."
         result = IndicatorResult.model_validate({

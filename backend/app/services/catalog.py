@@ -135,7 +135,9 @@ def discover(store, *, theme: str | None, place_type: str | None, question: str 
     for score, v, reasons in scored[:limit]:
         available = v["id"] in loaded
         if available:
-            target = region_id if region_id in store_regions else next(iter(sorted(store_regions)), None)
+            # Only suggest a region that actually holds this variable (the chosen one if it does).
+            holders = [rid for rid, r in store_regions.items() if v["id"] in r.variables]
+            target = region_id if region_id in holders else (holders[0] if holders else None)
             next_step = {"action": "analyze", "method": "POST", "path": "/api/v1/analyze/detail",
                          "body": {"region_id": target, "variable": v["id"], "season": "all"}}
         else:

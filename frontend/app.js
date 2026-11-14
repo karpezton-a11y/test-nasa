@@ -95,7 +95,9 @@ async function loadMeta() {
     const [r, v, cat, res] = await Promise.all([call("/regions"), call("/variables"), call("/catalog"), call("/research/series")]);
     regions = r.result.regions; variables = v.result; catalog = cat.result.variables;
     $("#region").replaceChildren(...regions.map((x) => el("option", { value: x.region_id }, x.name)));
-    $("#more-region").replaceChildren(...regions.map((x) => el("option", { value: x.region_id }, x.name)));
+    // Anomalies, rainfall indicators and the rain-haze analysis exist only where rainfall and AOD are both loaded.
+    $("#more-region").replaceChildren(...regions.filter((x) => x.variables.includes("rainfall") && x.variables.includes("aod"))
+      .map((x) => el("option", { value: x.region_id }, x.name)));
     fillVariables();
     $("#region").addEventListener("change", fillVariables);
     $("#variable").addEventListener("change", describeVariable);
@@ -184,7 +186,11 @@ $("#discover-form").addEventListener("submit", async (e) => {
       el("p", { class: "muted" }, "Suggested because: " + s.reasons.join(" ")),
       el("p", { class: "muted" }, "Caveat: " + s.caveat),
       s.available_now
-        ? el("button", { class: "btn", onclick: () => { $("#variable").value = s.variable_id; describeVariable(); openTab("analyze"); } }, "Analyze now")
+        ? el("button", { class: "btn", onclick: () => {
+            const target = s.next_step.body.region_id;
+            if (target) { $("#region").value = target; fillVariables(); }
+            $("#variable").value = s.variable_id; describeVariable(); openTab("analyze"); $("#analyze-form").requestSubmit();
+          } }, "Analyze now")
         : el("p", {}, el("b", {}, "Get the data: "), s.next_step.how))),
       ...(result.region_suggestions.length ? [el("p", { class: "muted" }, "Example regions: " +
         result.region_suggestions.map((r) => `${r.name} [${r.bbox.join(", ")}]`).join("; "))] : []));

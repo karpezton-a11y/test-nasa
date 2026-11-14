@@ -13,18 +13,29 @@ Return only JSON with text, key_points (at most three), caveats (at most two), n
 Do not use HTML or Markdown links."""
 
 
+# Fixed, OpenAI-compatible Chat Completions origins. No user-controlled URL; redirects are never followed.
+PROVIDERS = {
+    "openai": {"url": "https://api.openai.com/v1/chat/completions", "max_tokens_field": "max_completion_tokens"},
+    # Groq: free tier, fast, does not train on API data. Models e.g. openai/gpt-oss-120b.
+    "groq": {"url": "https://api.groq.com/openai/v1/chat/completions", "max_tokens_field": "max_completion_tokens"},
+    # Google Gemini via its OpenAI-compatible endpoint. Models e.g. a current gemini-*-flash.
+    "gemini": {"url": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+               "max_tokens_field": "max_tokens"},
+}
+
+
 class ProviderClient:
     def __init__(self, settings):
         self.settings = settings
 
     def generate(self, facts):
-        if self.settings.llm_provider != "openai" or not self.settings.llm_model:
+        provider = PROVIDERS.get(self.settings.llm_provider)
+        if provider is None or not self.settings.llm_model:
             raise ValueError("Unsupported or unconfigured LLM provider/model")
-        # Fixed origin; no user-controlled URL and no redirects carrying keys.
         with httpx.Client(timeout=15.0, follow_redirects=False, trust_env=False) as client:
-            response = client.post("https://api.openai.com/v1/chat/completions",
+            response = client.post(provider["url"],
                 headers={"Authorization": "Bearer " + self.settings.llm_api_key},
-                json={"model": self.settings.llm_model, "temperature": 0.1, "max_completion_tokens": 600,
+                json={"model": self.settings.llm_model, "temperature": 0.1, provider["max_tokens_field"]: 600,
                       "response_format": {"type": "json_object"},
                       "messages": [{"role": "system", "content": SYSTEM_PROMPT},
                                    {"role": "user", "content": json.dumps(facts, ensure_ascii=False)}]})

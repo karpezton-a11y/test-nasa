@@ -88,14 +88,17 @@ class _Capture:
         target[key] = code
 
 
-def requests_to_capture(regions: list[str]) -> list[tuple[str, dict]]:
+def requests_to_capture(regions: list[str], variables_by_region: dict[str, list[str]] | None = None) -> list[tuple[str, dict]]:
+    """Every request per region, using the variables each region actually holds (catalogue imports included)."""
     items: list[tuple[str, dict]] = [("/health", {}), ("/variables", {}), ("/regions", {}), ("/meta/sources", {})]
     for region in regions:
-        for variable in VARIABLES:
+        variables = (variables_by_region or {}).get(region, list(VARIABLES))
+        for variable in variables:
             items.append(("/timeseries", {"region_id": region, "variable": variable, "frequency": "month"}))
             for what in ("series", "trend", "anomalies"):
                 items.append(("/export/csv", {"region_id": region, "variable": variable, "what": what}))
-        for variable in (*VARIABLES, "both"):
+        contract = [v for v in VARIABLES if v in variables]  # anomalies exist for rainfall/AOD only (contract G)
+        for variable in (*contract, *(["both"] if len(contract) == 2 else [])):
             items.append(("/anomalies", {"region_id": region, "variable": variable}))
         items += [("/interaction", {"region_id": region, "season": s}) for s in INTERACTION_SEASONS]
         items += [("/rainfall/indicators", {"region_id": region, "indicator": i, "season": s})
@@ -122,8 +125,9 @@ def _selections(files: dict[str, Any], regions: list[str]) -> dict[str, list]:
     return selections
 
 
-def _capture_api(client: TestClient, out: Path, regions: list[str], capture: _Capture) -> None:
-    for path, params in requests_to_capture(regions):
+def _capture_api(client: TestClient, out: Path, regions: list[str], capture: _Capture,
+                 variables_by_region: dict[str, list[str]] | None = None) -> None:
+    for path, params in requests_to_capture(regions, variables_by_region):
         url = url_for(path, params)
         response = client.get(url)
         if response.status_code != 200:
@@ -136,11 +140,15 @@ def _capture_api(client: TestClient, out: Path, regions: list[str], capture: _Ca
         capture.files[url] = {"file": relative, "content_type": response.headers["content-type"]}
 
 
-def _save_reports(client: TestClient, out: Path, regions: list[str], capture: _Capture) -> None:
+def _save_reports(client: TestClient, out: Path, regions: list[str], capture: _Capture,
+                  variables_by_region: dict[str, list[str]] | None = None) -> None:
     for region in regions:
         key = f"report:{region}"
-        body = {"region_id": region, "variables": list(VARIABLES), "start": "2003-01", "end": "2024-12",
-                "season": "all", "include": ["trend", "anomalies", "interaction", "indicators"]}
+        held = (variables_by_region or {}).get(region, list(VARIABLES))
+        contract = [v for v in VARIABLES if v in held]
+        body = {"region_id": region, "variables": contract or held[:1], "start": "2003-01", "end": "2024-12",
+                "season": "all",
+                "include": ["trend", "anomalies", "interaction", "indicators"] if len(contract) == 2 else ["trend"]}
         created = client.post("/api/v1/report", json=body)
         if created.status_code != 200:
             capture.error(key, created)
@@ -175,14 +183,16 @@ def export_snapshot(out: Path = DEFAULT_OUT, *, require_real: bool = False, app:
         if require_real and (health["data_status"] != "real" or health["data_version"].upper().startswith("MOCK")):
             raise SnapshotRefused(f"refusing a real snapshot: data_status={health['data_status']}, "
                                   f"data_version={health['data_version']}")
-        regions = [r["region_id"] for r in client.get("/api/v1/regions").json()["result"]["regions"]]
+        region_list = client.get("/api/v1/regions").json()["result"]["regions"]
+        regions = [r["region_id"] for r in region_list]
+        variables_by_region = {r["region_id"]: r["variables"] for r in region_list}
         out.parent.mkdir(parents=True, exist_ok=True)
         staging = Path(tempfile.mkdtemp(prefix=f".{out.name}-new-", dir=out.parent))
         try:
             staging.chmod(0o755)
             capture = _Capture()
-            _capture_api(client, staging, regions, capture)
-            _save_reports(client, staging, regions, capture)
+            _capture_api(client, staging, regions, capture, variables_by_region)
+            _save_reports(client, staging, regions, capture, variables_by_region)
             if capture.failures:
                 raise SnapshotFailed(capture.failures)
             manifest = {"data_status": health["data_status"], "data_version": health["data_version"],
