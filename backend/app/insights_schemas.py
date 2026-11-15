@@ -30,6 +30,8 @@ class SeriesRequest(ContractModel):
             raise ValueError("provide exactly one of research_id, dates+values, or giovanni_csv")
         if given[1] and (self.dates is None or self.values is None or len(self.dates) != len(self.values)):
             raise ValueError("dates and values must both be given with the same length")
+        if given[1] and len(self.dates) == 0:
+            raise ValueError("dates and values must not be empty")
         return self
 
 

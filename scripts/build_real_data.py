@@ -14,6 +14,7 @@ Re-run after Group 3 updates its results:  python scripts/build_real_data.py
 """
 from __future__ import annotations
 
+import calendar
 import csv
 import hashlib
 import json
@@ -54,6 +55,42 @@ def envelope(result, version):
 def write(path: Path, obj) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+SEASON_MONTHS = {"annual": set(range(1, 13)), "JJAS": {6, 7, 8, 9}, "OND": {10, 11, 12}}
+
+
+def rx5day_rows(daily_csv: Path, min_valid: float = 0.95) -> dict:
+    """Rx5day per region, season and year from daily regional-mean IMERG rainfall (mm/day).
+
+    The largest 5-consecutive-day total; a window counts only if all 5 days are valid and inside
+    the same year/season. Years with less than ``min_valid`` of their days valid get no value.
+    """
+    series = defaultdict(dict)
+    for r in csv.DictReader(daily_csv.open(encoding="utf-8")):
+        if r["variable"] == "rainfall" and r["frequency"] == "day":
+            series[r["region_id"]][date.fromisoformat(r["date"])] = None if r["value"] == "" else float(r["value"])
+    out = defaultdict(list)
+    first, last = int(PERIOD["start"][:4]), int(PERIOD["end"][:4])
+    for rid, by_day in sorted(series.items()):
+        for season, months in SEASON_MONTHS.items():
+            for year in range(first, last + 1):
+                days = sorted(d for d in by_day if d.year == year and d.month in months)
+                n_total = sum(calendar.monthrange(year, m)[1] for m in months)
+                vals = [by_day[d] for d in days]
+                valid_fraction = sum(v is not None for v in vals) / n_total
+                best = None
+                for i in range(len(days) - 4):
+                    window = vals[i:i + 5]
+                    if None in window or (days[i + 4] - days[i]).days != 4:
+                        continue
+                    best = sum(window) if best is None else max(best, sum(window))
+                value = round(best, 4) if (best is not None and valid_fraction >= min_valid) else None
+                out[(rid, "rx5day", season)].append({
+                    "region_id": rid, "indicator": "rx5day", "season": season, "year": str(year),
+                    "value": "" if value is None else repr(value), "valid_fraction": repr(round(valid_fraction, 6)),
+                    "unit": "mm", "source_id": "IMERG_V07_FINAL_DAILY"})
+    return out
 
 
 def build(out: Path = OUT) -> dict:
@@ -182,9 +219,14 @@ def build(out: Path = OUT) -> dict:
     definitions = {"heavy_rain_share": ui["heavy_rain_share"] + " Wet day: at least 1 mm/day; rain strictly above the wet-day P95 "
                                        "divided by all wet-day rain.",
                    "longest_dry_spell": ui["dry_spell"] + " Year/season boundaries end a run."}
+    definitions["rx5day"] = ("Rx5day: the largest rainfall total over any 5 consecutive days in the year or season, "
+                             "from the regional daily mean of GPM IMERG Final V07. Only windows with 5 valid days count; "
+                             "windows do not cross year or season boundaries.")
     grouped = defaultdict(list)
     for r in csv.DictReader((RESULTS / "rainfall_indicators_annual.csv").open(encoding="utf-8")):
         grouped[(r["region_id"], r["indicator"], "annual" if r["season"] == "ALL" else r["season"])].append(r)
+    for key, rows in rx5day_rows(RESULTS / "timeseries_daily.csv").items():
+        grouped[key].extend(rows)
     csv_rows, metadata = [], []
     for (rid, ind, season), items in sorted(grouped.items()):
         items.sort(key=lambda x: int(x["year"]))

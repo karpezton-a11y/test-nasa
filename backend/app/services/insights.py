@@ -255,6 +255,8 @@ def analyze_series(body) -> dict[str, Any]:
         name = type(exc).__name__
         code = "INSUFFICIENT_DATA" if name == "InsufficientDataError" else "VALIDATION_ERROR"
         raise api_error(code, f"The series cannot be analysed: {exc}", {"dataset": "series"}) from exc
+    except (ValueError, TypeError) as exc:   # e.g. dates that are not dates: the caller's input, not a server fault
+        raise api_error("VALIDATION_ERROR", f"The series cannot be analysed: {exc}", {"dataset": "series"}) from exc
     if not body.deseasonalise or frequency == "year":
         result["climatology"] = None
     first, last = result["fit"][0]["date"][:7], result["fit"][-1]["date"][:7]

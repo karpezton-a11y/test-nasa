@@ -2,7 +2,7 @@
  "data_status": "real",
  "data_version": "REAL-G3-2026-11-14-a4151cac",
  "contract_version": "1.0",
- "generated_at": "2026-11-14T20:14:35+05:30",
+ "generated_at": "2026-11-15T09:06:02+05:30",
  "result": [
   {
    "source_id": "IMERG_V07_FINAL_MONTHLY",
@@ -77,9 +77,9 @@
    "version": "as downloaded",
    "doi": null,
    "access_method": "NASA POWER monthly point API, box mean",
-   "access_date": "2026-11-14",
+   "access_date": "2026-11-15",
    "variable_name": "T2M",
-   "citation": "NASA Langley Research Center POWER Project, monthly point API (power.larc.nasa.gov), accessed 2026-11-14."
+   "citation": "NASA Langley Research Center POWER Project, monthly point API (power.larc.nasa.gov), accessed 2026-11-15."
   },
   {
    "source_id": "NASA_POWER_PRECTOTCORR",
@@ -88,9 +88,9 @@
    "version": "as downloaded",
    "doi": null,
    "access_method": "NASA POWER monthly point API, box mean",
-   "access_date": "2026-11-14",
+   "access_date": "2026-11-15",
    "variable_name": "PRECTOTCORR",
-   "citation": "NASA Langley Research Center POWER Project, monthly point API (power.larc.nasa.gov), accessed 2026-11-14."
+   "citation": "NASA Langley Research Center POWER Project, monthly point API (power.larc.nasa.gov), accessed 2026-11-15."
   },
   {
    "source_id": "OMI_OMNO2D_V003_MONTHLY_MEAN",
@@ -99,7 +99,7 @@
    "version": "as downloaded",
    "doi": null,
    "access_method": "NASA Giovanni area-averaged time series CSV",
-   "access_date": "2026-11-14",
+   "access_date": "2026-11-15",
    "variable_name": "ColumnAmountNO2TropCloudScreened",
    "citation": null
   }

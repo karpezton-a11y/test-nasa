@@ -1279,6 +1279,639 @@
    "trend_note": null
   },
   {
+   "result_id": "indicator_IGP_rx5day_JJAS_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "rx5day",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "mm",
+   "definition": "Rx5day: the largest rainfall total over any 5 consecutive days in the year or season, from the regional daily mean of GPM IMERG Final V07. Only windows with 5 valid days count; windows do not cross year or season boundaries.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 84.9596,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 97.6858,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 97.9516,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 85.655,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 97.8723,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 89.2226,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 101.9309,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 89.1395,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 94.9272,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 98.1221,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 83.3592,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 81.8056,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 74.5391,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 89.7342,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 73.4475,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 85.4298,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 109.5797,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 69.6388,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 81.9611,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 69.6824,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 75.8958,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 110.4394,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_rx5day_JJAS_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "rx5day_JJAS",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -8.68375,
+    "slope_unit": "mm per decade",
+    "slope_ci": [
+     -15.889902,
+     0.626191
+    ],
+    "p_value": 0.11431678,
+    "significant": false,
+    "ols_slope": -5.164585,
+    "ols_ci": [
+     -13.311336,
+     2.982166
+    ],
+    "change_over_period": -19.10425,
+    "baseline_mean": 88.317236,
+    "percent_change_per_decade": -9.832452,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.195966,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.11431678,
+     "slope_ci": [
+      -15.889902,
+      0.626191
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -9.042333,
+       "p_value": 0.09309214,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -5.164585,
+       "p_value": 0.20096435,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 25 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T00:00:00+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_IGP_rx5day_OND_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "rx5day",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "mm",
+   "definition": "Rx5day: the largest rainfall total over any 5 consecutive days in the year or season, from the regional daily mean of GPM IMERG Final V07. Only windows with 5 valid days count; windows do not cross year or season boundaries.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 15.5405,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 23.2024,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 24.2691,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 15.7692,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 8.9702,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 10.0655,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 79.8954,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 13.198,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 4.6666,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 4.8356,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 50.2054,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 36.3698,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 14.2646,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 26.0727,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 7.9457,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 5.873,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 24.5827,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 11.0418,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 83.009,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 96.9976,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 35.9502,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 7.9511,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_rx5day_OND_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "rx5day_OND",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "positive",
+    "sen_slope": 1.729,
+    "slope_unit": "mm per decade",
+    "slope_ci": [
+     -7.651298,
+     17.865487
+    ],
+    "p_value": 0.61176003,
+    "significant": false,
+    "ols_slope": 10.914435,
+    "ols_ci": [
+     -7.732228,
+     29.561099
+    ],
+    "change_over_period": 3.8038,
+    "baseline_mean": 27.303459,
+    "percent_change_per_decade": 6.332531,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.202711,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.61176003,
+     "slope_ci": [
+      -7.651298,
+      17.865487
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": 0.762333,
+       "p_value": 0.94421663,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": 10.914435,
+       "p_value": 0.23629468,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 165 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T00:00:00+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_IGP_rx5day_annual_2003-01_2024-12",
+   "region_id": "IGP",
+   "indicator": "rx5day",
+   "season": "annual",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "mm",
+   "definition": "Rx5day: the largest rainfall total over any 5 consecutive days in the year or season, from the regional daily mean of GPM IMERG Final V07. Only windows with 5 valid days count; windows do not cross year or season boundaries.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 84.9596,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 97.6858,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 97.9516,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 85.655,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 97.8723,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 89.2226,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 101.9309,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 89.1395,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 94.9272,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 98.1221,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 83.3592,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 81.8056,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 74.5391,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 89.7342,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 73.4475,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 85.4298,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 109.5797,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 69.6388,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 83.009,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 96.9976,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 75.8958,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 110.4394,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_IGP_rx5day_annual_2003-01_2024-12",
+    "region_id": "IGP",
+    "variable": "rx5day_annual",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -4.637125,
+    "slope_unit": "mm per decade",
+    "slope_ci": [
+     -12.695751,
+     5.5837
+    ],
+    "p_value": 0.33769498,
+    "significant": false,
+    "ols_slope": -2.453818,
+    "ols_ci": [
+     -10.390015,
+     5.48238
+    ],
+    "change_over_period": -10.201675,
+    "baseline_mean": 89.606468,
+    "percent_change_per_decade": -5.174989,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.302877,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.33769498,
+     "slope_ci": [
+      -12.695751,
+      5.5837
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -8.754286,
+       "p_value": 0.09309214,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -2.453818,
+       "p_value": 0.52627945,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 34 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T00:00:00+05:30"
+   },
+   "trend_note": null
+  },
+  {
    "result_id": "indicator_TN_heavy_rain_share_JJAS_2003-01_2024-12",
    "region_id": "TN",
    "indicator": "heavy_rain_share",
@@ -2545,6 +3178,638 @@
       "Label rule defined by the team (v1); see docs/methods.md.",
       "Annual series: counts are years; the seasonal cycle does not apply.",
       "At the current rate and noise, about 87 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T00:00:00+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_rx5day_JJAS_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "rx5day",
+   "season": "JJAS",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "mm",
+   "definition": "Rx5day: the largest rainfall total over any 5 consecutive days in the year or season, from the regional daily mean of GPM IMERG Final V07. Only windows with 5 valid days count; windows do not cross year or season boundaries.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 47.6161,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 68.4666,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 51.867,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 35.5524,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 70.8878,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 39.1601,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 61.4008,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 86.0022,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 44.2809,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 42.3555,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 53.0747,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 48.4923,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 41.0642,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 49.458,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 44.4377,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 44.7031,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 59.5635,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 46.088,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 50.1118,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 60.681,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 40.4564,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 49.9515,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_rx5day_JJAS_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "rx5day_JJAS",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -0.898882,
+    "slope_unit": "mm per decade",
+    "slope_ci": [
+     -10.187993,
+     6.435184
+    ],
+    "p_value": 0.8656491,
+    "significant": false,
+    "ols_slope": -3.595048,
+    "ols_ci": [
+     -12.06592,
+     4.875824
+    ],
+    "change_over_period": -1.977541,
+    "baseline_mean": 51.621436,
+    "percent_change_per_decade": -1.741297,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": -0.242567,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.8656491,
+     "slope_ci": [
+      -10.187993,
+      6.435184
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -1.8373,
+       "p_value": 0.88870559,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -3.595048,
+       "p_value": 0.38652294,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 111 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T00:00:00+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_rx5day_OND_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "rx5day",
+   "season": "OND",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "mm",
+   "definition": "Rx5day: the largest rainfall total over any 5 consecutive days in the year or season, from the regional daily mean of GPM IMERG Final V07. Only windows with 5 valid days count; windows do not cross year or season boundaries.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 77.8525,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 110.3609,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 158.7291,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 134.827,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 121.2225,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 214.833,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 165.5836,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 119.6612,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 122.201,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 117.7299,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 60.3539,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 117.7278,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 129.2166,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 40.2877,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 107.7752,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 87.2877,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 107.0969,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 127.1926,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 126.4496,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 86.9419,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 80.5007,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 99.4973,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_rx5day_OND_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "rx5day_OND",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "no_significant_trend",
+    "slope_sign": "negative",
+    "sen_slope": -17.4986,
+    "slope_unit": "mm per decade",
+    "slope_ci": [
+     -39.831917,
+     2.772843
+    ],
+    "p_value": 0.06273523,
+    "significant": false,
+    "ols_slope": -20.733652,
+    "ols_ci": [
+     -45.363523,
+     3.896219
+    ],
+    "change_over_period": -38.49692,
+    "baseline_mean": 114.242209,
+    "percent_change_per_decade": -15.317106,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.132736,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 0.06273523,
+     "slope_ci": [
+      -39.831917,
+      2.772843
+     ],
+     "ci_excludes_zero": false,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -11.771333,
+       "p_value": 0.29391717,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -20.733652,
+       "p_value": 0.09439511,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "weak",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply.",
+      "At the current rate and noise, about 40 years of record would be needed to detect this trend (Weatherhead et al. 1998, 90% power)."
+     ]
+    },
+    "trendlib_version": "1.0.0",
+    "computed_at": "2026-11-14T00:00:00+05:30"
+   },
+   "trend_note": null
+  },
+  {
+   "result_id": "indicator_TN_rx5day_annual_2003-01_2024-12",
+   "region_id": "TN",
+   "indicator": "rx5day",
+   "season": "annual",
+   "period": {
+    "start": "2003-01",
+    "end": "2024-12"
+   },
+   "source_id": "IMERG_V07_FINAL_DAILY",
+   "unit": "mm",
+   "definition": "Rx5day: the largest rainfall total over any 5 consecutive days in the year or season, from the regional daily mean of GPM IMERG Final V07. Only windows with 5 valid days count; windows do not cross year or season boundaries.",
+   "spatial_method": "regional_mean",
+   "threshold_baseline": null,
+   "min_valid_fraction": 0.95,
+   "values": [
+    {
+     "year": 2003,
+     "value": 77.8525,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2004,
+     "value": 128.8369,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2005,
+     "value": 158.7291,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2006,
+     "value": 134.827,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2007,
+     "value": 121.2225,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2008,
+     "value": 214.833,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2009,
+     "value": 165.5836,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2010,
+     "value": 119.6612,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2011,
+     "value": 122.201,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2012,
+     "value": 117.7299,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2013,
+     "value": 60.3539,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2014,
+     "value": 117.7278,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2015,
+     "value": 129.2166,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2016,
+     "value": 157.2766,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2017,
+     "value": 107.7752,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2018,
+     "value": 87.2877,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2019,
+     "value": 107.0969,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2020,
+     "value": 127.1926,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2021,
+     "value": 126.4496,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2022,
+     "value": 86.9419,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2023,
+     "value": 80.5007,
+     "valid_fraction": 1.0
+    },
+    {
+     "year": 2024,
+     "value": 99.4973,
+     "valid_fraction": 1.0
+    }
+   ],
+   "trend": {
+    "result_id": "trend_TN_rx5day_annual_2003-01_2024-12",
+    "region_id": "TN",
+    "variable": "rx5day_annual",
+    "source_id": "IMERG_V07_FINAL_DAILY",
+    "period": {
+     "start": "2003-01",
+     "end": "2024-12"
+    },
+    "season": "annual",
+    "series_type": "annual_indicator",
+    "method": {
+     "test": "mann_kendall_hamed_rao",
+     "slope": "theil_sen",
+     "alpha": 0.05,
+     "ci_level": 0.95
+    },
+    "direction": "decreasing",
+    "slope_sign": "negative",
+    "sen_slope": -17.4986,
+    "slope_unit": "mm per decade",
+    "slope_ci": [
+     -28.097681,
+     -11.788874
+    ],
+    "p_value": 4.176e-05,
+    "significant": true,
+    "ols_slope": -19.412927,
+    "ols_ci": [
+     -42.077003,
+     3.25115
+    ],
+    "change_over_period": -38.49692,
+    "baseline_mean": 120.399705,
+    "percent_change_per_decade": -14.533757,
+    "n_expected": 22,
+    "n_valid": 22,
+    "missing_pct": 0.0,
+    "record_years": 22.0,
+    "lag1_autocorrelation": 0.174645,
+    "limitations": [
+     "Regional averaging smooths local extremes. These indicators do not describe every location inside the box.",
+     "Significance uses the Hamed-Rao autocorrelation correction; a non-significant result does not prove there is no change."
+    ],
+    "evidence": {
+     "record_years": 22.0,
+     "n_valid": 22,
+     "n_expected": 22,
+     "valid_obs_pct": 100.0,
+     "mean_valid_fraction": null,
+     "low_coverage_months": 0,
+     "p_value": 4.176e-05,
+     "slope_ci": [
+      -28.097681,
+      -11.788874
+     ],
+     "ci_excludes_zero": true,
+     "sensitivity": [
+      {
+       "name": "end_2021",
+       "sen_slope": -11.1091,
+       "p_value": 0.23423926,
+       "same_sign": true
+      },
+      {
+       "name": "ols",
+       "sen_slope": -19.412927,
+       "p_value": 0.08914897,
+       "same_sign": true
+      }
+     ],
+     "evidence_label": "moderate",
+     "label_rule_version": "v1",
+     "notes": [
+      "Label rule defined by the team (v1); see docs/methods.md.",
+      "Annual series: counts are years; the seasonal cycle does not apply."
      ]
     },
     "trendlib_version": "1.0.0",

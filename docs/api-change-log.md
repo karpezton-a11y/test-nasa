@@ -70,3 +70,9 @@ three groups and a `contract_version` bump.
 - New routes: `GET /catalog`, `GET /discover/questions`, `POST /discover`, `GET /demos`, `GET /research/series`, `GET /research/series/{research_id}`, `POST /analyze/detail`, `POST /analyze/series`, `GET /scan`. All use the standard envelope and error shape.
 - `/health.trendlib_version` reports the bundled version ("1.0.0") instead of null.
 - New scripts: `fetch_nasa_power.py`, `import_giovanni.py`, `run_demo.py`. The smoke test adds five checks (26 total).
+
+## 15 November 2026
+
+- `GET /api/v1/rainfall/indicators?indicator=rx5day` now returns data for IGP and TN (annual, JJAS, OND), unit mm.
+- `POST /api/v1/analyze/series` with empty `dates`/`values`, or dates that cannot be parsed, returns 422 `VALIDATION_ERROR` (previously 500 `INTERNAL_ERROR`).
+

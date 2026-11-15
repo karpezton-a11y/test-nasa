@@ -64,10 +64,15 @@ function sparkline(fit, w = 300, h = 74) {
   if (pts.length < 3) return "";
   const ys = pts.flatMap((f) => [f.analysed, f.fitted].filter((v) => v !== null && v !== undefined));
   const y0 = Math.min(...ys), y1 = Math.max(...ys), X = (i) => (i / (pts.length - 1)) * (w - 4) + 2, Y = (v) => h - 4 - ((v - y0) / (y1 - y0 || 1)) * (h - 8);
-  const line = pts.map((f, i) => `${X(i).toFixed(1)},${Y(f.analysed).toFixed(1)}`).join(" ");
+  // x follows real time, and a missing month or year breaks the line instead of being bridged
+  const mo = pts.map((f) => { const [y, m] = f.date.slice(0, 7).split("-").map(Number); return y * 12 + (m || 1); });
+  const steps = mo.slice(1).map((v, i) => v - mo[i]).sort((a, b) => a - b), step = steps[Math.floor(steps.length / 2)] || 1;
+  const XT = (i) => ((mo[i] - mo[0]) / (mo[mo.length - 1] - mo[0] || 1)) * (w - 4) + 2;
+  const segs = [[0]]; for (let i = 1; i < pts.length; i++) { if (mo[i] - mo[i - 1] > step) segs.push([]); segs[segs.length - 1].push(i); }
+  const lines = segs.filter((sg) => sg.length > 1).map((sg) => `<polyline points="${sg.map((i) => `${XT(i).toFixed(1)},${Y(pts[i].analysed).toFixed(1)}`).join(" ")}" fill="none" stroke="rgba(124,196,255,.75)" stroke-width="1.3"/>`).join("");
   const hasFit = pts[0].fitted !== null && pts[0].fitted !== undefined;
-  const trend = hasFit ? `<line x1="${X(0)}" y1="${Y(pts[0].fitted)}" x2="${X(pts.length - 1)}" y2="${Y(pts[pts.length - 1].fitted)}" stroke="#ff7a45" stroke-width="2.5" stroke-linecap="round"/>` : "";
-  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${line}" fill="none" stroke="rgba(124,196,255,.75)" stroke-width="1.3"/>${trend}</svg>`;
+  const trend = hasFit ? `<line x1="${XT(0)}" y1="${Y(pts[0].fitted)}" x2="${XT(pts.length - 1)}" y2="${Y(pts[pts.length - 1].fitted)}" stroke="#ff7a45" stroke-width="2.5" stroke-linecap="round"/>` : "";
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">${lines}${trend}</svg>`;
 }
 const verdictPill = (sig) => `<span class="${sig ? "sig" : "nosig"}">${sig ? "Significant trend" : "Not significant"}</span>`;
 const term = (key, text) => `<button type="button" class="term" data-term="${key}">${esc(text)}</button>`;

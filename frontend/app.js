@@ -60,19 +60,38 @@ function chart(fit, yLabel) {
   });
   add("text", { x: 12, y: 14, "font-size": 12, fill: "#b9c8dc" }).textContent = yLabel;
   const hasTrend = fit[0].fitted !== null && fit[0].fitted !== undefined;
-  // band
-  if (hasTrend) {
-  const upper = fit.map((f, i) => `${X(t[i])},${Y(f.upper)}`);
-  const lower = fit.map((f, i) => `${X(t[i])},${Y(f.lower)}`).reverse();
-  add("polygon", { points: [...upper, ...lower].join(" "), fill: "rgba(255,122,69,.20)" });
+  const hasBand = hasTrend && fit[0].lower !== null && fit[0].lower !== undefined;
+  // Missing months/years are gaps: never draw a line or band across them.
+  const segments = gapSegments(fit);
+  if (hasBand) for (const seg of segments) {
+    const upper = seg.map((i) => `${X(t[i])},${Y(fit[i].upper)}`);
+    const lower = seg.map((i) => `${X(t[i])},${Y(fit[i].lower)}`).reverse();
+    add("polygon", { points: [...upper, ...lower].join(" "), fill: "rgba(255,122,69,.20)" });
   }
-  // data points (connected thinly) and fitted line
-  add("polyline", { points: fit.map((f, i) => `${X(t[i])},${Y(f.analysed)}`).join(" "), fill: "none", stroke: "rgba(74,163,255,.45)", "stroke-width": 1 });
+  for (const seg of segments) if (seg.length > 1)
+    add("polyline", { points: seg.map((i) => `${X(t[i])},${Y(fit[i].analysed)}`).join(" "), fill: "none", stroke: "rgba(74,163,255,.45)", "stroke-width": 1 });
   fit.forEach((f, i) => add("circle", { cx: X(t[i]), cy: Y(f.analysed), r: fit.length > 60 ? 2 : 3.5, fill: "#7cc4ff" }));
-  if (hasTrend) add("line", { x1: X(t[0]), y1: Y(fit[0].fitted), x2: X(t[t.length - 1]), y2: Y(fit[fit.length - 1].fitted), stroke: "#ff7a45", "stroke-width": 3 });
+  if (hasTrend) for (const seg of segments) if (seg.length > 1)
+    add("line", { x1: X(t[seg[0]]), y1: Y(fit[seg[0]].fitted), x2: X(t[seg[seg.length - 1]]), y2: Y(fit[seg[seg.length - 1]].fitted), stroke: "#ff7a45", "stroke-width": 3 });
+  const gaps = segments.length - 1;
   return el("div", {}, svg, el("div", { class: "legend" },
-    el("span", {}, el("i", { class: "dot" }), " data"), el("span", {}, el("i", { class: "line" }), " Theil–Sen trend"),
-    el("span", {}, el("i", { class: "band" }), " likely range of the trend")));
+    el("span", {}, el("i", { class: "dot" }), " data"),
+    hasTrend ? el("span", {}, el("i", { class: "line" }), " Theil–Sen trend") : "",
+    hasBand ? el("span", {}, el("i", { class: "band" }), " likely range of the trend") : "",
+    gaps ? el("span", {}, `${gaps} gap${gaps > 1 ? "s" : ""} where data are missing (not joined)`) : ""));
+}
+
+// Split point indices wherever the time step jumps (missing months or years).
+function gapSegments(fit) {
+  const ms = fit.map((f) => f.date.slice(0, 7).split("-").map(Number)).map(([y, m]) => y * 12 + (m || 1));
+  const steps = ms.slice(1).map((v, i) => v - ms[i]).sort((a, b) => a - b);
+  const step = steps.length ? steps[Math.floor(steps.length / 2)] : 1;
+  const segs = [[0]];
+  for (let i = 1; i < fit.length; i++) {
+    if (ms[i] - ms[i - 1] > step) segs.push([]);
+    segs[segs.length - 1].push(i);
+  }
+  return segs;
 }
 
 function statsTable(rows) {
@@ -93,6 +112,7 @@ function openTab(name) {
 
 // ---------- Analyze ----------
 let regions = [], variables = [], catalog = [];
+let metaLoaded = false;
 async function loadMeta() {
   try {
     const [r, v, cat, res] = await Promise.all([call("/regions"), call("/variables"), call("/catalog"), call("/research/series")]);
@@ -108,8 +128,17 @@ async function loadMeta() {
     for (const [k, label] of Object.entries(cat.result.themes)) $("#theme").append(el("option", { value: k }, `${k} — ${label}`));
     for (const [k, label] of Object.entries(cat.result.place_types)) $("#place").append(el("option", { value: k }, label));
     $("#research").replaceChildren(...res.result.series.map((s) => el("option", { value: s.research_id }, `${s.region_id}: ${s.label} (${s.unit})`)));
-  } catch (e) { fail($("#analyze-out"), e); }
+    metaLoaded = true;
+    document.querySelectorAll("#lab-panels form button[type=submit]").forEach((b) => { b.disabled = false; b.removeAttribute("title"); });
+  } catch (e) { metaReady = null; fail($("#analyze-out"), e); }
 }
+// Until regions and variables are loaded, a submit waits for them instead of sending an empty request.
+document.querySelectorAll("#lab-panels form button[type=submit]").forEach((b) => { b.disabled = true; b.title = "Loading regions and variables…"; });
+document.getElementById("lab-panels").addEventListener("submit", (e) => {
+  if (metaLoaded) return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  ensureMeta().then(() => { if (metaLoaded) e.target.requestSubmit(); });
+}, true);
 function fillVariables() {
   const region = regions.find((r) => r.region_id === $("#region").value);
   $("#variable").replaceChildren(...region.variables.map((v) => el("option", { value: v }, variables.find((x) => x.variable === v)?.label || v)));
@@ -133,7 +162,8 @@ $("#analyze-form").addEventListener("submit", async (e) => {
     const { result } = await call("/analyze/detail", body);
     const tr = result.trend, a = result.analysis;
     const explainBox = el("p", { class: "muted" });
-    const csv = `${API}/export/csv?region_id=${encodeURIComponent(tr.region_id)}&variable=${encodeURIComponent(tr.variable)}`;
+    const csv = `${API}/export/csv?region_id=${encodeURIComponent(tr.region_id)}&variable=${encodeURIComponent(tr.variable)}`
+      + `&start=${encodeURIComponent(tr.period.start)}&end=${encodeURIComponent(tr.period.end)}`;
     show(out,
       el("div", { class: "card" }, verdict(tr.significant), el("p", { class: "summary" }, result.plain_language)),
       el("div", { class: "card" }, chart(a.fit, tr.season === "all" ? `${tr.variable} anomaly${tr.slope_unit.startsWith("1 ") ? "" : " (" + tr.slope_unit.replace(" per decade", "") + ")"}` : `${tr.season} mean`)),
@@ -317,20 +347,15 @@ $("#more-form").addEventListener("submit", async (e) => {
         el("p", { class: "muted" }, r.guardrail)));
     } else {
       const { result: r } = await call(`/rainfall/indicators?region_id=${rid}&indicator=${what}&season=${f.get("season")}`);
+      // Only what the engine returned: the yearly values (gaps kept) and its trend numbers. No line or band is invented here.
       const fit = r.values.filter((v) => v.value !== null).map((v) => ({ date: `${v.year}-07-01`, analysed: v.value, fitted: null, lower: null, upper: null }));
-      if (r.trend) {
-        const t = r.trend, mid = fit.reduce((s, p) => s + p.analysed, 0) / fit.length, ym = 2013.5;
-        for (const p of fit) {
-          const dy = (Number(p.date.slice(0, 4)) - ym) / 10;
-          p.fitted = mid + t.sen_slope * dy; p.lower = mid + Math.min(t.slope_ci[0] * dy, t.slope_ci[1] * dy); p.upper = mid + Math.max(t.slope_ci[0] * dy, t.slope_ci[1] * dy);
-        }
-      }
       const t = r.trend;
       show(out,
         el("div", { class: "card" }, t ? verdict(t.significant) : "", el("p", { class: "summary" },
           t ? `Trend: ${fmt(t.sen_slope)} ${t.slope_unit} (range ${fmt(t.slope_ci[0])} to ${fmt(t.slope_ci[1])}), Mann–Kendall p = ${pText(t.p_value)}.` : r.trend_note),
           el("p", { class: "muted" }, r.definition)),
-        el("div", { class: "card" }, chart(fit, `${what.replaceAll("_", " ")} (${r.unit})`)));
+        el("div", { class: "card" }, chart(fit, `${what === "rx5day" ? "Rx5day, wettest 5 days" : what.replaceAll("_", " ")} (${r.unit})`),
+          el("p", { class: "muted" }, "Yearly values as computed. Years without enough valid days are left out and not joined. The trend numbers above come from the statistical engine.")));
     }
   } catch (err) { fail(out, err); }
 });
@@ -367,8 +392,9 @@ async function playDemo(demo, log) {
 }
 
 // The landing page (globe markers, case files, the detective flow) opens a region + variable here.
-let metaReady = null;
-const ensureMeta = () => (metaReady ||= loadMeta());
+var metaReady = null;
+function ensureMeta() { return (metaReady ||= loadMeta()); }
+setTimeout(ensureMeta, 2500);   // prefetch shortly after the page appears
 window.ttOpenAnalysis = async (regionId, variable) => {
   await ensureMeta();
   if (![...$("#region").options].some((o) => o.value === regionId)) return;

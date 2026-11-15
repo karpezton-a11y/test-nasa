@@ -69,7 +69,11 @@ cases.forEach((c) => {
 // Back in the hero: spin again. Below the stage: nothing to do (render loop pauses itself).
 new IntersectionObserver(([e]) => {
   if (!globe) return;
-  if (e.isIntersecting) { activeCase = null; cases.forEach((x) => x.classList.remove("active")); globe.setSpin(true); globe.flyTo(22, 40, 3.4, 1400); }
+  if (e.isIntersecting) {
+    activeCase = null; cases.forEach((x) => x.classList.remove("active"));
+    if (pendingFocus) { globe.setSpin(false); globe.focusRegion(pendingFocus, 2.8); pendingFocus = null; }
+    else { globe.setSpin(true); globe.flyTo(22, 40, 3.4, 1400); }
+  }
   else globe.setSpin(false);
 }, { threshold: 0.35 }).observe($("#hero"));
 
@@ -253,7 +257,31 @@ addEventListener("scroll", () => {
   });
 }, { passive: true });
 
+// ---------- "back to top" links: #top is the fixed bar, so scroll the window itself ----------
+let pendingFocus = null;
+function toTop() {
+  window.scrollTo({ top: 0, behavior: REDUCED ? "auto" : "smooth" });
+  // A smooth scroll can be cut short when lazy sections grow on the way up: finish the trip if it stalls.
+  let last = scrollY, stalls = 0;
+  const check = () => {
+    if (scrollY <= 2) return;
+    stalls = Math.abs(scrollY - last) < 1 ? stalls + 1 : 0; last = scrollY;
+    if (stalls >= 6) { window.scrollTo({ top: 0, behavior: "auto" }); return; }
+    requestAnimationFrame(check);
+  };
+  setTimeout(() => requestAnimationFrame(check), 250);
+}
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href="#top"]');
+  if (!a) return;
+  e.preventDefault(); history.replaceState(null, "", location.pathname + location.search); toTop();
+});
+
 // ---------- start the light modules ----------
 startRocket();
 startMascot();
-initGuide({ openInLab, flyTo: (id) => { globe && globe.focusRegion(id, 2.8); $("#top").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); } });
+initGuide({ openInLab, flyTo: (id) => {
+  pendingFocus = id;                 // applied when the hero is back in view (or now, if it already is)
+  if (scrollY < innerHeight * 0.3 && globe) { globe.setSpin(false); globe.focusRegion(id, 2.8); pendingFocus = null; }
+  toTop();
+} });
