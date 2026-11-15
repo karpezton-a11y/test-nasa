@@ -25,15 +25,32 @@ def normalize(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
+def verbatim_fact_strings(facts: dict) -> list[str]:
+    """Sentences the model is told to copy word for word. Their wording is ours, so word-level checks
+    (number words, the word "significant") must not fire on them; numbers in them are still checked."""
+    out = [facts.get("aod_caveat", ""), INTERACTION_GUARDRAIL]
+    for item in facts["items"]:
+        out.append(item.get("significance_statement") or "")
+        out.extend(item.get("limitations", []))
+    return sorted({normalize(x) for x in out if x}, key=len, reverse=True)
+
+
+def strip_verbatim(normalized_text: str, facts: dict) -> str:
+    for phrase in verbatim_fact_strings(facts):
+        normalized_text = normalized_text.replace(phrase, " ")
+    return normalized_text
+
+
 def check(output: LlmOutput, facts: dict) -> list[str]:
     visible = " ".join([output.text, *output.key_points, *output.caveats])
     normalized = normalize(visible)
+    own_words = strip_verbatim(normalized, facts)   # what the model wrote itself
     issues = []
     if len(visible.split()) > 120: issues.append("word_limit")
     number_words = r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million|billion|trillion|dozen|half|quarter|double|twice|thrice)\b"
-    if re.search(number_words, normalized): issues.append("unformatted_number")
+    if re.search(number_words, own_words): issues.append("unformatted_number")
     for phrase in BANNED_CAUSAL_PHRASES:
-        if re.search(r"\b" + re.escape(phrase).replace(r"\ ", r"[\s-]+") + r"\b", normalized):
+        if re.search(r"\b" + re.escape(phrase).replace(r"\ ", r"[\s-]+") + r"\b", own_words):
             issues.append("causal_language"); break
     # Compare lexical tokens, never float equality: 0.02 cannot replace 0.021.
     allowed = set(NUMBER.findall(normalize(json.dumps(facts, ensure_ascii=False))))
@@ -49,9 +66,7 @@ def check(output: LlmOutput, facts: dict) -> list[str]:
     statements = [r["significance_statement"] for r in facts["items"] if r["kind"] == "trend"]
     if any(normalize(s) not in normalize(output.text) for s in statements):
         issues.append("significance_mismatch")
-    remainder = normalize(visible)
-    for statement in statements:
-        remainder = remainder.replace(normalize(statement), "")
+    remainder = own_words
     if re.search(r"\bsignifican(?:t|ce)\b", remainder):
         issues.append("significance_mismatch")
     if any(i.get("significant") is False for i in facts["items"]):

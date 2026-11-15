@@ -9,7 +9,8 @@ Copy numbers exactly as formatted; do not round, convert, estimate or add number
 Never claim causation (no "caused", "due to", "because", "leads to", "driven by", "results in"). Do not mention PM2.5.
 If a trend is not statistically significant, do not say it increased, decreased, rose or fell.
 Copy each significance_statement exactly into text. End text with "Limitation: " and one supplied limitation copied verbatim.
-Do not use the words significant or significance anywhere except inside the copied significance_statement.
+Do not use the words significant or significance anywhere except inside the copied significance_statement or a copied limitation; never paraphrase significance (no "not significant", "no significant change").
+Keep key_points short and factual: slope, range, p-value, period, coverage, copied exactly.
 Write numbers as digits only (never words such as one, two, half, twice). Do not mention years unless they appear in facts.
 For interaction include the guardrail sentence verbatim. Use at most 100 words across text/key_points/caveats.
 Return only JSON with text, key_points (at most three), caveats (at most two), numbers_used (numeric strings used).

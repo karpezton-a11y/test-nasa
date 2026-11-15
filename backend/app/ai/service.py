@@ -4,6 +4,7 @@ from contextlib import contextmanager
 import hashlib
 from copy import deepcopy
 import json
+import re
 import logging
 from threading import Lock
 from time import monotonic
@@ -129,17 +130,52 @@ class ExplanationService:
             raise api_error("AI_UNAVAILABLE", "The explanation is temporarily unavailable.") from exc
 
 
+# Issues a single optional sentence or bullet can introduce; such parts are dropped rather than failing the answer.
+DROPPABLE = {"unformatted_number", "causal_language", "p_value_mismatch", "unsupported_number", "significance_mismatch",
+             "non_significant_direction", "aod_pm25_equivalence", "markup", "word_limit"}
+# In the main text only wording slips are trimmed; a causal claim, a made-up number or markup rejects the answer.
+SOFT = {"unformatted_number", "significance_mismatch"}
+_SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9\"'(])")
+
+
 def repair(candidate: LlmOutput, facts: dict) -> LlmOutput:
-    """Fix formatting only, never content: add a missing exact significance statement or verbatim limitation,
-    and list the numbers actually used. Every number, word and claim is still checked by guardrails.check."""
-    text = candidate.text.strip()
-    for item in facts["items"]:
-        statement = item.get("significance_statement")
-        if statement and statement not in text:
-            text = f"{statement} {text}"
+    """Fix formatting only, never content. It may (a) drop an optional bullet or sentence the model added
+    that breaks a rule, (b) add the exact significance statement or a verbatim limitation if missing, and
+    (c) list the numbers actually used. Nothing is reworded or invented; guardrails.check still has the final say."""
+    statements = [i["significance_statement"] for i in facts["items"] if i.get("significance_statement")]
     limits = [lim for item in facts["items"] for lim in item["limitations"]]
-    visible = " ".join([text, *candidate.key_points, *candidate.caveats])
-    if limits and not any(lim in visible for lim in limits):
-        text = f"{text} Limitation: {limits[0]}"
-    numbers = NUMBER.findall(" ".join([text, *candidate.key_points, *candidate.caveats]))
-    return candidate.model_copy(update={"text": text, "numbers_used": numbers})
+    protected = set(statements) | set(limits)
+
+    def assemble(text, key_points, caveats):
+        t = text.strip()
+        for st in statements:
+            if st not in t:
+                t = f"{st} {t}".strip()
+        visible = " ".join([t, *key_points, *caveats])
+        if limits and not any(lim in visible for lim in limits):
+            t = f"{t} Limitation: {limits[0]}"
+        nums = NUMBER.findall(" ".join([t, *key_points, *caveats]))
+        return candidate.model_copy(update={"text": t, "key_points": key_points, "caveats": caveats, "numbers_used": nums})
+
+    def issues_of(text, key_points, caveats):
+        return set(check(assemble(text, key_points, caveats), facts)) & DROPPABLE
+
+    # 1) optional bullets: keep only those that add no problem of their own
+    base_text = candidate.text
+    kept_points, kept_caveats = [], []
+    for kp in candidate.key_points:
+        if not (issues_of(base_text, kept_points + [kp], kept_caveats) - issues_of(base_text, kept_points, kept_caveats)):
+            kept_points.append(kp)
+    for cv in candidate.caveats:
+        if not (issues_of(base_text, kept_points, kept_caveats + [cv]) - issues_of(base_text, kept_points, kept_caveats)):
+            kept_caveats.append(cv)
+    # 2) sentences of the main text the model wrote itself: drop the ones that break a rule
+    if issues_of(base_text, kept_points, kept_caveats) & SOFT:
+        sentences = [x for x in _SENTENCE.split(base_text.strip()) if x]
+        kept = []
+        for sent in sentences:
+            added = issues_of(" ".join(kept + [sent]), kept_points, kept_caveats) - issues_of(" ".join(kept), kept_points, kept_caveats)
+            if any(p in sent for p in protected) or not (added & SOFT):
+                kept.append(sent)
+        base_text = " ".join(kept)
+    return assemble(base_text, kept_points, kept_caveats)
