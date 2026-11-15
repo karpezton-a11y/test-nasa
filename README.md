@@ -6,7 +6,7 @@
 
 <p>
 <a href="https://trendtrace-api-staging-8ars.onrender.com"><img src="https://img.shields.io/badge/LIVE%20DEMO-open%20the%20app-ff7a45?style=for-the-badge" alt="Live demo"></a>
-<a href="https://github.com/karpezton-a11y/test-nasa/actions"><img src="https://img.shields.io/github/actions/workflow/status/karpezton-a11y/test-nasa/tests.yml?branch=main&style=for-the-badge&label=tests" alt="Tests"></a>
+<a href="https://github.com/adrian-hue-pixel/TrendTrace/actions"><img src="https://img.shields.io/github/actions/workflow/status/adrian-hue-pixel/TrendTrace/tests.yml?branch=main&style=for-the-badge&label=tests" alt="Tests"></a>
 <img src="https://img.shields.io/badge/data-real%20NASA-4aa3ff?style=for-the-badge" alt="Real NASA data">
 <img src="https://img.shields.io/badge/python-3.11-3776ab?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.11">
 <img src="https://img.shields.io/badge/FastAPI-backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI">
