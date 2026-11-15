@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 70" width="760" height="70" role="img" aria-label="What is changing on Earth? Where? By how much? Is it real?">
+<style>text{font:600 34px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#e8eef7} .l{opacity:0}
+.cur{animation:c 1s steps(2) infinite} @keyframes c{50%{opacity:0}}</style>
+<rect width="760" height="70" rx="14" fill="#0b1a30"/>
+<g transform="translate(24 0)"><g class="l" style="animation:show0 16.0s infinite"><text x="0" y="44">What is changing on Earth?</text>
+<rect x="-4" y="8" width="537" height="50" fill="#0b1a30" style="transform-origin:left;animation:wipe0 16.0s steps(26) infinite"/></g>
+<style>@keyframes show0{0%,-0.010%{opacity:0}0.000%,19.990%{opacity:1}20.000%,100%{opacity:0}}
+@keyframes wipe0{0%,0.000%{transform:translateX(0)}7.500%,100%{transform:translateX(537px)}}</style><g class="l" style="animation:show1 16.0s infinite"><text x="0" y="44">Where is it changing?</text>
+<rect x="-4" y="8" width="440" height="50" fill="#0b1a30" style="transform-origin:left;animation:wipe1 16.0s steps(21) infinite"/></g>
+<style>@keyframes show1{0%,19.990%{opacity:0}20.000%,39.990%{opacity:1}40.000%,100%{opacity:0}}
+@keyframes wipe1{0%,20.000%{transform:translateX(0)}27.500%,100%{transform:translateX(440px)}}</style><g class="l" style="animation:show2 16.0s infinite"><text x="0" y="44">By how much per decade?</text>
+<rect x="-4" y="8" width="478" height="50" fill="#0b1a30" style="transform-origin:left;animation:wipe2 16.0s steps(23) infinite"/></g>
+<style>@keyframes show2{0%,39.990%{opacity:0}40.000%,59.990%{opacity:1}60.000%,100%{opacity:0}}
+@keyframes wipe2{0%,40.000%{transform:translateX(0)}47.500%,100%{transform:translateX(478px)}}</style><g class="l" style="animation:show3 16.0s infinite"><text x="0" y="44">Is it real, or just noise?</text>
+<rect x="-4" y="8" width="537" height="50" fill="#0b1a30" style="transform-origin:left;animation:wipe3 16.0s steps(26) infinite"/></g>
+<style>@keyframes show3{0%,59.990%{opacity:0}60.000%,79.990%{opacity:1}80.000%,100%{opacity:0}}
+@keyframes wipe3{0%,60.000%{transform:translateX(0)}67.500%,100%{transform:translateX(537px)}}</style><g class="l" style="animation:show4 16.0s infinite"><text x="0" y="44">Become a data detective.</text>
+<rect x="-4" y="8" width="498" height="50" fill="#0b1a30" style="transform-origin:left;animation:wipe4 16.0s steps(24) infinite"/></g>
+<style>@keyframes show4{0%,79.990%{opacity:0}80.000%,99.990%{opacity:1}100.000%,100%{opacity:0}}
+@keyframes wipe4{0%,80.000%{transform:translateX(0)}87.500%,100%{transform:translateX(498px)}}</style></g>
+<rect x="732" y="16" width="4" height="38" fill="#ff7a45" class="cur"/>
+</svg>

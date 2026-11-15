@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 210" width="1200" height="210" role="img" aria-label="Ask, Fetch, De-season, Test, Map, Explain">
+<style>.ic{font:700 30px 'Segoe UI',Helvetica,Arial,sans-serif} .h{font:700 21px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#e8eef7} .s{font:400 14px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#8fa3bf}
+.node{animation:pop 3s ease-in-out infinite} @keyframes pop{0%,100%{opacity:.55}15%{opacity:1}30%{opacity:.55}}
+.dash{stroke-dasharray:6 10;animation:flow 1.2s linear infinite} @keyframes flow{to{stroke-dashoffset:-32}}</style>
+<rect width="1200" height="210" rx="18" fill="#071226"/>
+<line x1="100" y1="90" x2="1100" y2="90" stroke="#1f3352" stroke-width="3"/>
+<line x1="100" y1="90" x2="1100" y2="90" stroke="#4aa3ff" stroke-width="3" class="dash"/>
+<circle r="9" fill="#ff7a45"><animate attributeName="cx" values="100;1100" dur="3s" repeatCount="indefinite"/><animate attributeName="cy" values="90;90" dur="3s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.05;.95;1" dur="3s" repeatCount="indefinite"/></circle>
+<g class="node" style="animation-delay:0.0s">
+<circle cx="100" cy="90" r="38" fill="#0a1730" stroke="#ff7a45" stroke-width="2.5"/>
+<text x="100" y="101" text-anchor="middle" class="ic" fill="#ff9a6b">?</text>
+<text x="100" y="160" text-anchor="middle" class="h">Ask</text><text x="100" y="184" text-anchor="middle" class="s">pick a question</text></g><g class="node" style="animation-delay:0.5s">
+<circle cx="300" cy="90" r="38" fill="#0a1730" stroke="#4aa3ff" stroke-width="2.5"/>
+<g transform="translate(300 90)" stroke="#7cc4ff" fill="#7cc4ff"><path d="M0 -14 V12 M-10 2 L0 12 L10 2" fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="300" y="160" text-anchor="middle" class="h">Fetch</text><text x="300" y="184" text-anchor="middle" class="s">real NASA data</text></g><g class="node" style="animation-delay:1.0s">
+<circle cx="500" cy="90" r="38" fill="#0a1730" stroke="#ff7a45" stroke-width="2.5"/>
+<g transform="translate(500 90)" stroke="#ff9a6b" fill="#ff9a6b"><path d="M-16 0 C-10 -14 -6 -14 0 0 S10 14 16 0" fill="none" stroke-width="3.5" stroke-linecap="round"/></g>
+<text x="500" y="160" text-anchor="middle" class="h">De-season</text><text x="500" y="184" text-anchor="middle" class="s">remove the yearly cycle</text></g><g class="node" style="animation-delay:1.5s">
+<circle cx="700" cy="90" r="38" fill="#0a1730" stroke="#4aa3ff" stroke-width="2.5"/>
+<text x="700" y="101" text-anchor="middle" class="ic" fill="#7cc4ff">∑</text>
+<text x="700" y="160" text-anchor="middle" class="h">Test</text><text x="700" y="184" text-anchor="middle" class="s">Mann–Kendall + Theil–Sen</text></g><g class="node" style="animation-delay:2.0s">
+<circle cx="900" cy="90" r="38" fill="#0a1730" stroke="#ff7a45" stroke-width="2.5"/>
+<g transform="translate(900 90)" stroke="#ff9a6b" fill="#ff9a6b"><path d="M0 14 C-12 0 -12 -4 -12 -6 A12 12 0 0 1 12 -6 C12 -4 12 0 0 14Z M0 -10 A4 4 0 1 0 0.01 -10Z" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
+<text x="900" y="160" text-anchor="middle" class="h">Map</text><text x="900" y="184" text-anchor="middle" class="s">where it changes</text></g><g class="node" style="animation-delay:2.5s">
+<circle cx="1100" cy="90" r="38" fill="#0a1730" stroke="#4aa3ff" stroke-width="2.5"/>
+<g transform="translate(1100 90)" stroke="#7cc4ff" fill="#7cc4ff"><path d="M0 -15 L4 -4 L15 0 L4 4 L0 15 L-4 4 L-15 0 L-4 -4Z" stroke="none"/></g>
+<text x="1100" y="160" text-anchor="middle" class="h">Explain</text><text x="1100" y="184" text-anchor="middle" class="s">plain words, checked</text></g>
+</svg>

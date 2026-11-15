@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 160" width="1200" height="160" role="img" aria-label="21 variables, 6 NASA sources, 22 years, 665 tests">
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#4aa3ff"/><stop offset="1" stop-color="#ff7a45"/></linearGradient></defs>
+<style>.big{font:800 54px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#e8eef7} .lab{font:500 16px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#8fa3bf}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}} @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}</style>
+<rect width="1200" height="160" rx="18" fill="#071226"/><g style="animation:fade .8s 0.2s both"><text x="150" y="78" text-anchor="middle" class="big">21</text>
+<text x="150" y="112" text-anchor="middle" class="lab">Earth variables</text>
+<rect x="60" y="130" width="180" height="4" rx="2" fill="#1f3352"/>
+<rect x="60" y="130" width="180" height="4" rx="2" fill="url(#g)" style="transform-origin:60px 0;transform-box:view-box;animation:grow 1.6s 0.4s ease-out both"/></g><g style="animation:fade .8s 0.45s both"><text x="450" y="78" text-anchor="middle" class="big">6</text>
+<text x="450" y="112" text-anchor="middle" class="lab">NASA sources</text>
+<rect x="360" y="130" width="180" height="4" rx="2" fill="#1f3352"/>
+<rect x="360" y="130" width="180" height="4" rx="2" fill="url(#g)" style="transform-origin:360px 0;transform-box:view-box;animation:grow 1.6s 0.65s ease-out both"/></g><g style="animation:fade .8s 0.7s both"><text x="750" y="78" text-anchor="middle" class="big">22</text>
+<text x="750" y="112" text-anchor="middle" class="lab">years of data</text>
+<rect x="660" y="130" width="180" height="4" rx="2" fill="#1f3352"/>
+<rect x="660" y="130" width="180" height="4" rx="2" fill="url(#g)" style="transform-origin:660px 0;transform-box:view-box;animation:grow 1.6s 0.9s ease-out both"/></g><g style="animation:fade .8s 0.95s both"><text x="1050" y="78" text-anchor="middle" class="big">665</text>
+<text x="1050" y="112" text-anchor="middle" class="lab">tests passing</text>
+<rect x="960" y="130" width="180" height="4" rx="2" fill="#1f3352"/>
+<rect x="960" y="130" width="180" height="4" rx="2" fill="url(#g)" style="transform-origin:960px 0;transform-box:view-box;animation:grow 1.6s 1.15s ease-out both"/></g>
+</svg>

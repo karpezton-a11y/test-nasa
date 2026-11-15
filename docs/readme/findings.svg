@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" width="1200" height="370" role="img" aria-label="Real findings: Los Angeles NO2 -51.5% per decade, Delhi -4.2% not significant, IGP aerosol +15.7%, Tamil Nadu +15.9%, Amazon +0.64 C per decade">
+<style>.lab{font:600 16px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#c9d6e8} .val{font:700 17px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#e8eef7} .p{font:500 12.5px Consolas,'Courier New',monospace;fill:#8fa3bf}
+.t{font:700 22px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#e8eef7} .n{font:500 13px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#8fa3bf}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}} @keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes idle{50%{filter:brightness(1.25)}}</style>
+<rect width="1200" height="370" rx="18" fill="#071226"/>
+<text x="40" y="44" class="t">Real NASA data, real verdicts</text>
+<text x="1160" y="44" text-anchor="end" class="n">faded bar = not statistically significant</text>
+<line x1="800" y1="62" x2="800" y2="356" stroke="#2a3f60" stroke-dasharray="3 5"/>
+<text x="40" y="92" class="lab">Los Angeles · NO₂ (Aura OMI)</text>
+<rect x="470.4" y="74" width="329.6" height="26" rx="6" fill="#4aa3ff" fill-opacity="1" style="transform-origin:800px 0;transform-box:view-box;animation:grow 1.4s 0.3s cubic-bezier(.2,.8,.2,1) both, idle 4s 2.0s ease-in-out infinite"/>
+<text x="812.0" y="93" class="val" style="animation:fade .6s 1.2s both">−51.5% / decade</text>
+<text x="812.0" y="112" class="p" style="animation:fade .6s 1.3s both">p &lt; 0.001</text><text x="40" y="150" class="lab">Delhi · NO₂ (Aura OMI)</text>
+<rect x="773.1" y="132" width="26.9" height="26" rx="6" fill="#4aa3ff" fill-opacity="0.4" style="transform-origin:800px 0;transform-box:view-box;animation:grow 1.4s 0.55s cubic-bezier(.2,.8,.2,1) both, idle 4s 2.3s ease-in-out infinite"/>
+<text x="812.0" y="151" class="val" style="animation:fade .6s 1.45s both">−4.2% / decade</text>
+<text x="812.0" y="170" class="p" style="animation:fade .6s 1.55s both">p = 0.27 · not significant</text><text x="40" y="208" class="lab">Indo-Gangetic Plain · aerosol (Aqua MODIS)</text>
+<rect x="800.0" y="190" width="100.5" height="26" rx="6" fill="#ff7a45" fill-opacity="1" style="transform-origin:800px 0;transform-box:view-box;animation:grow 1.4s 0.8s cubic-bezier(.2,.8,.2,1) both, idle 4s 2.6s ease-in-out infinite"/>
+<text x="912.5" y="209" class="val" style="animation:fade .6s 1.7s both">+15.7% / decade</text>
+<text x="912.5" y="228" class="p" style="animation:fade .6s 1.8s both">p &lt; 0.001</text><text x="40" y="266" class="lab">Tamil Nadu · aerosol (Aqua MODIS)</text>
+<rect x="800.0" y="248" width="101.8" height="26" rx="6" fill="#ff7a45" fill-opacity="1" style="transform-origin:800px 0;transform-box:view-box;animation:grow 1.4s 1.05s cubic-bezier(.2,.8,.2,1) both, idle 4s 2.9s ease-in-out infinite"/>
+<text x="913.8" y="267" class="val" style="animation:fade .6s 1.95s both">+15.9% / decade</text>
+<text x="913.8" y="286" class="p" style="animation:fade .6s 2.05s both">p &lt; 0.001</text><text x="40" y="324" class="lab">Southern Amazon · air temperature (NASA POWER)</text>
+<rect x="800.0" y="306" width="110.0" height="26" rx="6" fill="#ff7a45" fill-opacity="1" style="transform-origin:800px 0;transform-box:view-box;animation:grow 1.4s 1.3s cubic-bezier(.2,.8,.2,1) both, idle 4s 3.2s ease-in-out infinite"/>
+<text x="922.0" y="325" class="val" style="animation:fade .6s 2.2s both">+0.64 °C / decade</text>
+<text x="922.0" y="344" class="p" style="animation:fade .6s 2.3s both">p &lt; 0.001</text>
+</svg>

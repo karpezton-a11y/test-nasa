@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 220 270" width="220" height="270" role="img" aria-label="Trace, the TrendTrace astronaut guide, waving">
+<style>
+.astro-body{animation:floaty 4.5s ease-in-out infinite;transform-origin:100px 125px}
+.wave-arm{transform-origin:134px 122px;animation:wave 2.4s ease-in-out infinite}
+.jet{transform-origin:100px 180px;animation:jet .14s ease-in-out infinite alternate}
+.led{animation:blink 1.2s steps(2) infinite} .l2{animation-delay:.4s} .l3{animation-delay:.8s}
+.antenna{animation:blink 1s steps(2) infinite}
+.eyes{animation:eyes 4s infinite;transform-origin:100px 74px}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+@keyframes wave{0%,55%,100%{transform:rotate(0)}10%{transform:rotate(-24deg)}20%{transform:rotate(14deg)}30%{transform:rotate(-24deg)}40%{transform:rotate(10deg)}}
+@keyframes jet{from{transform:scaleY(.8);opacity:.8}to{transform:scaleY(1.15);opacity:1}}
+@keyframes blink{50%{opacity:.15}}
+@keyframes eyes{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.1)}}
+</style>
+<defs><symbol id="tt-mark" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#ff7a45" stroke-width="3" transform="rotate(-24 32 32)"/>
+<circle cx="32" cy="32" r="14" fill="#0b1a30" stroke="#4aa3ff" stroke-width="2.5"/><polyline points="20,40 28,33 34,36 44,24" fill="none" stroke="#ff7a45" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol></defs>
+
+  <defs>
+    <linearGradient id="suit" x1="0" x2="1"><stop offset="0" stop-color="#c9d2de"/><stop offset=".35" stop-color="#ffffff"/><stop offset=".75" stop-color="#e8edf4"/><stop offset="1" stop-color="#aeb9c9"/></linearGradient>
+    <radialGradient id="visor" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#3ea0ff"/><stop offset=".45" stop-color="#123a78"/><stop offset="1" stop-color="#050d22"/></radialGradient>
+    <radialGradient id="planet" cx=".35" cy=".35"><stop offset="0" stop-color="#7cc4ff"/><stop offset=".6" stop-color="#2c6fbb"/><stop offset="1" stop-color="#0b2a5a"/></radialGradient>
+  </defs>
+  <g class="astro-body">
+    <!-- jet pack -->
+    <rect x="58" y="98" width="84" height="74" rx="16" fill="#8592a6"/>
+    <rect x="62" y="166" width="16" height="12" rx="3" fill="#5b667a"/><rect x="122" y="166" width="16" height="12" rx="3" fill="#5b667a"/>
+    <g class="jet"><ellipse cx="70" cy="186" rx="6" ry="10" fill="#ffb36b"/><ellipse cx="130" cy="186" rx="6" ry="10" fill="#ffb36b"/>
+      <ellipse cx="70" cy="184" rx="3" ry="6" fill="#fff6e0"/><ellipse cx="130" cy="184" rx="3" ry="6" fill="#fff6e0"/></g>
+    <!-- legs -->
+    <rect x="72" y="168" width="24" height="46" rx="11" fill="url(#suit)"/><rect x="104" y="168" width="24" height="46" rx="11" fill="url(#suit)"/>
+    <rect x="70" y="204" width="28" height="16" rx="7" fill="#3b4558"/><rect x="102" y="204" width="28" height="16" rx="7" fill="#3b4558"/>
+    <rect x="72" y="186" width="24" height="5" fill="#ff7a45"/><rect x="104" y="186" width="24" height="5" fill="#ff7a45"/>
+    <!-- torso -->
+    <rect x="62" y="108" width="76" height="72" rx="28" fill="url(#suit)"/>
+    <rect x="82" y="128" width="36" height="24" rx="5" fill="#dfe6ef" stroke="#a9b5c6"/>
+    <circle class="led l1" cx="91" cy="136" r="3" fill="#4ade80"/><circle class="led l2" cx="100" cy="136" r="3" fill="#ffc86b"/><circle class="led l3" cx="109" cy="136" r="3" fill="#ff7a45"/>
+    <rect x="88" y="143" width="24" height="4" rx="2" fill="#7c8aa0"/>
+    <svg x="66" y="114" width="16" height="16" viewBox="0 0 64 64"><use href="#tt-mark"/></svg>
+    <!-- left arm (resting) -->
+    <path d="M66 120 C52 132 48 150 52 168" stroke="url(#suit)" stroke-width="20" stroke-linecap="round" fill="none"/>
+    <circle cx="52" cy="170" r="10" fill="#e9eef5" stroke="#b5c0cf"/>
+    <!-- right arm (waving) -->
+    <g class="wave-arm">
+      <path d="M134 122 C150 112 158 96 160 78" stroke="url(#suit)" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <circle cx="160" cy="72" r="11" fill="#e9eef5" stroke="#b5c0cf"/>
+      <rect x="148" y="94" width="18" height="5" rx="2" transform="rotate(-62 157 96)" fill="#2c6fbb"/>
+    </g>
+    <!-- helmet -->
+    <circle cx="100" cy="70" r="48" fill="url(#suit)" stroke="#b9c3d2" stroke-width="2"/>
+    <ellipse cx="100" cy="74" rx="36" ry="30" fill="url(#visor)" stroke="#d7dee8" stroke-width="3"/>
+    <path d="M76 62 Q86 48 104 48" stroke="#ffffff" stroke-opacity=".7" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <circle cx="118" cy="88" r="7" fill="url(#planet)" opacity=".85"/>
+    <!-- friendly eyes on the visor display -->
+    <g class="eyes" stroke="#7df0ff" stroke-width="4" stroke-linecap="round" fill="none">
+      <path d="M86 76 Q91 70 96 76"/><path d="M104 76 Q109 70 114 76"/>
+    </g>
+    <path d="M94 88 Q100 93 106 88" stroke="#7df0ff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".9"/>
+    <line x1="132" y1="34" x2="140" y2="18" stroke="#b9c3d2" stroke-width="3"/><circle class="antenna" cx="141" cy="16" r="4.5" fill="#ff7a45"/>
+  </g>
+
+</svg>

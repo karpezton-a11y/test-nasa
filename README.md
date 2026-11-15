@@ -1,8 +1,56 @@
-# TrendTrace — Earth System Trend Detective
+<div align="center">
 
-**NASA Space Apps 2026 · "Be An Earth System Trend Detective!"**
+<a href="https://trendtrace-api-staging-8ars.onrender.com"><img src="docs/readme/hero.svg" alt="TrendTrace — Earth System Trend Detective. What is changing on Earth, where, by how much, and is it real or just noise?" width="100%"></a>
 
-TrendTrace helps students and the public become data detectives: pick an Earth science variable measured by NASA missions or models, choose a region, see how it changes over time, and find out **what** is changing, **where**, **how much**, and whether the change is **statistically significant**.
+<img src="docs/readme/typing.svg" alt="What is changing on Earth? Where? By how much? Is it real, or just noise?" width="620">
+
+<p>
+<a href="https://trendtrace-api-staging-8ars.onrender.com"><img src="https://img.shields.io/badge/LIVE%20DEMO-open%20the%20app-ff7a45?style=for-the-badge" alt="Live demo"></a>
+<a href="https://github.com/karpezton-a11y/test-nasa/actions"><img src="https://img.shields.io/github/actions/workflow/status/karpezton-a11y/test-nasa/tests.yml?branch=main&style=for-the-badge&label=tests" alt="Tests"></a>
+<img src="https://img.shields.io/badge/data-real%20NASA-4aa3ff?style=for-the-badge" alt="Real NASA data">
+<img src="https://img.shields.io/badge/python-3.11-3776ab?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.11">
+<img src="https://img.shields.io/badge/FastAPI-backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI">
+<img src="https://img.shields.io/badge/three.js-3D%20globe-000000?style=for-the-badge&logo=threedotjs&logoColor=white" alt="three.js">
+</p>
+
+**NASA Space Apps Challenge 2026 · "Be An Earth System Trend Detective!" · Team Copernicus**
+
+</div>
+
+<img src="docs/readme/divider.svg" alt="" width="100%">
+
+<img src="docs/readme/trace.svg" alt="Trace, the TrendTrace astronaut guide, waving" width="130" align="right">
+
+### 👋 Meet TrendTrace
+
+TrendTrace helps students and the public become **data detectives**. Answer three quick questions, and it finds the right NASA variables, tests 22 years of real satellite data the way scientists do, and tells you in plain words **what** is changing, **where**, **how much**, and whether the change is **statistically significant** or just noise.
+
+*Trace, our astronaut guide, shows you around the site.*
+
+<br clear="right">
+
+## 🎬 See it in action
+
+<div align="center">
+<a href="https://trendtrace-api-staging-8ars.onrender.com"><img src="docs/readme/tour.gif" alt="A tour of TrendTrace: the 3D globe, a case file, warming stripes, and the three-question investigation with a live trend test" width="100%"></a>
+<sub>Recorded from the real app: 3D globe with country names → Los Angeles case file → warming stripes → the 3-question investigation and a live trend test.</sub>
+</div>
+
+## 🛰️ How it works
+
+<img src="docs/readme/pipeline.svg" alt="Ask, Fetch, De-season, Test, Map, Explain" width="100%">
+
+## 📊 What we found
+
+<img src="docs/readme/findings.svg" alt="Los Angeles NO2 −51.5% per decade (significant); Delhi −4.2% (not significant); Indo-Gangetic Plain aerosol +15.7%; Tamil Nadu aerosol +15.9%; Southern Amazon +0.64 °C per decade" width="100%">
+
+<img src="docs/readme/stats.svg" alt="21 Earth variables, 6 NASA sources, 22 years of data, 665 tests passing" width="100%">
+
+> TrendTrace shows statistical patterns, not causes. AOD is haze in the whole air column, not ground-level PM2.5. Not an official NASA product, and not endorsed by NASA.
+
+<img src="docs/readme/divider.svg" alt="" width="100%">
+
+## ✅ How it answers the challenge
 
 | The challenge asks | TrendTrace does it with |
 |---|---|
